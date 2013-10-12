@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>916B1896-36A0-41DC-9D70-87D6E8DD2179</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>Terraria</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework.Game" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics" />
+    <Reference Include="System" />
+    <Reference Include="Microsoft.Xna.Framework.Xact" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Terraria\ChatLine.cs" />
+    <Compile Include="Terraria\Chest.cs" />
+    <Compile Include="Terraria\ClientSock.cs" />
+    <Compile Include="Terraria\Cloud.cs" />
+    <Compile Include="Terraria\Collision.cs" />
+    <Compile Include="Terraria\CombatText.cs" />
+    <Compile Include="Terraria\Dust.cs" />
+    <Compile Include="Terraria\Gore.cs" />
+    <Compile Include="Terraria\Item.cs" />
+    <Compile Include="Terraria\ItemText.cs" />
+    <Compile Include="Terraria\keyBoardInput.cs" />
+    <Compile Include="Terraria\Lang.cs" />
+    <Compile Include="Terraria\Lighting.cs" />
+    <Compile Include="Terraria\Liquid.cs" />
+    <Compile Include="Terraria\LiquidBuffer.cs" />
+    <Compile Include="Terraria\Main.cs" />
+    <Compile Include="Terraria\Map.cs" />
+    <Compile Include="Terraria\messageBuffer.cs" />
+    <Compile Include="Terraria\NetMessage.cs" />
+    <Compile Include="Terraria\Netplay.cs" />
+    <Compile Include="Terraria\NPC.cs" />
+    <Compile Include="Terraria\Player.cs" />
+    <Compile Include="Terraria\Program.cs" />
+    <Compile Include="Terraria\Projectile.cs" />
+    <Compile Include="Terraria\Rain.cs" />
+    <Compile Include="Terraria\Recipe.cs" />
+    <Compile Include="Terraria\ServerSock.cs" />
+    <Compile Include="Terraria\Sign.cs" />
+    <Compile Include="Terraria\Star.cs" />
+    <Compile Include="Terraria\Steam.cs" />
+    <Compile Include="Terraria\Tile.cs" />
+    <Compile Include="Terraria\WorldGen.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Microsoft.Xna.Framework.RuntimeProfile" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
