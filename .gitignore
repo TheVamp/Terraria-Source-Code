@@ -110,3 +110,7 @@ UpgradeLog*.XML
 # Temp Data
 *.orig
 *temp.cs
+
+.vs/Terraria/FileContentIndex/2bc66ed1-5c39-4797-9178-9006448fb9c9.vsidx
+
+.vs/Terraria/FileContentIndex/read.lock

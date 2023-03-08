@@ -1387,7 +1387,7 @@ namespace Terraria
 					{
 						binaryWriter.Write(Main.curRelease);
 						binaryWriter.Write(Main.clientUUID);
-						binaryWriter.Write(this.graphics.IsFullScreen);
+						binaryWriter.Write(graphics.IsFullScreen);
 						binaryWriter.Write(Main.mouseColor.R);
 						binaryWriter.Write(Main.mouseColor.G);
 						binaryWriter.Write(Main.mouseColor.B);
@@ -1406,8 +1406,8 @@ namespace Terraria
 						binaryWriter.Write(Main.cHook);
 						binaryWriter.Write(Main.caveParrallax);
 						binaryWriter.Write(Main.fixedTiming);
-						binaryWriter.Write(this.graphics.PreferredBackBufferWidth);
-						binaryWriter.Write(this.graphics.PreferredBackBufferHeight);
+						binaryWriter.Write(graphics.PreferredBackBufferWidth);
+						binaryWriter.Write(graphics.PreferredBackBufferHeight);
 						binaryWriter.Write(Main.autoSave);
 						binaryWriter.Write(Main.autoPause);
 						binaryWriter.Write(Main.showItemText);
@@ -1506,8 +1506,8 @@ namespace Terraria
 								}
 								if (num >= 4)
 								{
-									this.graphics.PreferredBackBufferWidth = binaryReader.ReadInt32();
-									this.graphics.PreferredBackBufferHeight = binaryReader.ReadInt32();
+									graphics.PreferredBackBufferWidth = binaryReader.ReadInt32();
+									graphics.PreferredBackBufferHeight = binaryReader.ReadInt32();
 								}
 								if (num >= 8)
 								{
@@ -1545,9 +1545,9 @@ namespace Terraria
 									Main.cMapAlphaUp = binaryReader.ReadString();
 									Main.cMapAlphaDown = binaryReader.ReadString();
 								}
-								if (flag2 && !this.graphics.IsFullScreen)
+								if (flag2 && !graphics.IsFullScreen)
 								{
-									this.graphics.ToggleFullScreen();
+									graphics.ToggleFullScreen();
 								}
 							}
 							binaryReader.Close();
@@ -1556,7 +1556,7 @@ namespace Terraria
 				}
 				if (flag)
 				{
-					this.SaveSettings();
+					SaveSettings();
 				}
 			}
 			catch
@@ -1994,7 +1994,7 @@ namespace Terraria
 			}
 			Main.dedServ = true;
 			Main.showSplash = false;
-			this.Initialize();
+			Initialize();
 			Lang.setLang(false);
 			for (int i = 0; i < 301; i++)
 			{
@@ -2344,7 +2344,7 @@ namespace Terraria
 					}
 					if (Netplay.anyClients)
 					{
-						this.Update(new GameTime());
+						Update(new GameTime());
 					}
 					double num10 = (double)stopwatch.ElapsedMilliseconds + num7;
 					if (num10 < num6)
@@ -2834,12 +2834,12 @@ namespace Terraria
 		}
 		public Main()
 		{
-			this.graphics = new GraphicsDeviceManager(this);
-			base.Content.RootDirectory = "Content";
+			graphics = new GraphicsDeviceManager(this);
+			Content.RootDirectory = "Content";
 		}
 		protected void SetTitle()
 		{
-			base.Window.Title = Lang.title();
+			Window.Title = Lang.title();
 		}
 		protected override void Initialize()
 		{
@@ -2850,7 +2850,7 @@ namespace Terraria
 			WorldGen.randMoon();
 			Main.bgAlpha[0] = 1f;
 			Main.bgAlpha2[0] = 1f;
-			this.invBottom = 258;
+			invBottom = 258;
 			for (int i = 0; i < 311; i++)
 			{
 				Main.projFrames[i] = 1;
@@ -3146,7 +3146,7 @@ namespace Terraria
 			{
 				WorldGen.genRand = new Random((int)DateTime.Now.Ticks);
 			}
-			this.SetTitle();
+			SetTitle();
 			Main.lo = Main.rand.Next(6);
 			Main.tileBrick[1] = true;
 			Main.tileBrick[54] = true;
@@ -4014,7 +4014,7 @@ namespace Terraria
 			Main.tileNoSunLight[196] = false;
 			for (int n = 0; n < Main.maxMenuItems; n++)
 			{
-				this.menuItemScale[n] = 0.8f;
+				menuItemScale[n] = 0.8f;
 			}
 			for (int num = 0; num < 6001; num++)
 			{
@@ -4093,11 +4093,11 @@ namespace Terraria
 			{
 				Main.liquidBuffer[num15] = new LiquidBuffer();
 			}
-			this.shop[0] = new Chest();
+			shop[0] = new Chest();
 			for (int num16 = 1; num16 < Main.numShops; num16++)
 			{
-				this.shop[num16] = new Chest();
-				this.shop[num16].SetupShop(num16);
+				shop[num16] = new Chest();
+				shop[num16].SetupShop(num16);
 			}
 			Main.teamColor[0] = Color.White;
 			Main.teamColor[1] = new Color(230, 40, 20);
@@ -4132,7 +4132,7 @@ namespace Terraria
 			}
 			else
 			{
-				IntPtr systemMenu = Main.GetSystemMenu(base.Window.Handle, false);
+				IntPtr systemMenu = Main.GetSystemMenu(Window.Handle, false);
 				int menuItemCount = Main.GetMenuItemCount(systemMenu);
 				Main.RemoveMenu(systemMenu, menuItemCount - 1, 1024);
 			}
@@ -4154,13 +4154,13 @@ namespace Terraria
 			{
 				Main.screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 			}
-			this.graphics.PreferredBackBufferWidth = Main.screenWidth;
-			this.graphics.PreferredBackBufferHeight = Main.screenHeight;
-			this.graphics.ApplyChanges();
-			base.Initialize();
-			base.Window.AllowUserResizing = true;
-			this.OpenSettings();
-			this.CheckBunny();
+			graphics.PreferredBackBufferWidth = Main.screenWidth;
+			graphics.PreferredBackBufferHeight = Main.screenHeight;
+			graphics.ApplyChanges();
+			//Initialize();
+			Window.AllowUserResizing = true;
+			OpenSettings();
+			CheckBunny();
 			if (Lang.lang > 1)
 			{
 				Lang.setLang(true);
@@ -4170,8 +4170,8 @@ namespace Terraria
 			{
 				Main.menuMode = 1212;
 			}
-			this.SetTitle();
-			this.OpenRecent();
+			SetTitle();
+			OpenRecent();
 			Star.SpawnStars();
 			WorldGen.RandomWeather();
 			foreach (DisplayMode current in GraphicsAdapter.DefaultAdapter.SupportedDisplayModes)
@@ -4179,9 +4179,9 @@ namespace Terraria
 				if (current.Width >= Main.minScreenW && current.Height >= Main.minScreenH && current.Width <= Main.maxScreenW && current.Height <= Main.maxScreenH)
 				{
 					bool flag = true;
-					for (int num18 = 0; num18 < this.numDisplayModes; num18++)
+					for (int num18 = 0; num18 < numDisplayModes; num18++)
 					{
-						if (current.Width == this.displayWidth[num18] && current.Height == this.displayHeight[num18])
+						if (current.Width == displayWidth[num18] && current.Height == displayHeight[num18])
 						{
 							flag = false;
 							break;
@@ -4189,9 +4189,9 @@ namespace Terraria
 					}
 					if (flag)
 					{
-						this.displayHeight[this.numDisplayModes] = current.Height;
-						this.displayWidth[this.numDisplayModes] = current.Width;
-						this.numDisplayModes++;
+						displayHeight[numDisplayModes] = current.Height;
+						displayWidth[numDisplayModes] = current.Width;
+						numDisplayModes++;
 					}
 				}
 			}
@@ -4204,12 +4204,18 @@ namespace Terraria
 			Main.fpsTimer.Start();
 			Main.updateTimer.Start();
 		}
+
+		private T LoadContent<T>(string fileName)
+		{
+			return default;
+		}
+
 		protected override void LoadContent()
 		{
 			try
 			{
-				Main.pixelShader = base.Content.Load<Effect>("pixelShader");
-				Main.tileShader = base.Content.Load<Effect>("tileShader");
+				Main.pixelShader = Content.Load<Effect>("pixelShader");
+				Main.tileShader = Content.Load<Effect>("tileShader");
 				Main.engine = new AudioEngine("Content" + Path.DirectorySeparatorChar + "TerrariaMusic.xgs");
 				Main.soundBank = new SoundBank(Main.engine, "Content" + Path.DirectorySeparatorChar + "Sound Bank.xsb");
 				Main.waveBank = new WaveBank(Main.engine, "Content" + Path.DirectorySeparatorChar + "Wave Bank.xwb");
@@ -4217,87 +4223,87 @@ namespace Terraria
 				{
 					Main.music[i] = Main.soundBank.GetCue("Music_" + i);
 				}
-				Main.soundMech[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Mech_0");
+				Main.soundMech[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Mech_0");
 				Main.soundInstanceMech[0] = Main.soundMech[0].CreateInstance();
-				Main.soundGrab = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Grab");
+				Main.soundGrab = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Grab");
 				Main.soundInstanceGrab = Main.soundGrab.CreateInstance();
-				Main.soundPixie = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Pixie");
+				Main.soundPixie = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Pixie");
 				Main.soundInstancePixie = Main.soundGrab.CreateInstance();
-				Main.soundDig[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Dig_0");
+				Main.soundDig[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Dig_0");
 				Main.soundInstanceDig[0] = Main.soundDig[0].CreateInstance();
-				Main.soundDig[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Dig_1");
+				Main.soundDig[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Dig_1");
 				Main.soundInstanceDig[1] = Main.soundDig[1].CreateInstance();
-				Main.soundDig[2] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Dig_2");
+				Main.soundDig[2] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Dig_2");
 				Main.soundInstanceDig[2] = Main.soundDig[2].CreateInstance();
-				Main.soundTink[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Tink_0");
+				Main.soundTink[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Tink_0");
 				Main.soundInstanceTink[0] = Main.soundTink[0].CreateInstance();
-				Main.soundTink[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Tink_1");
+				Main.soundTink[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Tink_1");
 				Main.soundInstanceTink[1] = Main.soundTink[1].CreateInstance();
-				Main.soundTink[2] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Tink_2");
+				Main.soundTink[2] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Tink_2");
 				Main.soundInstanceTink[2] = Main.soundTink[2].CreateInstance();
-				Main.soundPlayerHit[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Hit_0");
+				Main.soundPlayerHit[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Hit_0");
 				Main.soundInstancePlayerHit[0] = Main.soundPlayerHit[0].CreateInstance();
-				Main.soundPlayerHit[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Hit_1");
+				Main.soundPlayerHit[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Hit_1");
 				Main.soundInstancePlayerHit[1] = Main.soundPlayerHit[1].CreateInstance();
-				Main.soundPlayerHit[2] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Hit_2");
+				Main.soundPlayerHit[2] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Hit_2");
 				Main.soundInstancePlayerHit[2] = Main.soundPlayerHit[2].CreateInstance();
-				Main.soundFemaleHit[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Female_Hit_0");
+				Main.soundFemaleHit[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Female_Hit_0");
 				Main.soundInstanceFemaleHit[0] = Main.soundFemaleHit[0].CreateInstance();
-				Main.soundFemaleHit[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Female_Hit_1");
+				Main.soundFemaleHit[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Female_Hit_1");
 				Main.soundInstanceFemaleHit[1] = Main.soundFemaleHit[1].CreateInstance();
-				Main.soundFemaleHit[2] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Female_Hit_2");
+				Main.soundFemaleHit[2] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Female_Hit_2");
 				Main.soundInstanceFemaleHit[2] = Main.soundFemaleHit[2].CreateInstance();
-				Main.soundPlayerKilled = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Killed");
+				Main.soundPlayerKilled = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Player_Killed");
 				Main.soundInstancePlayerKilled = Main.soundPlayerKilled.CreateInstance();
-				Main.soundChat = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Chat");
+				Main.soundChat = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Chat");
 				Main.soundInstanceChat = Main.soundChat.CreateInstance();
-				Main.soundGrass = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Grass");
+				Main.soundGrass = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Grass");
 				Main.soundInstanceGrass = Main.soundGrass.CreateInstance();
-				Main.soundDoorOpen = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Door_Opened");
+				Main.soundDoorOpen = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Door_Opened");
 				Main.soundInstanceDoorOpen = Main.soundDoorOpen.CreateInstance();
-				Main.soundDoorClosed = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Door_Closed");
+				Main.soundDoorClosed = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Door_Closed");
 				Main.soundInstanceDoorClosed = Main.soundDoorClosed.CreateInstance();
-				Main.soundMenuTick = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Menu_Tick");
+				Main.soundMenuTick = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Menu_Tick");
 				Main.soundInstanceMenuTick = Main.soundMenuTick.CreateInstance();
-				Main.soundMenuOpen = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Menu_Open");
+				Main.soundMenuOpen = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Menu_Open");
 				Main.soundInstanceMenuOpen = Main.soundMenuOpen.CreateInstance();
-				Main.soundMenuClose = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Menu_Close");
+				Main.soundMenuClose = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Menu_Close");
 				Main.soundInstanceMenuClose = Main.soundMenuClose.CreateInstance();
-				Main.soundShatter = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Shatter");
+				Main.soundShatter = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Shatter");
 				Main.soundInstanceShatter = Main.soundShatter.CreateInstance();
-				Main.soundZombie[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_0");
+				Main.soundZombie[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_0");
 				Main.soundInstanceZombie[0] = Main.soundZombie[0].CreateInstance();
-				Main.soundZombie[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_1");
+				Main.soundZombie[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_1");
 				Main.soundInstanceZombie[1] = Main.soundZombie[1].CreateInstance();
-				Main.soundZombie[2] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_2");
+				Main.soundZombie[2] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_2");
 				Main.soundInstanceZombie[2] = Main.soundZombie[2].CreateInstance();
-				Main.soundZombie[3] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_3");
+				Main.soundZombie[3] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_3");
 				Main.soundInstanceZombie[3] = Main.soundZombie[3].CreateInstance();
-				Main.soundZombie[4] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_4");
+				Main.soundZombie[4] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Zombie_4");
 				Main.soundInstanceZombie[4] = Main.soundZombie[4].CreateInstance();
-				Main.soundRoar[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Roar_0");
+				Main.soundRoar[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Roar_0");
 				Main.soundInstanceRoar[0] = Main.soundRoar[0].CreateInstance();
-				Main.soundRoar[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Roar_1");
+				Main.soundRoar[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Roar_1");
 				Main.soundInstanceRoar[1] = Main.soundRoar[1].CreateInstance();
-				Main.soundSplash[0] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Splash_0");
+				Main.soundSplash[0] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Splash_0");
 				Main.soundInstanceSplash[0] = Main.soundRoar[0].CreateInstance();
-				Main.soundSplash[1] = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Splash_1");
+				Main.soundSplash[1] = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Splash_1");
 				Main.soundInstanceSplash[1] = Main.soundSplash[1].CreateInstance();
-				Main.soundDoubleJump = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Double_Jump");
+				Main.soundDoubleJump = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Double_Jump");
 				Main.soundInstanceDoubleJump = Main.soundRoar[0].CreateInstance();
-				Main.soundRun = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Run");
+				Main.soundRun = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Run");
 				Main.soundInstanceRun = Main.soundRun.CreateInstance();
-				Main.soundCoins = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Coins");
+				Main.soundCoins = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Coins");
 				Main.soundInstanceCoins = Main.soundCoins.CreateInstance();
-				Main.soundUnlock = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Unlock");
+				Main.soundUnlock = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Unlock");
 				Main.soundInstanceUnlock = Main.soundUnlock.CreateInstance();
-				Main.soundMaxMana = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "MaxMana");
+				Main.soundMaxMana = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "MaxMana");
 				Main.soundInstanceMaxMana = Main.soundMaxMana.CreateInstance();
-				Main.soundDrown = base.Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Drown");
+				Main.soundDrown = Content.Load<SoundEffect>("Sounds" + Path.DirectorySeparatorChar + "Drown");
 				Main.soundInstanceDrown = Main.soundDrown.CreateInstance();
 				for (int j = 1; j < 52; j++)
 				{
-					Main.soundItem[j] = base.Content.Load<SoundEffect>(string.Concat(new object[]
+					Main.soundItem[j] = Content.Load<SoundEffect>(string.Concat(new object[]
 					{
 						"Sounds",
 						Path.DirectorySeparatorChar,
@@ -4308,7 +4314,7 @@ namespace Terraria
 				}
 				for (int k = 1; k < 14; k++)
 				{
-					Main.soundNPCHit[k] = base.Content.Load<SoundEffect>(string.Concat(new object[]
+					Main.soundNPCHit[k] = Content.Load<SoundEffect>(string.Concat(new object[]
 					{
 						"Sounds",
 						Path.DirectorySeparatorChar,
@@ -4319,7 +4325,7 @@ namespace Terraria
 				}
 				for (int l = 1; l < 20; l++)
 				{
-					Main.soundNPCKilled[l] = base.Content.Load<SoundEffect>(string.Concat(new object[]
+					Main.soundNPCKilled[l] = Content.Load<SoundEffect>(string.Concat(new object[]
 					{
 						"Sounds",
 						Path.DirectorySeparatorChar,
@@ -4334,50 +4340,50 @@ namespace Terraria
 				Main.musicVolume = 0f;
 				Main.soundVolume = 0f;
 			}
-			this.iceBarrierTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "IceBarrier");
-			Main.frozenTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Frozen");
-			Main.craftButtonTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "CraftButton");
-			Main.craftUpButtonTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "RecUp");
-			Main.craftDownButtonTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "RecDown");
-			Main.pulleyTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "PlayerPulley");
-			Main.reforgeTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Reforge");
-			Main.timerTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Timer");
-			Main.wofTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "WallOfFlesh");
-			Main.wallOutlineTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wall_Outline");
-			Main.fadeTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "fade-out");
-			Main.ghostTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Ghost");
-			Main.evilCactusTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Evil_Cactus");
-			Main.goodCactusTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Good_Cactus");
-			Main.crimsonCactusTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Crimson_Cactus");
-			Main.wraithEyeTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wraith_Eyes");
-			Main.reaperEyeTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Reaper_Eyes");
-			Main.MusicBoxTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Music_Box");
-			this.mapTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Map");
-			this.mapBG1Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG1");
-			this.mapBG2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG2");
-			this.mapBG3Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG3");
-			this.mapBG4Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG4");
-			this.mapBG5Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG5");
-			this.mapBG6Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG6");
-			this.mapBG7Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG7");
-			this.mapBG8Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG8");
-			this.mapBG9Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG9");
-			this.mapBG10Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG10");
-			this.mapBG11Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG11");
-			this.mapBG12Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG12");
-			this.hueTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Hue");
-			this.colorSliderTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "ColorSlider");
-			this.colorBarTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "ColorBar");
-			this.colorBlipTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "ColorBlip");
-			Main.rainTexture[0] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Rain_0");
-			Main.rainTexture[1] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Rain_1");
-			Main.rainTexture[2] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Rain_2");
-			Main.magicPixel = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MagicPixel");
-			Main.miniMapFrameTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MiniMapFrame");
-			Main.miniMapFrame2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MiniMapFrame2");
+			iceBarrierTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "IceBarrier");
+			Main.frozenTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Frozen");
+			Main.craftButtonTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "CraftButton");
+			Main.craftUpButtonTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "RecUp");
+			Main.craftDownButtonTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "RecDown");
+			Main.pulleyTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "PlayerPulley");
+			Main.reforgeTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Reforge");
+			Main.timerTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Timer");
+			Main.wofTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "WallOfFlesh");
+			Main.wallOutlineTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wall_Outline");
+			Main.fadeTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "fade-out");
+			Main.ghostTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Ghost");
+			Main.evilCactusTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Evil_Cactus");
+			Main.goodCactusTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Good_Cactus");
+			Main.crimsonCactusTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Crimson_Cactus");
+			Main.wraithEyeTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wraith_Eyes");
+			Main.reaperEyeTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Reaper_Eyes");
+			Main.MusicBoxTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Music_Box");
+			mapTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Map");
+			mapBG1Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG1");
+			mapBG2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG2");
+			mapBG3Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG3");
+			mapBG4Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG4");
+			mapBG5Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG5");
+			mapBG6Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG6");
+			mapBG7Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG7");
+			mapBG8Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG8");
+			mapBG9Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG9");
+			mapBG10Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG10");
+			mapBG11Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG11");
+			mapBG12Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MapBG12");
+			hueTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Hue");
+			colorSliderTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "ColorSlider");
+			colorBarTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "ColorBar");
+			colorBlipTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "ColorBlip");
+			Main.rainTexture[0] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Rain_0");
+			Main.rainTexture[1] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Rain_1");
+			Main.rainTexture[2] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Rain_2");
+			Main.magicPixel = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MagicPixel");
+			Main.miniMapFrameTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MiniMapFrame");
+			Main.miniMapFrame2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "MiniMapFrame2");
 			for (int m = 0; m < Main.FlameTexture.Length; m++)
 			{
-				Main.FlameTexture[m] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.FlameTexture[m] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4387,7 +4393,7 @@ namespace Terraria
 			}
 			for (int n = 0; n < 3; n++)
 			{
-				Main.miniMapButtonTexture[n] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.miniMapButtonTexture[n] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4397,7 +4403,7 @@ namespace Terraria
 			}
 			for (int num = 0; num < 8; num++)
 			{
-				this.mapIconTexture[num] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				mapIconTexture[num] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4405,27 +4411,27 @@ namespace Terraria
 					num
 				}));
 			}
-			Main.destTexture[0] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dest1");
-			Main.destTexture[1] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dest2");
-			Main.destTexture[2] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dest3");
-			Main.actuatorTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Actuator");
-			Main.wireTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wires");
-			Main.wire2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wires2");
-			Main.wire3Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wires3");
-			Main.flyingCarpetTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "FlyingCarpet");
-			Main.hbTexture1 = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "HealthBar1");
-			Main.hbTexture2 = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "HealthBar2");
-			Main.loTexture = base.Content.Load<Texture2D>(string.Concat(new object[]
+			Main.destTexture[0] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dest1");
+			Main.destTexture[1] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dest2");
+			Main.destTexture[2] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dest3");
+			Main.actuatorTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Actuator");
+			Main.wireTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wires");
+			Main.wire2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wires2");
+			Main.wire3Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Wires3");
+			Main.flyingCarpetTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "FlyingCarpet");
+			Main.hbTexture1 = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "HealthBar1");
+			Main.hbTexture2 = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "HealthBar2");
+			Main.loTexture = Content.Load<Texture2D>(string.Concat(new object[]
 			{
 				"Images",
 				Path.DirectorySeparatorChar,
 				"logo_",
 				Main.rand.Next(1, 9)
 			}));
-			this.spriteBatch = new SpriteBatch(base.GraphicsDevice);
+			spriteBatch = new SpriteBatch(GraphicsDevice);
 			for (int num2 = 1; num2 < 2; num2++)
 			{
-				Main.bannerTexture[num2] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.bannerTexture[num2] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4435,7 +4441,7 @@ namespace Terraria
 			}
 			for (int num3 = 0; num3 < Main.npcHeadTexture.Length; num3++)
 			{
-				Main.npcHeadTexture[num3] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.npcHeadTexture[num3] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4445,7 +4451,7 @@ namespace Terraria
 			}
 			for (int num4 = 1; num4 < Main.BackPackTexture.Length; num4++)
 			{
-				Main.BackPackTexture[num4] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.BackPackTexture[num4] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4455,7 +4461,7 @@ namespace Terraria
 			}
 			for (int num5 = 1; num5 < 81; num5++)
 			{
-				Main.buffTexture[num5] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.buffTexture[num5] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4463,11 +4469,11 @@ namespace Terraria
 					num5
 				}));
 			}
-			this.LoadBackground(0);
-			this.LoadBackground(49);
+			LoadBackground(0);
+			LoadBackground(49);
 			for (int num6 = 0; num6 < 1725; num6++)
 			{
-				Main.itemTexture[num6] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.itemTexture[num6] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4477,7 +4483,7 @@ namespace Terraria
 			}
 			for (int num7 = 0; num7 < 6; num7++)
 			{
-				Main.gemTexture[num7] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.gemTexture[num7] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4493,7 +4499,7 @@ namespace Terraria
 			}
 			for (int num9 = 0; num9 < 22; num9++)
 			{
-				Main.cloudTexture[num9] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.cloudTexture[num9] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4503,7 +4509,7 @@ namespace Terraria
 			}
 			for (int num10 = 0; num10 < 5; num10++)
 			{
-				Main.starTexture[num10] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.starTexture[num10] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4513,14 +4519,14 @@ namespace Terraria
 			}
 			for (int num11 = 0; num11 < 12; num11++)
 			{
-				Main.liquidTexture[num11] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.liquidTexture[num11] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
 					"Liquid_",
 					num11
 				}));
-				Main.waterfallTexture[num11] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.waterfallTexture[num11] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4528,60 +4534,60 @@ namespace Terraria
 					num11
 				}));
 			}
-			Main.waterfallTexture[12] = base.Content.Load<Texture2D>(string.Concat(new object[]
+			Main.waterfallTexture[12] = Content.Load<Texture2D>(string.Concat(new object[]
 			{
 				"Images",
 				Path.DirectorySeparatorChar,
 				"Waterfall_",
 				12
 			}));
-			Main.waterfallTexture[13] = base.Content.Load<Texture2D>(string.Concat(new object[]
+			Main.waterfallTexture[13] = Content.Load<Texture2D>(string.Concat(new object[]
 			{
 				"Images",
 				Path.DirectorySeparatorChar,
 				"Waterfall_",
 				13
 			}));
-			Main.waterfallTexture[14] = base.Content.Load<Texture2D>(string.Concat(new object[]
+			Main.waterfallTexture[14] = Content.Load<Texture2D>(string.Concat(new object[]
 			{
 				"Images",
 				Path.DirectorySeparatorChar,
 				"Waterfall_",
 				14
 			}));
-			Main.npcToggleTexture[0] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "House_1");
-			Main.npcToggleTexture[1] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "House_2");
-			Main.HBLockTexture[0] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Lock_0");
-			Main.HBLockTexture[1] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Lock_1");
-			Main.gridTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Grid");
-			Main.trashTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Trash");
-			Main.cdTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "CoolDown");
-			Main.logoTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Logo");
-			Main.logo2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Logo2");
-			Main.dustTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dust");
-			Main.sunTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Sun");
-			Main.sun2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Sun2");
-			Main.sun3Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Sun3");
-			Main.blackTileTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Black_Tile");
-			Main.heartTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Heart");
-			Main.heart2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Heart2");
-			Main.bubbleTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Bubble");
-			Main.flameTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Flame");
-			Main.manaTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Mana");
-			Main.cursorTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Cursor");
-			Main.ninjaTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Ninja");
-			Main.antLionTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "AntlionBody");
-			Main.spikeBaseTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Spike_Base");
-			Main.woodTexture[0] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_0");
-			Main.woodTexture[1] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_1");
-			Main.woodTexture[2] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_2");
-			Main.woodTexture[3] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_3");
-			Main.woodTexture[4] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_4");
-			Main.woodTexture[5] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_5");
-			Main.woodTexture[6] = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_6");
+			Main.npcToggleTexture[0] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "House_1");
+			Main.npcToggleTexture[1] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "House_2");
+			Main.HBLockTexture[0] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Lock_0");
+			Main.HBLockTexture[1] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Lock_1");
+			Main.gridTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Grid");
+			Main.trashTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Trash");
+			Main.cdTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "CoolDown");
+			Main.logoTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Logo");
+			Main.logo2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Logo2");
+			Main.dustTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Dust");
+			Main.sunTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Sun");
+			Main.sun2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Sun2");
+			Main.sun3Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Sun3");
+			Main.blackTileTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Black_Tile");
+			Main.heartTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Heart");
+			Main.heart2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Heart2");
+			Main.bubbleTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Bubble");
+			Main.flameTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Flame");
+			Main.manaTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Mana");
+			Main.cursorTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Cursor");
+			Main.ninjaTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Ninja");
+			Main.antLionTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "AntlionBody");
+			Main.spikeBaseTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Spike_Base");
+			Main.woodTexture[0] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_0");
+			Main.woodTexture[1] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_1");
+			Main.woodTexture[2] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_2");
+			Main.woodTexture[3] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_3");
+			Main.woodTexture[4] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_4");
+			Main.woodTexture[5] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_5");
+			Main.woodTexture[6] = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Tiles_5_6");
 			for (int num12 = 0; num12 < Main.moonTexture.Length; num12++)
 			{
-				Main.moonTexture[num12] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.moonTexture[num12] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4591,7 +4597,7 @@ namespace Terraria
 			}
 			for (int num13 = 0; num13 < Main.treeTopTexture.Length; num13++)
 			{
-				Main.treeTopTexture[num13] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.treeTopTexture[num13] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4601,7 +4607,7 @@ namespace Terraria
 			}
 			for (int num14 = 0; num14 < Main.treeBranchTexture.Length; num14++)
 			{
-				Main.treeBranchTexture[num14] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.treeBranchTexture[num14] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4609,83 +4615,83 @@ namespace Terraria
 					num14
 				}));
 			}
-			Main.shroomCapTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Shroom_Tops");
-			Main.inventoryBackTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back");
-			Main.inventoryBack2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back2");
-			Main.inventoryBack3Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back3");
-			Main.inventoryBack4Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back4");
-			Main.inventoryBack5Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back5");
-			Main.inventoryBack6Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back6");
-			Main.inventoryBack7Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back7");
-			Main.inventoryBack8Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back8");
-			Main.inventoryBack9Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back9");
-			Main.inventoryBack10Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back10");
-			Main.inventoryBack11Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back11");
-			Main.inventoryBack12Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back12");
-			Main.textBackTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Text_Back");
-			Main.chatTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chat");
-			Main.chat2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chat2");
-			Main.chatBackTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chat_Back");
-			Main.teamTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Team");
-			Main.skinBodyTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Skin_Body");
-			Main.skinLegsTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Skin_Legs");
-			Main.playerEyeWhitesTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Eye_Whites");
-			Main.playerEyesTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Eyes");
-			Main.playerHandsTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Hands");
-			Main.playerHands2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Hands2");
-			Main.playerHeadTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Head");
-			Main.playerPantsTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Pants");
-			Main.playerShirtTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Shirt");
-			Main.playerShoesTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Shoes");
-			Main.playerUnderShirtTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Undershirt");
-			Main.playerUnderShirt2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Undershirt2");
-			Main.femalePantsTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Pants");
-			Main.femaleShirtTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Shirt");
-			Main.femaleShoesTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Shoes");
-			Main.femaleUnderShirtTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Undershirt");
-			Main.femaleUnderShirt2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Undershirt2");
-			Main.femaleShirt2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Shirt2");
-			Main.chaosTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chaos");
-			Main.EyeLaserTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Eye_Laser");
-			Main.BoneEyesTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Bone_eyes");
-			Main.BoneLaserTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Bone_Laser");
-			Main.lightDiscTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Light_Disc");
-			Main.confuseTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Confuse");
-			Main.probeTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Probe");
-			Main.sunOrbTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "SunOrb");
-			Main.sunAltarTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "SunAltar");
-			Main.chainTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain");
-			Main.chain2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain2");
-			Main.chain3Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain3");
-			Main.chain4Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain4");
-			Main.chain5Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain5");
-			Main.chain6Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain6");
-			Main.chain7Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain7");
-			Main.chain8Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain8");
-			Main.chain9Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain9");
-			Main.chain10Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain10");
-			Main.chain11Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain11");
-			Main.chain12Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain12");
-			Main.chain13Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain13");
-			Main.chain14Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain14");
-			Main.chain15Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain15");
-			Main.chain16Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain16");
-			Main.chain17Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain17");
-			Main.chain18Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain18");
-			Main.chain19Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain19");
-			Main.chain20Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain20");
-			Main.chain21Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain21");
-			Main.chain22Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain22");
-			Main.chain23Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain23");
-			Main.chain24Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain24");
-			Main.chain25Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain25");
-			Main.chain26Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain26");
-			Main.chain27Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain27");
-			Main.boneArmTexture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Arm_Bone");
-			Main.boneArm2Texture = base.Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Arm_Bone_2");
+			Main.shroomCapTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Shroom_Tops");
+			Main.inventoryBackTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back");
+			Main.inventoryBack2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back2");
+			Main.inventoryBack3Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back3");
+			Main.inventoryBack4Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back4");
+			Main.inventoryBack5Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back5");
+			Main.inventoryBack6Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back6");
+			Main.inventoryBack7Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back7");
+			Main.inventoryBack8Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back8");
+			Main.inventoryBack9Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back9");
+			Main.inventoryBack10Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back10");
+			Main.inventoryBack11Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back11");
+			Main.inventoryBack12Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Inventory_Back12");
+			Main.textBackTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Text_Back");
+			Main.chatTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chat");
+			Main.chat2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chat2");
+			Main.chatBackTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chat_Back");
+			Main.teamTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Team");
+			Main.skinBodyTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Skin_Body");
+			Main.skinLegsTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Skin_Legs");
+			Main.playerEyeWhitesTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Eye_Whites");
+			Main.playerEyesTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Eyes");
+			Main.playerHandsTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Hands");
+			Main.playerHands2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Hands2");
+			Main.playerHeadTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Head");
+			Main.playerPantsTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Pants");
+			Main.playerShirtTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Shirt");
+			Main.playerShoesTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Shoes");
+			Main.playerUnderShirtTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Undershirt");
+			Main.playerUnderShirt2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Player_Undershirt2");
+			Main.femalePantsTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Pants");
+			Main.femaleShirtTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Shirt");
+			Main.femaleShoesTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Shoes");
+			Main.femaleUnderShirtTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Undershirt");
+			Main.femaleUnderShirt2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Undershirt2");
+			Main.femaleShirt2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Female_Shirt2");
+			Main.chaosTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chaos");
+			Main.EyeLaserTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Eye_Laser");
+			Main.BoneEyesTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Bone_eyes");
+			Main.BoneLaserTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Bone_Laser");
+			Main.lightDiscTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Light_Disc");
+			Main.confuseTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Confuse");
+			Main.probeTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Probe");
+			Main.sunOrbTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "SunOrb");
+			Main.sunAltarTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "SunAltar");
+			Main.chainTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain");
+			Main.chain2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain2");
+			Main.chain3Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain3");
+			Main.chain4Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain4");
+			Main.chain5Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain5");
+			Main.chain6Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain6");
+			Main.chain7Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain7");
+			Main.chain8Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain8");
+			Main.chain9Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain9");
+			Main.chain10Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain10");
+			Main.chain11Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain11");
+			Main.chain12Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain12");
+			Main.chain13Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain13");
+			Main.chain14Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain14");
+			Main.chain15Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain15");
+			Main.chain16Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain16");
+			Main.chain17Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain17");
+			Main.chain18Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain18");
+			Main.chain19Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain19");
+			Main.chain20Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain20");
+			Main.chain21Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain21");
+			Main.chain22Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain22");
+			Main.chain23Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain23");
+			Main.chain24Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain24");
+			Main.chain25Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain25");
+			Main.chain26Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain26");
+			Main.chain27Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Chain27");
+			Main.boneArmTexture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Arm_Bone");
+			Main.boneArm2Texture = Content.Load<Texture2D>("Images" + Path.DirectorySeparatorChar + "Arm_Bone_2");
 			for (int num15 = 1; num15 < Main.gemChainTexture.Length; num15++)
 			{
-				Main.gemChainTexture[num15] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.gemChainTexture[num15] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4695,7 +4701,7 @@ namespace Terraria
 			}
 			for (int num16 = 1; num16 < Main.golemTexture.Length; num16++)
 			{
-				Main.golemTexture[num16] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.golemTexture[num16] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -4703,11 +4709,11 @@ namespace Terraria
 					num16
 				}));
 			}
-			Main.fontItemStack = base.Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Item_Stack");
-			Main.fontMouseText = base.Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Mouse_Text");
-			Main.fontDeathText = base.Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Death_Text");
-			Main.fontCombatText[0] = base.Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Combat_Text");
-			Main.fontCombatText[1] = base.Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Combat_Crit");
+			Main.fontItemStack = Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Item_Stack");
+			Main.fontMouseText = Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Mouse_Text");
+			Main.fontDeathText = Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Death_Text");
+			Main.fontCombatText[0] = Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Combat_Text");
+			Main.fontCombatText[1] = Content.Load<SpriteFont>("Fonts" + Path.DirectorySeparatorChar + "Combat_Crit");
 		}
 		protected override void UnloadContent()
 		{
@@ -4724,7 +4730,7 @@ namespace Terraria
 				{
 					if (Main.curMusic > 0)
 					{
-						if (!base.IsActive)
+						if (!IsActive)
 						{
 							if (!Main.music[Main.curMusic].IsPaused && Main.music[Main.curMusic].IsPlaying)
 							{
@@ -4829,7 +4835,7 @@ namespace Terraria
 					int num2 = (int)((Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16f);
 					if (Main.musicVolume == 0f)
 					{
-						this.newMusic = 0;
+						newMusic = 0;
 					}
 					else
 					{
@@ -4837,11 +4843,11 @@ namespace Terraria
 						{
 							if (Main.netMode != 2)
 							{
-								this.newMusic = 6;
+								newMusic = 6;
 							}
 							else
 							{
-								this.newMusic = 0;
+								newMusic = 0;
 							}
 						}
 						else
@@ -4851,67 +4857,67 @@ namespace Terraria
 							float num4 = (float)((double)((Main.screenPosition.Y + (float)(Main.screenHeight / 2)) / 16f - (65f + 10f * num3)) / (Main.worldSurface / 5.0));
 							if (flag6)
 							{
-								this.newMusic = 24;
+								newMusic = 24;
 							}
 							else
 							{
 								if (flag2)
 								{
-									this.newMusic = 12;
+									newMusic = 12;
 								}
 								else
 								{
 									if (flag)
 									{
-										this.newMusic = 5;
+										newMusic = 5;
 									}
 									else
 									{
 										if (flag3)
 										{
-											this.newMusic = 13;
+											newMusic = 13;
 										}
 										else
 										{
 											if (flag4)
 											{
-												this.newMusic = 17;
+												newMusic = 17;
 											}
 											else
 											{
 												if (flag5)
 												{
-													this.newMusic = 25;
+													newMusic = 25;
 												}
 												else
 												{
 													if (Main.player[Main.myPlayer].position.Y > (float)((Main.maxTilesY - 200) * 16))
 													{
-														this.newMusic = 2;
+														newMusic = 2;
 													}
 													else
 													{
 														if (Main.eclipse && (double)Main.player[Main.myPlayer].position.Y < Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2))
 														{
-															this.newMusic = 27;
+															newMusic = 27;
 														}
 														else
 														{
 															if (num4 < 1f)
 															{
-																this.newMusic = 15;
+																newMusic = 15;
 															}
 															else
 															{
 																if (Main.tile[(int)(Main.player[Main.myPlayer].Center().X / 16f), (int)(Main.player[Main.myPlayer].Center().Y / 16f)].wall == 87)
 																{
-																	this.newMusic = 26;
+																	newMusic = 26;
 																}
 																else
 																{
 																	if ((Main.bgStyle == 9 && (double)Main.player[Main.myPlayer].position.Y < Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2)) || Main.ugBack == 2)
 																	{
-																		this.newMusic = 29;
+																		newMusic = 29;
 																	}
 																	else
 																	{
@@ -4919,11 +4925,11 @@ namespace Terraria
 																		{
 																			if ((double)Main.player[Main.myPlayer].position.Y > Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2))
 																			{
-																				this.newMusic = 10;
+																				newMusic = 10;
 																			}
 																			else
 																			{
-																				this.newMusic = 8;
+																				newMusic = 8;
 																			}
 																		}
 																		else
@@ -4932,30 +4938,30 @@ namespace Terraria
 																			{
 																				if ((double)Main.player[Main.myPlayer].position.Y > Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2))
 																				{
-																					this.newMusic = 16;
+																					newMusic = 16;
 																				}
 																				else
 																				{
-																					this.newMusic = 16;
+																					newMusic = 16;
 																				}
 																			}
 																			else
 																			{
 																				if (Main.player[Main.myPlayer].zoneDungeon)
 																				{
-																					this.newMusic = 23;
+																					newMusic = 23;
 																				}
 																				else
 																				{
 																					if (Main.player[Main.myPlayer].zoneMeteor)
 																					{
-																						this.newMusic = 2;
+																						newMusic = 2;
 																					}
 																					else
 																					{
 																						if (Main.player[Main.myPlayer].zoneJungle)
 																						{
-																							this.newMusic = 7;
+																							newMusic = 7;
 																						}
 																						else
 																						{
@@ -4963,11 +4969,11 @@ namespace Terraria
 																							{
 																								if ((double)Main.player[Main.myPlayer].position.Y > Main.worldSurface * 16.0 + (double)(Main.screenHeight / 2))
 																								{
-																									this.newMusic = 20;
+																									newMusic = 20;
 																								}
 																								else
 																								{
-																									this.newMusic = 14;
+																									newMusic = 14;
 																								}
 																							}
 																							else
@@ -4976,11 +4982,11 @@ namespace Terraria
 																								{
 																									if (Main.player[Main.myPlayer].zoneHoly)
 																									{
-																										this.newMusic = 11;
+																										newMusic = 11;
 																									}
 																									else
 																									{
-																										this.newMusic = 4;
+																										newMusic = 4;
 																									}
 																								}
 																								else
@@ -4989,24 +4995,24 @@ namespace Terraria
 																									{
 																										if (Main.cloudAlpha > 0f && !Main.gameMenu)
 																										{
-																											this.newMusic = 19;
+																											newMusic = 19;
 																										}
 																										else
 																										{
-																											this.newMusic = 9;
+																											newMusic = 9;
 																										}
 																									}
 																									else
 																									{
 																										if ((double)(Main.screenPosition.Y / 16f) < Main.worldSurface + 10.0 && (num2 < 380 || num2 > Main.maxTilesX - 380))
 																										{
-																											this.newMusic = 22;
+																											newMusic = 22;
 																										}
 																										else
 																										{
 																											if (Main.sandTiles > 1000)
 																											{
-																												this.newMusic = 21;
+																												newMusic = 21;
 																											}
 																											else
 																											{
@@ -5014,7 +5020,7 @@ namespace Terraria
 																												{
 																													if (Main.cloudAlpha > 0f && !Main.gameMenu)
 																													{
-																														this.newMusic = 19;
+																														newMusic = 19;
 																													}
 																													else
 																													{
@@ -5037,7 +5043,7 @@ namespace Terraria
 																																}
 																															}
 																														}
-																														this.newMusic = Main.dayMusic;
+																														newMusic = Main.dayMusic;
 																													}
 																												}
 																												else
@@ -5046,17 +5052,17 @@ namespace Terraria
 																													{
 																														if (Main.bloodMoon)
 																														{
-																															this.newMusic = 2;
+																															newMusic = 2;
 																														}
 																														else
 																														{
 																															if (Main.cloudAlpha > 0f && !Main.gameMenu)
 																															{
-																																this.newMusic = 19;
+																																newMusic = 19;
 																															}
 																															else
 																															{
-																																this.newMusic = 3;
+																																newMusic = 3;
 																															}
 																														}
 																													}
@@ -5097,118 +5103,118 @@ namespace Terraria
 					{
 						if (Main.musicBox == 0)
 						{
-							this.newMusic = 1;
+							newMusic = 1;
 						}
 						if (Main.musicBox == 1)
 						{
-							this.newMusic = 2;
+							newMusic = 2;
 						}
 						if (Main.musicBox == 2)
 						{
-							this.newMusic = 3;
+							newMusic = 3;
 						}
 						if (Main.musicBox == 4)
 						{
-							this.newMusic = 4;
+							newMusic = 4;
 						}
 						if (Main.musicBox == 5)
 						{
-							this.newMusic = 5;
+							newMusic = 5;
 						}
 						if (Main.musicBox == 3)
 						{
-							this.newMusic = 6;
+							newMusic = 6;
 						}
 						if (Main.musicBox == 6)
 						{
-							this.newMusic = 7;
+							newMusic = 7;
 						}
 						if (Main.musicBox == 7)
 						{
-							this.newMusic = 8;
+							newMusic = 8;
 						}
 						if (Main.musicBox == 9)
 						{
-							this.newMusic = 9;
+							newMusic = 9;
 						}
 						if (Main.musicBox == 8)
 						{
-							this.newMusic = 10;
+							newMusic = 10;
 						}
 						if (Main.musicBox == 11)
 						{
-							this.newMusic = 11;
+							newMusic = 11;
 						}
 						if (Main.musicBox == 10)
 						{
-							this.newMusic = 12;
+							newMusic = 12;
 						}
 						if (Main.musicBox == 12)
 						{
-							this.newMusic = 13;
+							newMusic = 13;
 						}
 						if (Main.musicBox == 13)
 						{
-							this.newMusic = 14;
+							newMusic = 14;
 						}
 						if (Main.musicBox == 14)
 						{
-							this.newMusic = 15;
+							newMusic = 15;
 						}
 						if (Main.musicBox == 15)
 						{
-							this.newMusic = 16;
+							newMusic = 16;
 						}
 						if (Main.musicBox == 16)
 						{
-							this.newMusic = 17;
+							newMusic = 17;
 						}
 						if (Main.musicBox == 17)
 						{
-							this.newMusic = 18;
+							newMusic = 18;
 						}
 						if (Main.musicBox == 18)
 						{
-							this.newMusic = 19;
+							newMusic = 19;
 						}
 						if (Main.musicBox == 19)
 						{
-							this.newMusic = 20;
+							newMusic = 20;
 						}
 						if (Main.musicBox == 20)
 						{
-							this.newMusic = 21;
+							newMusic = 21;
 						}
 						if (Main.musicBox == 21)
 						{
-							this.newMusic = 22;
+							newMusic = 22;
 						}
 						if (Main.musicBox == 22)
 						{
-							this.newMusic = 23;
+							newMusic = 23;
 						}
 						if (Main.musicBox == 23)
 						{
-							this.newMusic = 24;
+							newMusic = 24;
 						}
 						if (Main.musicBox == 24)
 						{
-							this.newMusic = 25;
+							newMusic = 25;
 						}
 						if (Main.musicBox == 25)
 						{
-							this.newMusic = 26;
+							newMusic = 26;
 						}
 						if (Main.musicBox == 26)
 						{
-							this.newMusic = 27;
+							newMusic = 27;
 						}
 						if (Main.musicBox == 27)
 						{
-							this.newMusic = 29;
+							newMusic = 29;
 						}
 					}
-					Main.curMusic = this.newMusic;
+					Main.curMusic = newMusic;
 					for (int j = 1; j < 30; j++)
 					{
 						if (j == 28)
@@ -5515,15 +5521,15 @@ namespace Terraria
 			{
 				Main.cloudAlpha = Main.maxRaining;
 			}
-			if (base.IsActive && Main.cloudAlpha > 0f)
+			if (IsActive && Main.cloudAlpha > 0f)
 			{
 				Rain.MakeRain();
 			}
 			if (Main.netMode != 1)
 			{
-				this.updateCloudLayer();
+				updateCloudLayer();
 			}
-			this.UpdateWeather();
+			UpdateWeather();
 			if (Main.netMode != 2)
 			{
 				if (Main.ignoreErrors)
@@ -5544,7 +5550,7 @@ namespace Terraria
 			if (Main.chTitle)
 			{
 				Main.chTitle = false;
-				this.SetTitle();
+				SetTitle();
 			}
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
@@ -5591,28 +5597,28 @@ namespace Terraria
 			{
 				if (Main.superFast)
 				{
-					base.IsFixedTimeStep = false;
-					this.graphics.SynchronizeWithVerticalRetrace = false;
+					IsFixedTimeStep = false;
+					graphics.SynchronizeWithVerticalRetrace = false;
 				}
 				else
 				{
 					if (Main.fixedTiming)
 					{
-						if (base.IsActive)
+						if (IsActive)
 						{
-							base.IsFixedTimeStep = false;
+							IsFixedTimeStep = false;
 						}
 						else
 						{
-							base.IsFixedTimeStep = true;
+							IsFixedTimeStep = true;
 						}
 					}
 					else
 					{
-						base.IsFixedTimeStep = true;
-						this.graphics.SynchronizeWithVerticalRetrace = true;
+						IsFixedTimeStep = true;
+						graphics.SynchronizeWithVerticalRetrace = true;
 					}
-					this.graphics.SynchronizeWithVerticalRetrace = true;
+					graphics.SynchronizeWithVerticalRetrace = true;
 				}
 				if (Main.treeMntBG[1] == 94 || (Main.treeMntBG[1] >= 114 && Main.treeMntBG[1] <= 116))
 				{
@@ -5706,7 +5712,7 @@ namespace Terraria
 						}
 					}
 				}
-				this.UpdateMusic();
+				UpdateMusic();
 				if (Main.showSplash)
 				{
 					return;
@@ -5774,7 +5780,7 @@ namespace Terraria
 					{
 						Main.gfxQuality = 1f;
 					}
-					if (Main.maxQ && base.IsActive)
+					if (Main.maxQ && IsActive)
 					{
 						Main.gfxQuality = 1f;
 						Main.maxQ = false;
@@ -5846,15 +5852,15 @@ namespace Terraria
 				Liquid.cycles = (int)(17f - 10f * Main.gfxQuality);
 				if ((double)Main.gfxQuality < 0.5)
 				{
-					this.graphics.SynchronizeWithVerticalRetrace = false;
+					graphics.SynchronizeWithVerticalRetrace = false;
 				}
 				else
 				{
-					this.graphics.SynchronizeWithVerticalRetrace = true;
+					graphics.SynchronizeWithVerticalRetrace = true;
 				}
 				if (Main.superFast)
 				{
-					this.graphics.SynchronizeWithVerticalRetrace = false;
+					graphics.SynchronizeWithVerticalRetrace = false;
 					Main.drawSkip = false;
 				}
 				if ((double)Main.gfxQuality < 0.2)
@@ -5891,7 +5897,7 @@ namespace Terraria
 					Liquid.maxLiquid = Liquid.resLiquid;
 					Liquid.cycles = 1;
 				}
-				if (!base.IsActive)
+				if (!IsActive)
 				{
 					Main.hasFocus = false;
 				}
@@ -5905,9 +5911,9 @@ namespace Terraria
 					WorldGen.tempRainTime = Main.rainTime;
 					WorldGen.tempMaxRain = Main.maxRaining;
 				}
-				if (!base.IsActive && Main.netMode == 0)
+				if (!IsActive && Main.netMode == 0)
 				{
-					base.IsMouseVisible = true;
+					IsMouseVisible = true;
 					if (Main.netMode != 2 && Main.myPlayer >= 0)
 					{
 						Main.player[Main.myPlayer].delayUseItem = true;
@@ -5921,7 +5927,7 @@ namespace Terraria
 					Main.gamePaused = true;
 					return;
 				}
-				base.IsMouseVisible = false;
+				IsMouseVisible = false;
 				Main.demonTorch += (float)Main.demonTorchDir * 0.01f;
 				if (Main.demonTorch > 1f)
 				{
@@ -5934,13 +5940,13 @@ namespace Terraria
 					Main.demonTorchDir = 1;
 				}
 				int num4 = 7;
-				if (this.DiscoStyle == 0)
+				if (DiscoStyle == 0)
 				{
 					Main.DiscoG += num4;
 					if (Main.DiscoG >= 255)
 					{
 						Main.DiscoG = 255;
-						this.DiscoStyle++;
+						DiscoStyle++;
 					}
 					Main.DiscoR -= num4;
 					if (Main.DiscoR <= 0)
@@ -5950,13 +5956,13 @@ namespace Terraria
 				}
 				else
 				{
-					if (this.DiscoStyle == 1)
+					if (DiscoStyle == 1)
 					{
 						Main.DiscoB += num4;
 						if (Main.DiscoB >= 255)
 						{
 							Main.DiscoB = 255;
-							this.DiscoStyle++;
+							DiscoStyle++;
 						}
 						Main.DiscoG -= num4;
 						if (Main.DiscoG <= 0)
@@ -5970,7 +5976,7 @@ namespace Terraria
 						if (Main.DiscoR >= 255)
 						{
 							Main.DiscoR = 255;
-							this.DiscoStyle = 0;
+							DiscoStyle = 0;
 						}
 						Main.DiscoB -= num4;
 						if (Main.DiscoB <= 0)
@@ -6339,16 +6345,16 @@ namespace Terraria
 				}
 				if ((Main.keyState.IsKeyDown(Keys.LeftAlt) || Main.keyState.IsKeyDown(Keys.RightAlt)) && Main.keyState.IsKeyDown(Keys.Enter))
 				{
-					if (this.toggleFullscreen)
+					if (toggleFullscreen)
 					{
-						this.graphics.ToggleFullScreen();
+						graphics.ToggleFullScreen();
 						Main.chatRelease = false;
 					}
-					this.toggleFullscreen = false;
+					toggleFullscreen = false;
 				}
 				else
 				{
-					this.toggleFullscreen = true;
+					toggleFullscreen = true;
 				}
 				if (!Main.gamePad || Main.gameMenu)
 				{
@@ -6943,7 +6949,7 @@ namespace Terraria
 				Main.upTimerMax = Main.upTimer;
 				Main.upTimerMaxDelay = 400f;
 			}
-			base.Update(gameTime);
+			Update(gameTime);
 		}
 		private static void UpdateMenu()
 		{
@@ -7065,7 +7071,7 @@ namespace Terraria
 		}
 		protected void MouseText(string cursorText, int rare = 0, byte diff = 0)
 		{
-			if (this.mouseNPC > -1)
+			if (mouseNPC > -1)
 			{
 				return;
 			}
@@ -7988,7 +7994,7 @@ namespace Terraria
 								}
 							}
 						}
-						this.spriteBatch.DrawString(Main.fontMouseText, array[k], new Vector2((float)num25, (float)num26), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, array[k], new Vector2((float)num25, (float)num26), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 					num24 += (int)(Main.fontMouseText.MeasureString(array[k]).Y + (float)num23);
 				}
@@ -8030,7 +8036,7 @@ namespace Terraria
 							}
 						}
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, Main.buffString, new Vector2((float)num27, (float)num28), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, Main.buffString, new Vector2((float)num27, (float)num28), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			Vector2 vector3 = Main.fontMouseText.MeasureString(cursorText);
@@ -8042,10 +8048,10 @@ namespace Terraria
 			{
 				num2 = (int)((float)Main.screenHeight - vector3.Y - 4f);
 			}
-			this.spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)num, (float)(num2 - 2)), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-			this.spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)num, (float)(num2 + 2)), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-			this.spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)(num - 2), (float)num2), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-			this.spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)(num + 2), (float)num2), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)num, (float)(num2 - 2)), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)num, (float)(num2 + 2)), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)(num - 2), (float)num2), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)(num + 2), (float)num2), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			num22 = (float)Main.mouseTextColor / 255f;
 			Color color3 = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor);
 			if (rare == -10)
@@ -8100,7 +8106,7 @@ namespace Terraria
 			{
 				color3 = new Color((int)((byte)((float)Main.hcColor.R * num22)), (int)((byte)((float)Main.hcColor.G * num22)), (int)((byte)((float)Main.hcColor.B * num22)), (int)Main.mouseTextColor);
 			}
-			this.spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)num, (float)num2), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, cursorText, new Vector2((float)num, (float)num2), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 		}
 		protected void DrawFPS()
 		{
@@ -8128,7 +8134,7 @@ namespace Terraria
 				{
 					num = Main.screenHeight - 24;
 				}
-				this.spriteBatch.DrawString(Main.fontMouseText, text + " " + Main.debugWords, new Vector2(4f, (float)num), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text + " " + Main.debugWords, new Vector2(4f, (float)num), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			}
 		}
 		public static Color shine(Color newColor, int type)
@@ -8300,7 +8306,7 @@ namespace Terraria
 					}
 					if (Main.tile[j, i].active() && flag == solidOnly)
 					{
-						this.LoadTiles((int)Main.tile[j, i].type);
+						LoadTiles((int)Main.tile[j, i].type);
 						SpriteEffects effects = SpriteEffects.None;
 						if (Main.tile[j, i].type == 3 || Main.tile[j, i].type == 13 || Main.tile[j, i].type == 20 || Main.tile[j, i].type == 24 || Main.tile[j, i].type == 49 || Main.tile[j, i].type == 50 || Main.tile[j, i].type == 52 || Main.tile[j, i].type == 61 || Main.tile[j, i].type == 62 || Main.tile[j, i].type == 71 || Main.tile[j, i].type == 73 || Main.tile[j, i].type == 74 || Main.tile[j, i].type == 81 || Main.tile[j, i].type == 82 || Main.tile[j, i].type == 83 || Main.tile[j, i].type == 84 || Main.tile[j, i].type == 91 || Main.tile[j, i].type == 92 || Main.tile[j, i].type == 93 || Main.tile[j, i].type == 110 || Main.tile[j, i].type == 113 || Main.tile[j, i].type == 115 || Main.tile[j, i].type == 135 || Main.tile[j, i].type == 141 || Main.tile[j, i].type == 165 || Main.tile[j, i].type == 174 || Main.tile[j, i].type == 201 || Main.tile[j, i].type == 205 || Main.tile[j, i].type == 227)
 						{
@@ -8621,7 +8627,7 @@ namespace Terraria
 									color.B = 210;
 								}
 								color.A = Main.mouseTextColor;
-								if (!Main.gamePaused && base.IsActive && Main.rand.Next(150) == 0)
+								if (!Main.gamePaused && IsActive && Main.rand.Next(150) == 0)
 								{
 									int num14 = Dust.NewDust(new Vector2((float)(j * 16), (float)(i * 16)), 16, 16, 15, 0f, 0f, 150, default(Color), 0.8f);
 									Main.dust[num14].velocity *= 0.1f;
@@ -8629,7 +8635,7 @@ namespace Terraria
 								}
 							}
 						}
-						if (!Main.gamePaused && base.IsActive && (Lighting.lightMode < 2 || Main.rand.Next(4) == 0))
+						if (!Main.gamePaused && IsActive && (Lighting.lightMode < 2 || Main.rand.Next(4) == 0))
 						{
 							if (Main.tile[j, i].type == 238 && Main.rand.Next(10) == 0)
 							{
@@ -9148,7 +9154,7 @@ namespace Terraria
 									num37 = 2;
 								}
 							}
-							this.spriteBatch.Draw(Main.shroomCapTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X - 22), (float)(i * 16 - (int)Main.screenPosition.Y - 26)) + value, new Rectangle?(new Rectangle(num37 * 62, 0, 60, 42)), Lighting.GetColor(j, i), 0f, default(Vector2), 1f, effects, 0f);
+							spriteBatch.Draw(Main.shroomCapTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X - 22), (float)(i * 16 - (int)Main.screenPosition.Y - 26)) + value, new Rectangle?(new Rectangle(num37 * 62, 0, 60, 42)), Lighting.GetColor(j, i), 0f, default(Vector2), 1f, effects, 0f);
 						}
 						if (color.R > 1 || color.G > 1 || color.B > 1)
 						{
@@ -9398,7 +9404,7 @@ namespace Terraria
 										float num45 = (float)color2.B * num42;
 										float num46 = (float)color2.A * num42;
 										color2 = new Color((int)((byte)num43), (int)((byte)num44), (int)((byte)num45), (int)((byte)num46));
-										this.spriteBatch.Draw(Main.liquidTexture[num40], value2 - Main.screenPosition + value, new Rectangle?(value3), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.liquidTexture[num40], value2 - Main.screenPosition + value, new Rectangle?(value3), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -9413,11 +9419,11 @@ namespace Terraria
 								color3 = new Color((int)((byte)num48), (int)((byte)num49), (int)((byte)num50), (int)((byte)num51));
 								if (Main.canDrawColorTile(j, i))
 								{
-									this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color3, 0f, default(Vector2), 1f, effects, 0f);
+									spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color3, 0f, default(Vector2), 1f, effects, 0f);
 								}
 								else
 								{
-									this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color3, 0f, default(Vector2), 1f, effects, 0f);
+									spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color3, 0f, default(Vector2), 1f, effects, 0f);
 								}
 							}
 							else
@@ -9432,7 +9438,7 @@ namespace Terraria
 									}
 									if (Main.tile[j, i].slope() == 0)
 									{
-										this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color4, 0f, default(Vector2), 1f, effects, 0f);
+										spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color4, 0f, default(Vector2), 1f, effects, 0f);
 									}
 									else
 									{
@@ -9443,7 +9449,7 @@ namespace Terraria
 												int num52 = 2;
 												int num53 = l * 2;
 												int height = 14 - l * num52;
-												this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num53, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + l * num52)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num53, (int)Main.tile[j, i].frameY, num52, height)), color4, 0f, default(Vector2), 1f, effects, 0f);
+												spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num53, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + l * num52)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num53, (int)Main.tile[j, i].frameY, num52, height)), color4, 0f, default(Vector2), 1f, effects, 0f);
 											}
 										}
 										if (Main.tile[j, i].slope() == 2)
@@ -9453,10 +9459,10 @@ namespace Terraria
 												int num54 = 2;
 												int num55 = 16 - m * num54 - num54;
 												int height2 = 14 - m * num54;
-												this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num55, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + m * num54)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num55, (int)Main.tile[j, i].frameY, num54, height2)), color4, 0f, default(Vector2), 1f, effects, 0f);
+												spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num55, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + m * num54)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num55, (int)Main.tile[j, i].frameY, num54, height2)), color4, 0f, default(Vector2), 1f, effects, 0f);
 											}
 										}
-										this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 14)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 14), 16, 2)), color4, 0f, default(Vector2), 1f, effects, 0f);
+										spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 14)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 14), 16, 2)), color4, 0f, default(Vector2), 1f, effects, 0f);
 									}
 								}
 								else
@@ -9483,11 +9489,11 @@ namespace Terraria
 												int height3 = 14 - n * num56;
 												if (Main.canDrawColorTile(j, i))
 												{
-													this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num57, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + n * num56)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num57, (int)Main.tile[j, i].frameY, num56, height3)), color, 0f, default(Vector2), 1f, effects, 0f);
+													spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num57, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + n * num56)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num57, (int)Main.tile[j, i].frameY, num56, height3)), color, 0f, default(Vector2), 1f, effects, 0f);
 												}
 												else
 												{
-													this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num57, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + n * num56)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num57, (int)Main.tile[j, i].frameY, num56, height3)), color, 0f, default(Vector2), 1f, effects, 0f);
+													spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num57, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + n * num56)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num57, (int)Main.tile[j, i].frameY, num56, height3)), color, 0f, default(Vector2), 1f, effects, 0f);
 												}
 											}
 										}
@@ -9500,28 +9506,28 @@ namespace Terraria
 												int height4 = 14 - num58 * num59;
 												if (Main.canDrawColorTile(j, i))
 												{
-													this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num60, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num58 * num59)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num60, (int)Main.tile[j, i].frameY, num59, height4)), color, 0f, default(Vector2), 1f, effects, 0f);
+													spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num60, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num58 * num59)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num60, (int)Main.tile[j, i].frameY, num59, height4)), color, 0f, default(Vector2), 1f, effects, 0f);
 												}
 												else
 												{
-													this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num60, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num58 * num59)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num60, (int)Main.tile[j, i].frameY, num59, height4)), color, 0f, default(Vector2), 1f, effects, 0f);
+													spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num60, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num58 * num59)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num60, (int)Main.tile[j, i].frameY, num59, height4)), color, 0f, default(Vector2), 1f, effects, 0f);
 												}
 											}
 										}
 										if (Main.canDrawColorTile(j, i))
 										{
-											this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 14)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 14), 16, 2)), color, 0f, default(Vector2), 1f, effects, 0f);
+											spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 14)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 14), 16, 2)), color, 0f, default(Vector2), 1f, effects, 0f);
 										}
 										else
 										{
-											this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 14)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 14), 16, 2)), color, 0f, default(Vector2), 1f, effects, 0f);
+											spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 14)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 14), 16, 2)), color, 0f, default(Vector2), 1f, effects, 0f);
 										}
 									}
 									else
 									{
 										if (Main.tile[j, i].type == 129)
 										{
-											this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(200, 200, 200, 0), 0f, default(Vector2), 1f, effects, 0f);
+											spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(200, 200, 200, 0), 0f, default(Vector2), 1f, effects, 0f);
 										}
 										else
 										{
@@ -9608,12 +9614,12 @@ namespace Terraria
 												}
 												if (Main.canDrawColorTile(j, i))
 												{
-													this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+													spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 												}
 												else
 												{
-													this.LoadTiles(num61);
-													this.spriteBatch.Draw(Main.tileTexture[num61], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+													LoadTiles(num61);
+													spriteBatch.Draw(Main.tileTexture[num61], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 												}
 											}
 											else
@@ -9678,29 +9684,29 @@ namespace Terraria
 													}
 													if (flag9)
 													{
-														this.spriteBatch.Draw(Main.evilCactusTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+														spriteBatch.Draw(Main.evilCactusTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 													}
 													else
 													{
 														if (flag11)
 														{
-															this.spriteBatch.Draw(Main.crimsonCactusTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+															spriteBatch.Draw(Main.crimsonCactusTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 														}
 														else
 														{
 															if (flag10)
 															{
-																this.spriteBatch.Draw(Main.goodCactusTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																spriteBatch.Draw(Main.goodCactusTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 															}
 															else
 															{
 																if (Main.canDrawColorTile(j, i))
 																{
-																	this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																}
 																else
 																{
-																	this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																}
 															}
 														}
@@ -9729,13 +9735,13 @@ namespace Terraria
 														{
 															if (Main.canDrawColorTile(j, i))
 															{
-																this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
-																this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 16, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 16, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
 															}
 															else
 															{
-																this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
-																this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 16, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 16, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
 															}
 														}
 														else
@@ -9744,15 +9750,15 @@ namespace Terraria
 															{
 																if (Main.canDrawColorTile(j, i))
 																{
-																	this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
-																	this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 4f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)(Main.tile[j, i].frameX + 4), (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
-																	this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 4f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)(Main.tile[j, i].frameX + 4), (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
 																}
 																else
 																{
-																	this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
-																	this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 4f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)(Main.tile[j, i].frameX + 4), (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
-																	this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 4f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)(Main.tile[j, i].frameX + 4), (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																	spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(126, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
 																}
 															}
 															else
@@ -9761,26 +9767,26 @@ namespace Terraria
 																{
 																	if (Main.canDrawColorTile(j, i))
 																	{
-																		this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
-																		this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
-																		this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 12f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(138, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 12f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(138, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																	else
 																	{
-																		this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
-																		this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
-																		this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 12f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(138, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 8)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)(Main.tile[j, i].frameY + 8), num8, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8 - 4, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + 12f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(138, 0, 4, 8)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																}
 																else
 																{
 																	if (Main.canDrawColorTile(j, i))
 																	{
-																		this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																	else
 																	{
-																		this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																}
 															}
@@ -9870,11 +9876,11 @@ namespace Terraria
 																	}
 																	if (Main.canDrawColorTile(j, i))
 																	{
-																		this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num71, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num72)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num71, (int)Main.tile[j, i].frameY + num72, width, height5)), color5, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num71, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num72)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num71, (int)Main.tile[j, i].frameY + num72, width, height5)), color5, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																	else
 																	{
-																		this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num71, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num72)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num71, (int)Main.tile[j, i].frameY + num72, width, height5)), color5, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num71, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num72)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num71, (int)Main.tile[j, i].frameY + num72, width, height5)), color5, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																}
 															}
@@ -9952,11 +9958,11 @@ namespace Terraria
 																		}
 																		if (Main.canDrawColorTile(j, i))
 																		{
-																			this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num74, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num75)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num74, (int)Main.tile[j, i].frameY + num75, 8, 8)), color7, 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num74, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num75)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num74, (int)Main.tile[j, i].frameY + num75, 8, 8)), color7, 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																		else
 																		{
-																			this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num74, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num75)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num74, (int)Main.tile[j, i].frameY + num75, 8, 8)), color7, 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + (float)num74, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num75)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX + num74, (int)Main.tile[j, i].frameY + num75, 8, 8)), color7, 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																	}
 																}
@@ -9975,11 +9981,11 @@ namespace Terraria
 																	}
 																	if (Main.canDrawColorTile(j, i))
 																	{
-																		this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																	else
 																	{
-																		this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																}
 															}
@@ -10013,7 +10019,7 @@ namespace Terraria
 																for (num76 = (int)Main.tile[j, i].frameX; num76 >= 100; num76 -= 100)
 																{
 																}
-																this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(num76, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle(num76, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 															}
 															else
 															{
@@ -10078,16 +10084,16 @@ namespace Terraria
 																	{
 																		if (Main.canDrawColorTile(j, i))
 																		{
-																			this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																		else
 																		{
-																			this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																	}
 																	else
 																	{
-																		this.spriteBatch.Draw(Main.woodTexture[num77], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.woodTexture[num77], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																}
 																else
@@ -10098,24 +10104,24 @@ namespace Terraria
 																		{
 																			if (Main.canDrawColorTile(j, i))
 																			{
-																				this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																				spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																			}
 																			else
 																			{
-																				this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
+																				spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), color, 0f, default(Vector2), 1f, effects, 0f);
 																			}
 																		}
 																		else
 																		{
 																			if (Main.canDrawColorTile(j, i))
 																			{
-																				this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10 - num11 - 4)), color, 0f, default(Vector2), 1f, effects, 0f);
-																				this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 12)) + value, new Rectangle?(new Rectangle(144, 66, num8, 4)), color, 0f, default(Vector2), 1f, effects, 0f);
+																				spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10 - num11 - 4)), color, 0f, default(Vector2), 1f, effects, 0f);
+																				spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 12)) + value, new Rectangle?(new Rectangle(144, 66, num8, 4)), color, 0f, default(Vector2), 1f, effects, 0f);
 																			}
 																			else
 																			{
-																				this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10 - num11 - 4)), color, 0f, default(Vector2), 1f, effects, 0f);
-																				this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 12)) + value, new Rectangle?(new Rectangle(144, 66, num8, 4)), color, 0f, default(Vector2), 1f, effects, 0f);
+																				spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10 - num11 - 4)), color, 0f, default(Vector2), 1f, effects, 0f);
+																				spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + 12)) + value, new Rectangle?(new Rectangle(144, 66, num8, 4)), color, 0f, default(Vector2), 1f, effects, 0f);
 																			}
 																		}
 																	}
@@ -10123,16 +10129,16 @@ namespace Terraria
 																	{
 																		if (Main.canDrawColorTile(j, i))
 																		{
-																			this.spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY + num12, num8, num10 - num11)), color, 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.tileAltTexture[(int)Main.tile[j, i].type, (int)Main.tile[j, i].color()], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY + num12, num8, num10 - num11)), color, 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																		else
 																		{
-																			this.spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY + num12, num8, num10 - num11)), color, 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.tileTexture[(int)Main.tile[j, i].type], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9 + num11)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY + num12, num8, num10 - num11)), color, 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																	}
 																	if (Main.tile[j, i].type == 139)
 																	{
-																		this.spriteBatch.Draw(Main.MusicBoxTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(200, 200, 200, 0), 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.MusicBoxTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(200, 200, 200, 0), 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																	if (Main.tileFlame[(int)Main.tile[j, i].type])
 																	{
@@ -10188,16 +10194,16 @@ namespace Terraria
 																		{
 																			float num82 = (float)Main.rand.Next(-10, 11) * 0.15f;
 																			float num83 = (float)Main.rand.Next(-10, 1) * 0.35f;
-																			this.spriteBatch.Draw(Main.FlameTexture[num80], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + num82, (float)(i * 16 - (int)Main.screenPosition.Y + num9) + num83) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(100, 100, 100, 0), 0f, default(Vector2), 1f, effects, 0f);
+																			spriteBatch.Draw(Main.FlameTexture[num80], new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f + num82, (float)(i * 16 - (int)Main.screenPosition.Y + num9) + num83) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(100, 100, 100, 0), 0f, default(Vector2), 1f, effects, 0f);
 																		}
 																	}
 																	if (Main.tile[j, i].type == 144)
 																	{
-																		this.spriteBatch.Draw(Main.timerTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(200, 200, 200, 0), 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.timerTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color(200, 200, 200, 0), 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																	if (Main.tile[j, i].type == 237)
 																	{
-																		this.spriteBatch.Draw(Main.sunAltarTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color((int)(Main.mouseTextColor / 2), (int)(Main.mouseTextColor / 2), (int)(Main.mouseTextColor / 2), 0), 0f, default(Vector2), 1f, effects, 0f);
+																		spriteBatch.Draw(Main.sunAltarTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X) - ((float)num8 - 16f) / 2f, (float)(i * 16 - (int)Main.screenPosition.Y + num9)) + value, new Rectangle?(new Rectangle((int)Main.tile[j, i].frameX, (int)Main.tile[j, i].frameY, num8, num10)), new Color((int)(Main.mouseTextColor / 2), (int)(Main.mouseTextColor / 2), (int)(Main.mouseTextColor / 2), 0), 0f, default(Vector2), 1f, effects, 0f);
 																	}
 																}
 															}
@@ -10219,7 +10225,7 @@ namespace Terraria
 				int num86 = array2[num84];
 				if (Main.tile[num85, num86].type == 237)
 				{
-					this.spriteBatch.Draw(Main.sunOrbTexture, new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X) + (float)num8 / 2f, (float)(num86 * 16 - (int)Main.screenPosition.Y - 36)) + value, new Rectangle?(new Rectangle(0, 0, Main.sunOrbTexture.Width, Main.sunOrbTexture.Height)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, 0), Main.sunCircle, new Vector2((float)(Main.sunOrbTexture.Width / 2), (float)(Main.sunOrbTexture.Height / 2)), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.sunOrbTexture, new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X) + (float)num8 / 2f, (float)(num86 * 16 - (int)Main.screenPosition.Y - 36)) + value, new Rectangle?(new Rectangle(0, 0, Main.sunOrbTexture.Width, Main.sunOrbTexture.Height)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, 0), Main.sunCircle, new Vector2((float)(Main.sunOrbTexture.Width / 2), (float)(Main.sunOrbTexture.Height / 2)), 1f, SpriteEffects.None, 0f);
 				}
 				if (Main.tile[num85, num86].type == 128 && Main.tile[num85, num86].frameX >= 100)
 				{
@@ -10240,22 +10246,22 @@ namespace Terraria
 					}
 					if (num87 == 0)
 					{
-						this.LoadArmorHead(num89);
-						this.spriteBatch.Draw(Main.armorHeadTexture[num89], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X + num90), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(0, 0, 40, 36)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, effects2, 0f);
+						LoadArmorHead(num89);
+						spriteBatch.Draw(Main.armorHeadTexture[num89], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X + num90), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(0, 0, 40, 36)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, effects2, 0f);
 					}
 					else
 					{
 						if (num87 == 1)
 						{
-							this.LoadArmorBody(num89);
-							this.spriteBatch.Draw(Main.armorBodyTexture[num89], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X + num90), (float)(num86 * 16 - (int)Main.screenPosition.Y - 28)) + value, new Rectangle?(new Rectangle(0, 0, 40, 54)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, effects2, 0f);
+							LoadArmorBody(num89);
+							spriteBatch.Draw(Main.armorBodyTexture[num89], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X + num90), (float)(num86 * 16 - (int)Main.screenPosition.Y - 28)) + value, new Rectangle?(new Rectangle(0, 0, 40, 54)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, effects2, 0f);
 						}
 						else
 						{
 							if (num87 == 2)
 							{
-								this.LoadArmorLegs(num89);
-								this.spriteBatch.Draw(Main.armorLegTexture[num89], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X + num90), (float)(num86 * 16 - (int)Main.screenPosition.Y - 44)) + value, new Rectangle?(new Rectangle(0, 0, 40, 54)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, effects2, 0f);
+								LoadArmorLegs(num89);
+								spriteBatch.Draw(Main.armorLegTexture[num89], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X + num90), (float)(num86 * 16 - (int)Main.screenPosition.Y - 44)) + value, new Rectangle?(new Rectangle(0, 0, 40, 54)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, effects2, 0f);
 							}
 						}
 					}
@@ -10368,11 +10374,11 @@ namespace Terraria
 							}
 							if (Main.tile[num85, num86].color() > 0 && Main.treeAltTextureDrawn[num92, (int)Main.tile[num85, num86].color()])
 							{
-								this.spriteBatch.Draw(Main.treeTopAltTexture[num92, (int)Main.tile[num85, num86].color()], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - num95), (float)(num86 * 16 - (int)Main.screenPosition.Y - num94 + 16 + num96)) + value, new Rectangle?(new Rectangle(num91 * (num93 + 2), 0, num93, num94)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.treeTopAltTexture[num92, (int)Main.tile[num85, num86].color()], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - num95), (float)(num86 * 16 - (int)Main.screenPosition.Y - num94 + 16 + num96)) + value, new Rectangle?(new Rectangle(num91 * (num93 + 2), 0, num93, num94)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							else
 							{
-								this.spriteBatch.Draw(Main.treeTopTexture[num92], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - num95), (float)(num86 * 16 - (int)Main.screenPosition.Y - num94 + 16 + num96)) + value, new Rectangle?(new Rectangle(num91 * (num93 + 2), 0, num93, num94)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.treeTopTexture[num92], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - num95), (float)(num86 * 16 - (int)Main.screenPosition.Y - num94 + 16 + num96)) + value, new Rectangle?(new Rectangle(num91 * (num93 + 2), 0, num93, num94)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 						}
 						else
@@ -10472,11 +10478,11 @@ namespace Terraria
 								}
 								if (Main.tile[num85, num86].color() > 0 && Main.treeAltTextureDrawn[num99, (int)Main.tile[num85, num86].color()])
 								{
-									this.spriteBatch.Draw(Main.treeBranchAltTexture[num99, (int)Main.tile[num85, num86].color()], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - 24), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(0, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.treeBranchAltTexture[num99, (int)Main.tile[num85, num86].color()], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - 24), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(0, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 								}
 								else
 								{
-									this.spriteBatch.Draw(Main.treeBranchTexture[num99], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - 24), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(0, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.treeBranchTexture[num99], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X - 24), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(0, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 								}
 							}
 							else
@@ -10576,11 +10582,11 @@ namespace Terraria
 									}
 									if (Main.tile[num85, num86].color() > 0 && Main.treeAltTextureDrawn[num102, (int)Main.tile[num85, num86].color()])
 									{
-										this.spriteBatch.Draw(Main.treeBranchAltTexture[num102, (int)Main.tile[num85, num86].color()], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(42, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.treeBranchAltTexture[num102, (int)Main.tile[num85, num86].color()], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(42, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 									else
 									{
-										this.spriteBatch.Draw(Main.treeBranchTexture[num102], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(42, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.treeBranchTexture[num102], new Vector2((float)(num85 * 16 - (int)Main.screenPosition.X), (float)(num86 * 16 - (int)Main.screenPosition.Y - 12)) + value, new Rectangle?(new Rectangle(42, num91 * 42, 40, 40)), Lighting.GetColor(num85, num86), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -10805,7 +10811,7 @@ namespace Terraria
 								{
 									num8 = 1f;
 								}
-								if (base.IsActive && !Main.gamePaused && Dust.lavaBubbles < 200)
+								if (IsActive && !Main.gamePaused && Dust.lavaBubbles < 200)
 								{
 									if (Main.tile[j, i].liquid > 200 && Main.rand.Next(700) == 0)
 									{
@@ -10885,12 +10891,12 @@ namespace Terraria
 										color3.G = (byte)((color2.G * 3 + color4.G * 2) / 5);
 										color3.B = (byte)((color2.B * 3 + color4.B * 2) / 5);
 										color3.A = (byte)((color2.A * 3 + color4.A * 2) / 5);
-										this.spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + new Vector2((float)num19, (float)num20) + value, new Rectangle?(new Rectangle(value3.X + num19, value3.Y + num20, width, height)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + new Vector2((float)num19, (float)num20) + value, new Rectangle?(new Rectangle(value3.X + num19, value3.Y + num20, width, height)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 								else
 								{
-									this.spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + value, new Rectangle?(value3), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + value, new Rectangle?(value3), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 								}
 							}
 							else
@@ -10899,7 +10905,7 @@ namespace Terraria
 								{
 									value3.X += (int)(Main.wFrame * 18f);
 								}
-								this.spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + value, new Rectangle?(value3), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + value, new Rectangle?(value3), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							if (Main.tile[j, i + 1].halfBrick())
 							{
@@ -10910,7 +10916,7 @@ namespace Terraria
 								num18 = (float)color.A * num8;
 								color = new Color((int)((byte)num15), (int)((byte)num16), (int)((byte)num17), (int)((byte)num18));
 								value2 = new Vector2((float)(j * 16), (float)(i * 16 + 16));
-								this.spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + value, new Rectangle?(new Rectangle(0, 4, 16, 8)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.liquidTexture[num7], value2 - Main.screenPosition + value, new Rectangle?(new Rectangle(0, 4, 16, 8)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -10929,9 +10935,9 @@ namespace Terraria
 			{
 				if (Main.gore[i].active && Main.gore[i].type > 0)
 				{
-					this.LoadGore(Main.gore[i].type);
+					LoadGore(Main.gore[i].type);
 					Color alpha = Main.gore[i].GetAlpha(Lighting.GetColor((int)((double)Main.gore[i].position.X + (double)Main.goreTexture[Main.gore[i].type].Width * 0.5) / 16, (int)(((double)Main.gore[i].position.Y + (double)Main.goreTexture[Main.gore[i].type].Height * 0.5) / 16.0)));
-					this.spriteBatch.Draw(Main.goreTexture[Main.gore[i].type], new Vector2(Main.gore[i].position.X - Main.screenPosition.X + (float)(Main.goreTexture[Main.gore[i].type].Width / 2), Main.gore[i].position.Y - Main.screenPosition.Y + (float)(Main.goreTexture[Main.gore[i].type].Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.goreTexture[Main.gore[i].type].Width, Main.goreTexture[Main.gore[i].type].Height)), alpha, Main.gore[i].rotation, new Vector2((float)(Main.goreTexture[Main.gore[i].type].Width / 2), (float)(Main.goreTexture[Main.gore[i].type].Height / 2)), Main.gore[i].scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.goreTexture[Main.gore[i].type], new Vector2(Main.gore[i].position.X - Main.screenPosition.X + (float)(Main.goreTexture[Main.gore[i].type].Width / 2), Main.gore[i].position.Y - Main.screenPosition.Y + (float)(Main.goreTexture[Main.gore[i].type].Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.goreTexture[Main.gore[i].type].Width, Main.goreTexture[Main.gore[i].type].Height)), alpha, Main.gore[i].rotation, new Vector2((float)(Main.goreTexture[Main.gore[i].type].Width / 2), (float)(Main.goreTexture[Main.gore[i].type].Height / 2)), Main.gore[i].scale, SpriteEffects.None, 0f);
 				}
 			}
 		}
@@ -10994,24 +11000,24 @@ namespace Terraria
 			{
 				if (num2 < 36)
 				{
-					this.spriteBatch.Draw(Main.hbTexture2, new Vector2(num3 - Main.screenPosition.X + (float)num2 * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(2, 0, 2, Main.hbTexture2.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.hbTexture2, new Vector2(num3 - Main.screenPosition.X + (float)num2 * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(2, 0, 2, Main.hbTexture2.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
 				}
 				if (num2 < 34)
 				{
-					this.spriteBatch.Draw(Main.hbTexture2, new Vector2(num3 - Main.screenPosition.X + (float)(num2 + 2) * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(num2 + 2, 0, 36 - num2 - 2, Main.hbTexture2.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.hbTexture2, new Vector2(num3 - Main.screenPosition.X + (float)(num2 + 2) * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(num2 + 2, 0, 36 - num2 - 2, Main.hbTexture2.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
 				}
 				if (num2 > 2)
 				{
-					this.spriteBatch.Draw(Main.hbTexture1, new Vector2(num3 - Main.screenPosition.X, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, num2 - 2, Main.hbTexture1.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.hbTexture1, new Vector2(num3 - Main.screenPosition.X, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, num2 - 2, Main.hbTexture1.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
 				}
-				this.spriteBatch.Draw(Main.hbTexture1, new Vector2(num3 - Main.screenPosition.X + (float)(num2 - 2) * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(32, 0, 2, Main.hbTexture1.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.hbTexture1, new Vector2(num3 - Main.screenPosition.X + (float)(num2 - 2) * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(32, 0, 2, Main.hbTexture1.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
 				return;
 			}
 			if (num2 < 36)
 			{
-				this.spriteBatch.Draw(Main.hbTexture2, new Vector2(num3 - Main.screenPosition.X + (float)num2 * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(num2, 0, 36 - num2, Main.hbTexture2.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.hbTexture2, new Vector2(num3 - Main.screenPosition.X + (float)num2 * scale, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(num2, 0, 36 - num2, Main.hbTexture2.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
 			}
-			this.spriteBatch.Draw(Main.hbTexture1, new Vector2(num3 - Main.screenPosition.X, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, num2, Main.hbTexture1.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.hbTexture1, new Vector2(num3 - Main.screenPosition.X, num4 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, num2, Main.hbTexture1.Height)), color, 0f, new Vector2(0f, 0f), scale, SpriteEffects.None, 0f);
 		}
 		public static float NPCAddHeight(int i)
 		{
@@ -11249,7 +11255,7 @@ namespace Terraria
 				{
 					if (Main.npc[i].active && Main.npc[i].type > 0 && Main.npc[i].type < 301)
 					{
-						this.LoadNPC(Main.npc[i].type);
+						LoadNPC(Main.npc[i].type);
 						if (Main.npc[i].behindTiles == behindTiles)
 						{
 							if (Main.npc[i].setFrameSize)
@@ -11295,7 +11301,7 @@ namespace Terraria
 													num3 = num - vector.X;
 													num4 = num2 - vector.Y;
 													Color color = Lighting.GetColor((int)vector.X / 16, (int)(vector.Y / 16f));
-													this.spriteBatch.Draw(Main.chain12Texture, new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain12Texture.Width, Main.chain12Texture.Height)), color, rotation, new Vector2((float)Main.chain12Texture.Width * 0.5f, (float)Main.chain12Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+													spriteBatch.Draw(Main.chain12Texture, new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain12Texture.Width, Main.chain12Texture.Height)), color, rotation, new Vector2((float)Main.chain12Texture.Width * 0.5f, (float)Main.chain12Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 												}
 											}
 										}
@@ -11329,7 +11335,7 @@ namespace Terraria
 										num6 = Main.npc[NPC.plantBoss].center().X - vector2.X;
 										num7 = Main.npc[NPC.plantBoss].center().Y - vector2.Y;
 										Color color2 = Lighting.GetColor((int)vector2.X / 16, (int)(vector2.Y / 16f));
-										this.spriteBatch.Draw(Main.chain26Texture, new Vector2(vector2.X - Main.screenPosition.X, vector2.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain26Texture.Width, num8)), color2, rotation2, new Vector2((float)Main.chain26Texture.Width * 0.5f, (float)Main.chain26Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.chain26Texture, new Vector2(vector2.X - Main.screenPosition.X, vector2.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain26Texture.Width, num8)), color2, rotation2, new Vector2((float)Main.chain26Texture.Width * 0.5f, (float)Main.chain26Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 									}
 								}
 								else
@@ -11360,7 +11366,7 @@ namespace Terraria
 											num11 = Main.npc[plantBoss].center().X - vector3.X;
 											num12 = Main.npc[plantBoss].center().Y - vector3.Y;
 											Color color3 = Lighting.GetColor((int)vector3.X / 16, (int)(vector3.Y / 16f));
-											this.spriteBatch.Draw(Main.chain27Texture, new Vector2(vector3.X - Main.screenPosition.X, vector3.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain27Texture.Width, num13)), color3, rotation3, new Vector2((float)Main.chain27Texture.Width * 0.5f, (float)Main.chain27Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.chain27Texture, new Vector2(vector3.X - Main.screenPosition.X, vector3.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain27Texture.Width, num13)), color3, rotation3, new Vector2((float)Main.chain27Texture.Width * 0.5f, (float)Main.chain27Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 										}
 									}
 								}
@@ -11396,12 +11402,12 @@ namespace Terraria
 										if (!flag5)
 										{
 											flag5 = true;
-											this.spriteBatch.Draw(Main.chain10Texture, new Vector2(vector4.X - Main.screenPosition.X, vector4.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain10Texture.Width, height)), color4, rotation4, new Vector2((float)Main.chain10Texture.Width * 0.5f, (float)Main.chain10Texture.Height * 0.5f), num18, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.chain10Texture, new Vector2(vector4.X - Main.screenPosition.X, vector4.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain10Texture.Width, height)), color4, rotation4, new Vector2((float)Main.chain10Texture.Width * 0.5f, (float)Main.chain10Texture.Height * 0.5f), num18, SpriteEffects.None, 0f);
 										}
 										else
 										{
 											flag5 = false;
-											this.spriteBatch.Draw(Main.chain11Texture, new Vector2(vector4.X - Main.screenPosition.X, vector4.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain10Texture.Width, height)), color4, rotation4, new Vector2((float)Main.chain10Texture.Width * 0.5f, (float)Main.chain10Texture.Height * 0.5f), num18, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.chain11Texture, new Vector2(vector4.X - Main.screenPosition.X, vector4.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain10Texture.Width, height)), color4, rotation4, new Vector2((float)Main.chain10Texture.Width * 0.5f, (float)Main.chain10Texture.Height * 0.5f), num18, SpriteEffects.None, 0f);
 										}
 									}
 								}
@@ -11451,29 +11457,29 @@ namespace Terraria
 											}
 											if (Main.npc[i].type == 56)
 											{
-												this.spriteBatch.Draw(Main.chain5Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain4Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain4Texture.Width * 0.5f, (float)Main.chain4Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+												spriteBatch.Draw(Main.chain5Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain4Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain4Texture.Width * 0.5f, (float)Main.chain4Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 											}
 											else
 											{
 												if (Main.npc[i].type == 175)
 												{
-													this.spriteBatch.Draw(Main.chain14Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain14Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain14Texture.Width * 0.5f, (float)Main.chain14Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+													spriteBatch.Draw(Main.chain14Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain14Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain14Texture.Width * 0.5f, (float)Main.chain14Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 												}
 												else
 												{
 													if (Main.npc[i].type == 259)
 													{
-														this.spriteBatch.Draw(Main.chain24Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain24Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain24Texture.Width * 0.5f, (float)Main.chain24Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+														spriteBatch.Draw(Main.chain24Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain24Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain24Texture.Width * 0.5f, (float)Main.chain24Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 													}
 													else
 													{
 														if (Main.npc[i].type == 260)
 														{
-															this.spriteBatch.Draw(Main.chain25Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain25Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain25Texture.Width * 0.5f, (float)Main.chain25Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+															spriteBatch.Draw(Main.chain25Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain25Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain25Texture.Width * 0.5f, (float)Main.chain25Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 														}
 														else
 														{
-															this.spriteBatch.Draw(Main.chain4Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain4Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain4Texture.Width * 0.5f, (float)Main.chain4Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+															spriteBatch.Draw(Main.chain4Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain4Texture.Width, num22)), color5, rotation5, new Vector2((float)Main.chain4Texture.Width * 0.5f, (float)Main.chain4Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 														}
 													}
 												}
@@ -11509,7 +11515,7 @@ namespace Terraria
 										}
 										float rotation6 = (float)Math.Atan2((double)num26, (double)num25) - 1.57f;
 										Color color6 = Lighting.GetColor((int)vector6.X / 16, (int)(vector6.Y / 16f));
-										this.spriteBatch.Draw(Main.boneArmTexture, new Vector2(vector6.X - Main.screenPosition.X, vector6.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.boneArmTexture.Width, Main.boneArmTexture.Height)), color6, rotation6, new Vector2((float)Main.boneArmTexture.Width * 0.5f, (float)Main.boneArmTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.boneArmTexture, new Vector2(vector6.X - Main.screenPosition.X, vector6.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.boneArmTexture.Width, Main.boneArmTexture.Height)), color6, rotation6, new Vector2((float)Main.boneArmTexture.Width * 0.5f, (float)Main.boneArmTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 										if (k == 0)
 										{
 											vector6.X += num25 * num27 / 2f;
@@ -11517,7 +11523,7 @@ namespace Terraria
 										}
 										else
 										{
-											if (base.IsActive)
+											if (IsActive)
 											{
 												vector6.X += num25 * num27 - 16f;
 												vector6.Y += num26 * num27 - 6f;
@@ -11569,7 +11575,7 @@ namespace Terraria
 												num29 += 66f;
 											}
 											Color color7 = Lighting.GetColor((int)vector7.X / 16, (int)(vector7.Y / 16f));
-											this.spriteBatch.Draw(Main.chain21Texture, new Vector2(vector7.X - Main.screenPosition.X, vector7.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain21Texture.Width, Main.chain21Texture.Height)), color7, rotation7, new Vector2((float)Main.chain21Texture.Width * 0.5f, (float)Main.chain21Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.chain21Texture, new Vector2(vector7.X - Main.screenPosition.X, vector7.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain21Texture.Width, Main.chain21Texture.Height)), color7, rotation7, new Vector2((float)Main.chain21Texture.Width * 0.5f, (float)Main.chain21Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 										}
 									}
 								}
@@ -11601,7 +11607,7 @@ namespace Terraria
 										}
 										float rotation8 = (float)Math.Atan2((double)num33, (double)num32) - 1.57f;
 										Color color8 = Lighting.GetColor((int)vector8.X / 16, (int)(vector8.Y / 16f));
-										this.spriteBatch.Draw(Main.boneArm2Texture, new Vector2(vector8.X - Main.screenPosition.X, vector8.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.boneArmTexture.Width, Main.boneArmTexture.Height)), color8, rotation8, new Vector2((float)Main.boneArmTexture.Width * 0.5f, (float)Main.boneArmTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.boneArm2Texture, new Vector2(vector8.X - Main.screenPosition.X, vector8.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.boneArmTexture.Width, Main.boneArmTexture.Height)), color8, rotation8, new Vector2((float)Main.boneArmTexture.Width * 0.5f, (float)Main.boneArmTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 										if (l == 0)
 										{
 											vector8.X += num32 * num34 / 2f;
@@ -11609,7 +11615,7 @@ namespace Terraria
 										}
 										else
 										{
-											if (base.IsActive)
+											if (IsActive)
 											{
 												vector8.X += num32 * num34 - 16f;
 												vector8.Y += num33 * num34 - 6f;
@@ -11644,9 +11650,9 @@ namespace Terraria
 										num36 = Main.npc[i].ai[1] - vector9.X;
 										num37 = Main.npc[i].ai[2] - vector9.Y;
 										Color color9 = Lighting.GetColor((int)vector9.X / 16, (int)(vector9.Y / 16f));
-										this.spriteBatch.Draw(Main.chainTexture, new Vector2(vector9.X - Main.screenPosition.X, vector9.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chainTexture.Width, height2)), color9, num38, new Vector2((float)Main.chainTexture.Width * 0.5f, (float)Main.chainTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.chainTexture, new Vector2(vector9.X - Main.screenPosition.X, vector9.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chainTexture.Width, height2)), color9, num38, new Vector2((float)Main.chainTexture.Width * 0.5f, (float)Main.chainTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 									}
-									this.spriteBatch.Draw(Main.spikeBaseTexture, new Vector2(Main.npc[i].ai[1] - Main.screenPosition.X, Main.npc[i].ai[2] - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.spikeBaseTexture.Width, Main.spikeBaseTexture.Height)), Lighting.GetColor((int)Main.npc[i].ai[1] / 16, (int)(Main.npc[i].ai[2] / 16f)), num38 - 0.75f, new Vector2((float)Main.spikeBaseTexture.Width * 0.5f, (float)Main.spikeBaseTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.spikeBaseTexture, new Vector2(Main.npc[i].ai[1] - Main.screenPosition.X, Main.npc[i].ai[2] - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.spikeBaseTexture.Width, Main.spikeBaseTexture.Height)), Lighting.GetColor((int)Main.npc[i].ai[1] / 16, (int)(Main.npc[i].ai[2] / 16f)), num38 - 0.75f, new Vector2((float)Main.spikeBaseTexture.Width * 0.5f, (float)Main.spikeBaseTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 								}
 								Color color10 = Lighting.GetColor((int)((double)Main.npc[i].position.X + (double)Main.npc[i].width * 0.5) / 16, (int)(((double)Main.npc[i].position.Y + (double)Main.npc[i].height * 0.5) / 16.0));
 								if (Main.npc[i].type >= 277 && Main.npc[i].type <= 280)
@@ -11784,7 +11790,7 @@ namespace Terraria
 									{
 										color10.B = 100;
 									}
-									if (!Main.gamePaused && base.IsActive && Main.rand.Next(50) == 0)
+									if (!Main.gamePaused && IsActive && Main.rand.Next(50) == 0)
 									{
 										int num53 = Dust.NewDust(new Vector2(Main.npc[i].position.X, Main.npc[i].position.Y), Main.npc[i].width, Main.npc[i].height, 15, 0f, 0f, 150, default(Color), 0.8f);
 										Main.dust[num53].velocity *= 0.1f;
@@ -11810,7 +11816,7 @@ namespace Terraria
 									{
 										vector10.Y -= 6f;
 									}
-									this.spriteBatch.Draw(Main.ninjaTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) + vector10.X, Main.npc[i].position.Y - Main.screenPosition.Y + (float)(Main.npc[i].height / 2) + vector10.Y), new Rectangle?(new Rectangle(0, 0, Main.ninjaTexture.Width, Main.ninjaTexture.Height)), color10, num54, new Vector2((float)(Main.ninjaTexture.Width / 2), (float)(Main.ninjaTexture.Height / 2)), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.ninjaTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) + vector10.X, Main.npc[i].position.Y - Main.screenPosition.Y + (float)(Main.npc[i].height / 2) + vector10.Y), new Rectangle?(new Rectangle(0, 0, Main.ninjaTexture.Width, Main.ninjaTexture.Height)), color10, num54, new Vector2((float)(Main.ninjaTexture.Width / 2), (float)(Main.ninjaTexture.Height / 2)), 1f, SpriteEffects.None, 0f);
 								}
 								if (Main.npc[i].type == 71)
 								{
@@ -11831,11 +11837,11 @@ namespace Terraria
 									{
 										vector11.Y -= 6f;
 									}
-									this.spriteBatch.Draw(Main.itemTexture[327], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) + vector11.X, Main.npc[i].position.Y - Main.screenPosition.Y + (float)(Main.npc[i].height / 2) + vector11.Y), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[327].Width, Main.itemTexture[327].Height)), color10, num55, new Vector2((float)(Main.itemTexture[327].Width / 2), (float)(Main.itemTexture[327].Height / 2)), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.itemTexture[327], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) + vector11.X, Main.npc[i].position.Y - Main.screenPosition.Y + (float)(Main.npc[i].height / 2) + vector11.Y), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[327].Width, Main.itemTexture[327].Height)), color10, num55, new Vector2((float)(Main.itemTexture[327].Width / 2), (float)(Main.itemTexture[327].Height / 2)), 1f, SpriteEffects.None, 0f);
 								}
 								if (Main.npc[i].type == 69)
 								{
-									this.spriteBatch.Draw(Main.antLionTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2), Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height + 14f), new Rectangle?(new Rectangle(0, 0, Main.antLionTexture.Width, Main.antLionTexture.Height)), color10, -Main.npc[i].rotation * 0.3f, new Vector2((float)(Main.antLionTexture.Width / 2), (float)(Main.antLionTexture.Height / 2)), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.antLionTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2), Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height + 14f), new Rectangle?(new Rectangle(0, 0, Main.antLionTexture.Width, Main.antLionTexture.Height)), color10, -Main.npc[i].rotation * 0.3f, new Vector2((float)(Main.antLionTexture.Width / 2), (float)(Main.antLionTexture.Height / 2)), 1f, SpriteEffects.None, 0f);
 								}
 								float num56 = 0f;
 								float num57 = Main.NPCAddHeight(i);
@@ -11924,7 +11930,7 @@ namespace Terraria
 								}
 								if (Main.npc[i].type == 83 || Main.npc[i].type == 84 || Main.npc[i].type == 179)
 								{
-									this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), Color.White, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+									spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), Color.White, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 								}
 								else
 								{
@@ -11944,7 +11950,7 @@ namespace Terraria
 										{
 											alpha.B = b;
 										}
-										this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), alpha, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+										spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), alpha, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 									}
 									else
 									{
@@ -11958,7 +11964,7 @@ namespace Terraria
 												alpha2.G = (byte)((int)alpha2.G * (10 - num58) / 15);
 												alpha2.B = (byte)((int)alpha2.B * (10 - num58) / 15);
 												alpha2.A = (byte)((int)alpha2.A * (10 - num58) / 15);
-												this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].oldPos[num58].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num58].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), alpha2, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+												spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].oldPos[num58].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num58].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), alpha2, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 											}
 										}
 										if (Main.npc[i].type == 125 || Main.npc[i].type == 126 || Main.npc[i].type == 127 || Main.npc[i].type == 128 || Main.npc[i].type == 129 || Main.npc[i].type == 130 || Main.npc[i].type == 131 || Main.npc[i].type == 139 || Main.npc[i].type == 140)
@@ -11971,7 +11977,7 @@ namespace Terraria
 												alpha3.G = (byte)((int)alpha3.G * (10 - num59) / 20);
 												alpha3.B = (byte)((int)alpha3.B * (10 - num59) / 20);
 												alpha3.A = (byte)((int)alpha3.A * (10 - num59) / 20);
-												this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].oldPos[num59].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num59].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), alpha3, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+												spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].oldPos[num59].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num59].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), alpha3, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 											}
 										}
 										Rectangle frame = Main.npc[i].frame;
@@ -11979,34 +11985,34 @@ namespace Terraria
 										{
 											frame.Height -= 2;
 										}
-										this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 + Main.npc[i].gfxOffY), new Rectangle?(frame), Main.npc[i].GetAlpha(color10), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+										spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 + Main.npc[i].gfxOffY), new Rectangle?(frame), Main.npc[i].GetAlpha(color10), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										if (Main.npc[i].color != default(Color))
 										{
-											this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 + Main.npc[i].gfxOffY), new Rectangle?(frame), Main.npc[i].GetColor(color10), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+											spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 + Main.npc[i].gfxOffY), new Rectangle?(frame), Main.npc[i].GetColor(color10), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										}
 										if (Main.npc[i].confused)
 										{
-											this.spriteBatch.Draw(Main.confuseTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 - (float)Main.confuseTexture.Height - 20f), new Rectangle?(new Rectangle(0, 0, Main.confuseTexture.Width, Main.confuseTexture.Height)), new Color(250, 250, 250, 70), Main.npc[i].velocity.X * -0.05f, new Vector2((float)(Main.confuseTexture.Width / 2), (float)(Main.confuseTexture.Height / 2)), Main.essScale + 0.2f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.confuseTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 - (float)Main.confuseTexture.Height - 20f), new Rectangle?(new Rectangle(0, 0, Main.confuseTexture.Width, Main.confuseTexture.Height)), new Color(250, 250, 250, 70), Main.npc[i].velocity.X * -0.05f, new Vector2((float)(Main.confuseTexture.Width / 2), (float)(Main.confuseTexture.Height / 2)), Main.essScale + 0.2f, SpriteEffects.None, 0f);
 										}
 										if (Main.npc[i].type >= 134 && Main.npc[i].type <= 136 && color10 != Color.Black)
 										{
-											this.spriteBatch.Draw(Main.destTexture[Main.npc[i].type - 134], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(255, 255, 255, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+											spriteBatch.Draw(Main.destTexture[Main.npc[i].type - 134], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(255, 255, 255, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										}
 										if (Main.npc[i].type == 125)
 										{
-											this.spriteBatch.Draw(Main.EyeLaserTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(255, 255, 255, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+											spriteBatch.Draw(Main.EyeLaserTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(255, 255, 255, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										}
 										if (Main.npc[i].type == 139)
 										{
-											this.spriteBatch.Draw(Main.probeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(255, 255, 255, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+											spriteBatch.Draw(Main.probeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(255, 255, 255, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										}
 										if (Main.npc[i].type == 127)
 										{
-											this.spriteBatch.Draw(Main.BoneEyesTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(200, 200, 200, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+											spriteBatch.Draw(Main.BoneEyesTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(200, 200, 200, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										}
 										if (Main.npc[i].type == 131)
 										{
-											this.spriteBatch.Draw(Main.BoneLaserTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(200, 200, 200, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+											spriteBatch.Draw(Main.BoneLaserTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56), new Rectangle?(Main.npc[i].frame), new Color(200, 200, 200, 0), Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 										}
 										if (Main.npc[i].type == 120)
 										{
@@ -12018,7 +12024,7 @@ namespace Terraria
 												color11.G = (byte)(100 * (10 - num60) / 15);
 												color11.B = (byte)(150 * (10 - num60) / 15);
 												color11.A = (byte)(50 * (10 - num60) / 15);
-												this.spriteBatch.Draw(Main.chaosTexture, new Vector2(Main.npc[i].oldPos[num60].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num60].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), color11, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+												spriteBatch.Draw(Main.chaosTexture, new Vector2(Main.npc[i].oldPos[num60].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num60].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), color11, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 											}
 										}
 										else
@@ -12033,29 +12039,29 @@ namespace Terraria
 													color12.G = (byte)(100 * (10 - num61) / 15);
 													color12.B = (byte)(150 * (10 - num61) / 15);
 													color12.A = (byte)(50 * (10 - num61) / 15);
-													this.spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].oldPos[num61].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num61].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), color12, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+													spriteBatch.Draw(Main.npcTexture[Main.npc[i].type], new Vector2(Main.npc[i].oldPos[num61].X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].oldPos[num61].Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), color12, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 												}
 											}
 											else
 											{
 												if (Main.npc[i].type == 82)
 												{
-													this.spriteBatch.Draw(Main.wraithEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), Color.White, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+													spriteBatch.Draw(Main.wraithEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), Color.White, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 													for (int num62 = 1; num62 < 10; num62++)
 													{
 														Color color13 = new Color(110 - num62 * 10, 110 - num62 * 10, 110 - num62 * 10, 110 - num62 * 10);
-														this.spriteBatch.Draw(Main.wraithEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57) - Main.npc[i].velocity * (float)num62 * 0.5f, new Rectangle?(Main.npc[i].frame), color13, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+														spriteBatch.Draw(Main.wraithEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57) - Main.npc[i].velocity * (float)num62 * 0.5f, new Rectangle?(Main.npc[i].frame), color13, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 													}
 												}
 												else
 												{
 													if (Main.npc[i].type == 253)
 													{
-														this.spriteBatch.Draw(Main.reaperEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 3f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), Color.White, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+														spriteBatch.Draw(Main.reaperEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 3f + origin.Y * Main.npc[i].scale + num57), new Rectangle?(Main.npc[i].frame), Color.White, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 														for (int num63 = 1; num63 < 20; num63++)
 														{
 															Color color14 = new Color(210 - num63 * 20, 210 - num63 * 20, 210 - num63 * 20, 210 - num63 * 20);
-															this.spriteBatch.Draw(Main.reaperEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 3f + origin.Y * Main.npc[i].scale + num57) - Main.npc[i].velocity * (float)num63 * 0.5f, new Rectangle?(Main.npc[i].frame), color14, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+															spriteBatch.Draw(Main.reaperEyeTexture, new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 3f + origin.Y * Main.npc[i].scale + num57) - Main.npc[i].velocity * (float)num63 * 0.5f, new Rectangle?(Main.npc[i].frame), color14, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 														}
 													}
 													else
@@ -12063,7 +12069,7 @@ namespace Terraria
 														if (Main.npc[i].type == 245 && Main.npc[i].alpha == 0)
 														{
 															Color color15 = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, 0);
-															this.spriteBatch.Draw(Main.golemTexture[3], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 + Main.npc[i].gfxOffY), new Rectangle?(frame), color15, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
+															spriteBatch.Draw(Main.golemTexture[3], new Vector2(Main.npc[i].position.X - Main.screenPosition.X + (float)(Main.npc[i].width / 2) - (float)Main.npcTexture[Main.npc[i].type].Width * Main.npc[i].scale / 2f + origin.X * Main.npc[i].scale, Main.npc[i].position.Y - Main.screenPosition.Y + (float)Main.npc[i].height - (float)Main.npcTexture[Main.npc[i].type].Height * Main.npc[i].scale / (float)Main.npcFrameCount[Main.npc[i].type] + 4f + origin.Y * Main.npc[i].scale + num57 + num56 + Main.npc[i].gfxOffY), new Rectangle?(frame), color15, Main.npc[i].rotation, origin, Main.npc[i].scale, effects, 0f);
 														}
 														else
 														{
@@ -12072,17 +12078,17 @@ namespace Terraria
 																Color color16 = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, 0);
 																if (Main.npc[i].frame.Y < 222)
 																{
-																	this.spriteBatch.Draw(Main.golemTexture[1], new Vector2(Main.npc[i].center().X - Main.screenPosition.X - 20f, Main.npc[i].center().Y - Main.screenPosition.Y - 27f), new Rectangle?(new Rectangle(0, 0, Main.golemTexture[1].Width, Main.golemTexture[1].Height / 2)), color16, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+																	spriteBatch.Draw(Main.golemTexture[1], new Vector2(Main.npc[i].center().X - Main.screenPosition.X - 20f, Main.npc[i].center().Y - Main.screenPosition.Y - 27f), new Rectangle?(new Rectangle(0, 0, Main.golemTexture[1].Width, Main.golemTexture[1].Height / 2)), color16, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 																}
 																else
 																{
 																	if (Main.npc[i].frame.Y < 444)
 																	{
-																		this.spriteBatch.Draw(Main.golemTexture[2], new Vector2(Main.npc[i].center().X - Main.screenPosition.X + 26f, Main.npc[i].center().Y - Main.screenPosition.Y - 28f), new Rectangle?(new Rectangle(0, 0, Main.golemTexture[2].Width, Main.golemTexture[2].Height / 4)), color16, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+																		spriteBatch.Draw(Main.golemTexture[2], new Vector2(Main.npc[i].center().X - Main.screenPosition.X + 26f, Main.npc[i].center().Y - Main.screenPosition.Y - 28f), new Rectangle?(new Rectangle(0, 0, Main.golemTexture[2].Width, Main.golemTexture[2].Height / 4)), color16, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 																	}
 																	else
 																	{
-																		this.spriteBatch.Draw(Main.golemTexture[2], new Vector2(Main.npc[i].center().X - Main.screenPosition.X - 38f, Main.npc[i].center().Y - Main.screenPosition.Y - 28f), new Rectangle?(new Rectangle(0, Main.golemTexture[2].Height / 2, Main.golemTexture[2].Width, Main.golemTexture[2].Height / 4)), color16, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+																		spriteBatch.Draw(Main.golemTexture[2], new Vector2(Main.npc[i].center().X - Main.screenPosition.X - 38f, Main.npc[i].center().Y - Main.screenPosition.Y - 28f), new Rectangle?(new Rectangle(0, Main.golemTexture[2].Height / 2, Main.golemTexture[2].Width, Main.golemTexture[2].Height / 4)), color16, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 																	}
 																}
 															}
@@ -12091,7 +12097,7 @@ namespace Terraria
 																if (Main.npc[i].type == 249)
 																{
 																	Color color17 = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, 0);
-																	this.spriteBatch.Draw(Main.golemTexture[1], new Vector2(Main.npc[i].center().X - Main.screenPosition.X - 20f, Main.npc[i].center().Y - Main.screenPosition.Y - 47f), new Rectangle?(new Rectangle(0, 0, Main.golemTexture[1].Width, Main.golemTexture[1].Height / 2)), color17, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+																	spriteBatch.Draw(Main.golemTexture[1], new Vector2(Main.npc[i].center().X - Main.screenPosition.X - 20f, Main.npc[i].center().Y - Main.screenPosition.Y - 47f), new Rectangle?(new Rectangle(0, 0, Main.golemTexture[1].Width, Main.golemTexture[1].Height / 2)), color17, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 																}
 															}
 														}
@@ -12113,7 +12119,7 @@ namespace Terraria
 		}
 		protected void DrawProj(int i)
 		{
-			this.LoadProjectile(Main.projectile[i].type);
+			LoadProjectile(Main.projectile[i].type);
 			if (Main.projectile[i].type == 32)
 			{
 				Vector2 vector = new Vector2(Main.projectile[i].position.X + (float)Main.projectile[i].width * 0.5f, Main.projectile[i].position.Y + (float)Main.projectile[i].height * 0.5f);
@@ -12159,7 +12165,7 @@ namespace Terraria
 							num = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector.X;
 							num2 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector.Y;
 							Color color = Lighting.GetColor((int)vector.X / 16, (int)(vector.Y / 16f));
-							this.spriteBatch.Draw(Main.chain5Texture, new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain5Texture.Width, Main.chain5Texture.Height)), color, rotation, new Vector2((float)Main.chain5Texture.Width * 0.5f, (float)Main.chain5Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.chain5Texture, new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain5Texture.Width, Main.chain5Texture.Height)), color, rotation, new Vector2((float)Main.chain5Texture.Width * 0.5f, (float)Main.chain5Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 						}
 					}
 				}
@@ -12196,7 +12202,7 @@ namespace Terraria
 								num5 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector2.X;
 								num6 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector2.Y;
 								Color color2 = Lighting.GetColor((int)vector2.X / 16, (int)(vector2.Y / 16f));
-								this.spriteBatch.Draw(Main.chain8Texture, new Vector2(vector2.X - Main.screenPosition.X, vector2.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain8Texture.Width, Main.chain8Texture.Height)), color2, rotation2, new Vector2((float)Main.chain8Texture.Width * 0.5f, (float)Main.chain8Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.chain8Texture, new Vector2(vector2.X - Main.screenPosition.X, vector2.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain8Texture.Width, Main.chain8Texture.Height)), color2, rotation2, new Vector2((float)Main.chain8Texture.Width * 0.5f, (float)Main.chain8Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -12209,7 +12215,7 @@ namespace Terraria
 						float num9 = Main.projectile[i].position.Y - num8;
 						float num10 = (float)Main.chain17Texture.Height - num9;
 						Color color3 = Lighting.GetColor((int)Main.projectile[i].position.X / 16, (int)Main.projectile[i].position.Y / 16);
-						this.spriteBatch.Draw(Main.chain17Texture, new Vector2(Main.projectile[i].position.X - Main.screenPosition.X, num8 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, (int)num10, Main.chain17Texture.Width, (int)num9)), color3, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.chain17Texture, new Vector2(Main.projectile[i].position.X - Main.screenPosition.X, num8 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, (int)num10, Main.chain17Texture.Width, (int)num9)), color3, 0f, new Vector2(0f, 0f), 1f, SpriteEffects.None, 0f);
 					}
 					else
 					{
@@ -12243,7 +12249,7 @@ namespace Terraria
 										num11 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector3.X;
 										num12 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector3.Y;
 										Color color4 = Lighting.GetColor((int)vector3.X / 16, (int)(vector3.Y / 16f));
-										this.spriteBatch.Draw(Main.chain9Texture, new Vector2(vector3.X - Main.screenPosition.X, vector3.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain8Texture.Width, Main.chain8Texture.Height)), color4, rotation3, new Vector2((float)Main.chain8Texture.Width * 0.5f, (float)Main.chain8Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.chain9Texture, new Vector2(vector3.X - Main.screenPosition.X, vector3.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain8Texture.Width, Main.chain8Texture.Height)), color4, rotation3, new Vector2((float)Main.chain8Texture.Width * 0.5f, (float)Main.chain8Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -12299,7 +12305,7 @@ namespace Terraria
 									vector4.Y = array[k].Y;
 									float rotation4 = array2[k];
 									Color color5 = Lighting.GetColor((int)vector4.X / 16, (int)(vector4.Y / 16f));
-									this.spriteBatch.Draw(Main.chain16Texture, new Vector2(vector4.X - Main.screenPosition.X, vector4.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain16Texture.Width, Main.chain16Texture.Height)), color5, rotation4, new Vector2((float)Main.chain16Texture.Width * 0.5f, (float)Main.chain16Texture.Height * 0.5f), 0.8f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.chain16Texture, new Vector2(vector4.X - Main.screenPosition.X, vector4.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain16Texture.Width, Main.chain16Texture.Height)), color5, rotation4, new Vector2((float)Main.chain16Texture.Width * 0.5f, (float)Main.chain16Texture.Height * 0.5f), 0.8f, SpriteEffects.None, 0f);
 								}
 							}
 							else
@@ -12334,7 +12340,7 @@ namespace Terraria
 												num24 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector5.X;
 												num25 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector5.Y;
 												Color color6 = Lighting.GetColor((int)vector5.X / 16, (int)(vector5.Y / 16f));
-												this.spriteBatch.Draw(Main.chain15Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain15Texture.Width, Main.chain15Texture.Height)), color6, rotation5, new Vector2((float)Main.chain15Texture.Width * 0.5f, (float)Main.chain15Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+												spriteBatch.Draw(Main.chain15Texture, new Vector2(vector5.X - Main.screenPosition.X, vector5.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain15Texture.Width, Main.chain15Texture.Height)), color6, rotation5, new Vector2((float)Main.chain15Texture.Width * 0.5f, (float)Main.chain15Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 											}
 										}
 									}
@@ -12372,7 +12378,7 @@ namespace Terraria
 													num28 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector6.X;
 													num29 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector6.Y;
 													Color color7 = Lighting.GetColor((int)vector6.X / 16, (int)(vector6.Y / 16f));
-													this.spriteBatch.Draw(Main.gemChainTexture[num27], new Vector2(vector6.X - Main.screenPosition.X, vector6.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.gemChainTexture[num27].Width, Main.gemChainTexture[num27].Height)), color7, rotation6, new Vector2((float)Main.gemChainTexture[num27].Width * 0.5f, (float)Main.gemChainTexture[num27].Height * 0.5f), 1f, SpriteEffects.None, 0f);
+													spriteBatch.Draw(Main.gemChainTexture[num27], new Vector2(vector6.X - Main.screenPosition.X, vector6.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.gemChainTexture[num27].Width, Main.gemChainTexture[num27].Height)), color7, rotation6, new Vector2((float)Main.gemChainTexture[num27].Width * 0.5f, (float)Main.gemChainTexture[num27].Height * 0.5f), 1f, SpriteEffects.None, 0f);
 												}
 											}
 										}
@@ -12409,7 +12415,7 @@ namespace Terraria
 														num31 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector7.X;
 														num32 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector7.Y;
 														Color color8 = Lighting.GetColor((int)vector7.X / 16, (int)(vector7.Y / 16f));
-														this.spriteBatch.Draw(Main.chain20Texture, new Vector2(vector7.X - Main.screenPosition.X, vector7.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain20Texture.Width, Main.chain20Texture.Height)), color8, num33 - 0.785f, new Vector2((float)Main.chain20Texture.Width * 0.5f, (float)Main.chain20Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+														spriteBatch.Draw(Main.chain20Texture, new Vector2(vector7.X - Main.screenPosition.X, vector7.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain20Texture.Width, Main.chain20Texture.Height)), color8, num33 - 0.785f, new Vector2((float)Main.chain20Texture.Width * 0.5f, (float)Main.chain20Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 													}
 												}
 											}
@@ -12446,7 +12452,7 @@ namespace Terraria
 															num35 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector8.X;
 															num36 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector8.Y;
 															Color color9 = Lighting.GetColor((int)vector8.X / 16, (int)(vector8.Y / 16f));
-															this.spriteBatch.Draw(Main.chainTexture, new Vector2(vector8.X - Main.screenPosition.X, vector8.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chainTexture.Width, Main.chainTexture.Height)), color9, rotation7, new Vector2((float)Main.chainTexture.Width * 0.5f, (float)Main.chainTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+															spriteBatch.Draw(Main.chainTexture, new Vector2(vector8.X - Main.screenPosition.X, vector8.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chainTexture.Width, Main.chainTexture.Height)), color9, rotation7, new Vector2((float)Main.chainTexture.Width * 0.5f, (float)Main.chainTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 														}
 													}
 												}
@@ -12515,7 +12521,7 @@ namespace Terraria
 																num40 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector9.X;
 																num41 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector9.Y;
 																Color color10 = Lighting.GetColor((int)vector9.X / 16, (int)(vector9.Y / 16f));
-																this.spriteBatch.Draw(Main.chain22Texture, new Vector2(vector9.X - Main.screenPosition.X, vector9.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain22Texture.Width, Main.chain22Texture.Height)), color10, rotation8, new Vector2((float)Main.chain22Texture.Width * 0.5f, (float)Main.chain22Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																spriteBatch.Draw(Main.chain22Texture, new Vector2(vector9.X - Main.screenPosition.X, vector9.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain22Texture.Width, Main.chain22Texture.Height)), color10, rotation8, new Vector2((float)Main.chain22Texture.Width * 0.5f, (float)Main.chain22Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 															}
 														}
 													}
@@ -12584,7 +12590,7 @@ namespace Terraria
 																	num47 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector10.X;
 																	num48 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector10.Y;
 																	Color color11 = Lighting.GetColor((int)vector10.X / 16, (int)(vector10.Y / 16f));
-																	this.spriteBatch.Draw(Main.chain23Texture, new Vector2(vector10.X - Main.screenPosition.X, vector10.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain23Texture.Width, Main.chain23Texture.Height)), color11, rotation9, new Vector2((float)Main.chain23Texture.Width * 0.5f, (float)Main.chain23Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																	spriteBatch.Draw(Main.chain23Texture, new Vector2(vector10.X - Main.screenPosition.X, vector10.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain23Texture.Width, Main.chain23Texture.Height)), color11, rotation9, new Vector2((float)Main.chain23Texture.Width * 0.5f, (float)Main.chain23Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																}
 															}
 														}
@@ -12653,7 +12659,7 @@ namespace Terraria
 																		num54 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector11.X;
 																		num55 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector11.Y;
 																		Color color12 = Lighting.GetColor((int)vector11.X / 16, (int)(vector11.Y / 16f));
-																		this.spriteBatch.Draw(Main.chain18Texture, new Vector2(vector11.X - Main.screenPosition.X, vector11.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain18Texture.Width, Main.chain18Texture.Height)), color12, rotation10, new Vector2((float)Main.chain18Texture.Width * 0.5f, (float)Main.chain18Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																		spriteBatch.Draw(Main.chain18Texture, new Vector2(vector11.X - Main.screenPosition.X, vector11.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain18Texture.Width, Main.chain18Texture.Height)), color12, rotation10, new Vector2((float)Main.chain18Texture.Width * 0.5f, (float)Main.chain18Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																	}
 																}
 															}
@@ -12726,7 +12732,7 @@ namespace Terraria
 																			num61 = Main.player[Main.projectile[i].owner].position.X + (float)(Main.player[Main.projectile[i].owner].width / 2) - vector12.X;
 																			num62 = Main.player[Main.projectile[i].owner].position.Y + (float)(Main.player[Main.projectile[i].owner].height / 2) - vector12.Y;
 																			Color color13 = Lighting.GetColor((int)vector12.X / 16, (int)(vector12.Y / 16f));
-																			this.spriteBatch.Draw(Main.chainTexture, new Vector2(vector12.X - Main.screenPosition.X, vector12.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chainTexture.Width, Main.chainTexture.Height)), color13, rotation11, new Vector2((float)Main.chainTexture.Width * 0.5f, (float)Main.chainTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																			spriteBatch.Draw(Main.chainTexture, new Vector2(vector12.X - Main.screenPosition.X, vector12.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chainTexture.Width, Main.chainTexture.Height)), color13, rotation11, new Vector2((float)Main.chainTexture.Width * 0.5f, (float)Main.chainTexture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																		}
 																	}
 																}
@@ -12818,35 +12824,35 @@ namespace Terraria
 																					Color color14 = Lighting.GetColor((int)vector14.X / 16, (int)(vector14.Y / 16f));
 																					if (Main.projectile[i].type == 25)
 																					{
-																						this.spriteBatch.Draw(Main.chain2Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain2Texture.Width, Main.chain2Texture.Height)), color14, rotation12, new Vector2((float)Main.chain2Texture.Width * 0.5f, (float)Main.chain2Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																						spriteBatch.Draw(Main.chain2Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain2Texture.Width, Main.chain2Texture.Height)), color14, rotation12, new Vector2((float)Main.chain2Texture.Width * 0.5f, (float)Main.chain2Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																					}
 																					else
 																					{
 																						if (Main.projectile[i].type == 35)
 																						{
-																							this.spriteBatch.Draw(Main.chain6Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain6Texture.Width, Main.chain6Texture.Height)), color14, rotation12, new Vector2((float)Main.chain6Texture.Width * 0.5f, (float)Main.chain6Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																							spriteBatch.Draw(Main.chain6Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain6Texture.Width, Main.chain6Texture.Height)), color14, rotation12, new Vector2((float)Main.chain6Texture.Width * 0.5f, (float)Main.chain6Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																						}
 																						else
 																						{
 																							if (Main.projectile[i].type == 247)
 																							{
-																								this.spriteBatch.Draw(Main.chain19Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain19Texture.Width, Main.chain19Texture.Height)), color14, rotation12, new Vector2((float)Main.chain19Texture.Width * 0.5f, (float)Main.chain19Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																								spriteBatch.Draw(Main.chain19Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain19Texture.Width, Main.chain19Texture.Height)), color14, rotation12, new Vector2((float)Main.chain19Texture.Width * 0.5f, (float)Main.chain19Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																							}
 																							else
 																							{
 																								if (Main.projectile[i].type == 63)
 																								{
-																									this.spriteBatch.Draw(Main.chain7Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain7Texture.Width, Main.chain7Texture.Height)), color14, rotation12, new Vector2((float)Main.chain7Texture.Width * 0.5f, (float)Main.chain7Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																									spriteBatch.Draw(Main.chain7Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain7Texture.Width, Main.chain7Texture.Height)), color14, rotation12, new Vector2((float)Main.chain7Texture.Width * 0.5f, (float)Main.chain7Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																								}
 																								else
 																								{
 																									if (Main.projectile[i].type == 154)
 																									{
-																										this.spriteBatch.Draw(Main.chain13Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain13Texture.Width, Main.chain13Texture.Height)), color14, rotation12, new Vector2((float)Main.chain13Texture.Width * 0.5f, (float)Main.chain13Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																										spriteBatch.Draw(Main.chain13Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain13Texture.Width, Main.chain13Texture.Height)), color14, rotation12, new Vector2((float)Main.chain13Texture.Width * 0.5f, (float)Main.chain13Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																									}
 																									else
 																									{
-																										this.spriteBatch.Draw(Main.chain3Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain3Texture.Width, Main.chain3Texture.Height)), color14, rotation12, new Vector2((float)Main.chain3Texture.Width * 0.5f, (float)Main.chain3Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+																										spriteBatch.Draw(Main.chain3Texture, new Vector2(vector14.X - Main.screenPosition.X, vector14.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain3Texture.Width, Main.chain3Texture.Height)), color14, rotation12, new Vector2((float)Main.chain3Texture.Width * 0.5f, (float)Main.chain3Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 																									}
 																								}
 																							}
@@ -13091,7 +13097,7 @@ namespace Terraria
 					alpha.A = (byte)((float)alpha.A * num78);
 					int num79 = Main.projectileTexture[Main.projectile[i].type].Height / Main.projFrames[Main.projectile[i].type];
 					int y2 = num79 * Main.projectile[i].frame;
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74 - num76, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY - num77), new Rectangle?(new Rectangle(0, y2, Main.projectileTexture[Main.projectile[i].type].Width, num79)), alpha, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74 - num76, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY - num77), new Rectangle?(new Rectangle(0, y2, Main.projectileTexture[Main.projectile[i].type].Width, num79)), alpha, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
 				}
 			}
 			if (Main.projFrames[Main.projectile[i].type] > 1)
@@ -13105,32 +13111,32 @@ namespace Terraria
 					int num81 = (int)Main.player[Main.projectile[i].owner].shirtColor.B;
 					Color oldColor = new Color((int)((byte)r), (int)((byte)g), (int)((byte)num81));
 					newColor = Lighting.GetColor((int)((double)Main.projectile[i].position.X + (double)Main.projectile[i].width * 0.5) / 16, (int)(((double)Main.projectile[i].position.Y + (double)Main.projectile[i].height * 0.5) / 16.0), oldColor);
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, y3, Main.projectileTexture[Main.projectile[i].type].Width, num80)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, y3, Main.projectileTexture[Main.projectile[i].type].Width, num80)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
 					return;
 				}
-				this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, y3, Main.projectileTexture[Main.projectile[i].type].Width, num80)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
+				spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, y3, Main.projectileTexture[Main.projectile[i].type].Width, num80)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
 				return;
 			}
 			else
 			{
 				if (Main.projectile[i].type == 157)
 				{
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)(Main.projectileTexture[Main.projectile[i].type].Width / 2), (float)(Main.projectileTexture[Main.projectile[i].type].Height / 2)), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)(Main.projectileTexture[Main.projectile[i].type].Width / 2), (float)(Main.projectileTexture[Main.projectile[i].type].Height / 2)), Main.projectile[i].scale, effects, 0f);
 					return;
 				}
 				if (Main.projectile[i].type == 306)
 				{
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)(Main.projectileTexture[Main.projectile[i].type].Width / 2), (float)(Main.projectileTexture[Main.projectile[i].type].Height / 2)), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)(Main.projectileTexture[Main.projectile[i].type].Width / 2), (float)(Main.projectileTexture[Main.projectile[i].type].Height / 2)), Main.projectile[i].scale, effects, 0f);
 					return;
 				}
 				if (Main.projectile[i].type == 256)
 				{
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)(Main.projectileTexture[Main.projectile[i].type].Width / 2), (float)(Main.projectileTexture[Main.projectile[i].type].Height / 2)), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)(Main.projectileTexture[Main.projectile[i].type].Width / 2), (float)(Main.projectileTexture[Main.projectile[i].type].Height / 2)), Main.projectile[i].scale, effects, 0f);
 					return;
 				}
 				if (Main.projectile[i].aiStyle == 27)
 				{
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)Main.projectileTexture[Main.projectile[i].type].Width, 0f), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2((float)Main.projectileTexture[Main.projectile[i].type].Width, 0f), Main.projectile[i].scale, effects, 0f);
 					return;
 				}
 				if (Main.projectile[i].aiStyle == 19)
@@ -13140,7 +13146,7 @@ namespace Terraria
 					{
 						origin.X = (float)Main.projectileTexture[Main.projectile[i].type].Width;
 					}
-					this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, origin, Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + (float)(Main.projectile[i].width / 2), Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, origin, Main.projectile[i].scale, effects, 0f);
 					return;
 				}
 				if (Main.projectile[i].type == 94 && Main.projectile[i].ai[1] > 6f)
@@ -13154,7 +13160,7 @@ namespace Terraria
 						alpha2.B = (byte)((float)alpha2.B * num82);
 						alpha2.A = (byte)((float)alpha2.A * num82);
 						float num83 = (float)(9 - m) / 9f;
-						this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].oldPos[m].X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].oldPos[m].Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), alpha2, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), num83 * Main.projectile[i].scale, effects, 0f);
+						spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].oldPos[m].X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].oldPos[m].Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), alpha2, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), num83 * Main.projectile[i].scale, effects, 0f);
 					}
 				}
 				if (Main.projectile[i].type == 301)
@@ -13168,7 +13174,7 @@ namespace Terraria
 						alpha3.B = (byte)((float)alpha3.B * num84);
 						alpha3.A = (byte)((float)alpha3.A * num84);
 						float num85 = (float)(9 - n) / 9f;
-						this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].oldPos[n].X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].oldPos[n].Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), alpha3, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), num85 * Main.projectile[i].scale, effects, 0f);
+						spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].oldPos[n].X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].oldPos[n].Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), alpha3, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), num85 * Main.projectile[i].scale, effects, 0f);
 					}
 				}
 				if (Main.projectile[i].type == 117 && Main.projectile[i].ai[0] > 3f)
@@ -13199,13 +13205,13 @@ namespace Terraria
 						alpha4.G = (byte)((float)alpha4.G * num89);
 						alpha4.B = (byte)((float)alpha4.B * num89);
 						alpha4.A = (byte)((float)alpha4.A * num89);
-						this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74 - num87, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY - num88), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), alpha4, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
+						spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74 - num87, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY - num88), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), alpha4, Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
 					}
 				}
-				this.spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
+				spriteBatch.Draw(Main.projectileTexture[Main.projectile[i].type], new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2) + Main.projectile[i].gfxOffY), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), Main.projectile[i].GetAlpha(newColor), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
 				if (Main.projectile[i].type == 106)
 				{
-					this.spriteBatch.Draw(Main.lightDiscTexture, new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), new Color(200, 200, 200, 0), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
+					spriteBatch.Draw(Main.lightDiscTexture, new Vector2(Main.projectile[i].position.X - Main.screenPosition.X + num75 + (float)num74, Main.projectile[i].position.Y - Main.screenPosition.Y + (float)(Main.projectile[i].height / 2)), new Rectangle?(new Rectangle(0, 0, Main.projectileTexture[Main.projectile[i].type].Width, Main.projectileTexture[Main.projectile[i].type].Height)), new Color(200, 200, 200, 0), Main.projectile[i].rotation, new Vector2(num75, (float)(Main.projectile[i].height / 2 + num73)), Main.projectile[i].scale, effects, 0f);
 				}
 				return;
 			}
@@ -13250,7 +13256,7 @@ namespace Terraria
 								num3 = num - vector.X;
 								num4 = num2 - vector.Y;
 								Color color = Lighting.GetColor((int)vector.X / 16, (int)(vector.Y / 16f));
-								this.spriteBatch.Draw(Main.chain12Texture, new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain12Texture.Width, Main.chain12Texture.Height)), color, rotation, new Vector2((float)Main.chain12Texture.Width * 0.5f, (float)Main.chain12Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.chain12Texture, new Vector2(vector.X - Main.screenPosition.X, vector.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain12Texture.Width, Main.chain12Texture.Height)), color, rotation, new Vector2((float)Main.chain12Texture.Width * 0.5f, (float)Main.chain12Texture.Height * 0.5f), 1f, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -13300,7 +13306,7 @@ namespace Terraria
 							num9 = num6 - vector2.X;
 							num10 = num7 - vector2.Y;
 							Color color2 = Lighting.GetColor((int)vector2.X / 16, (int)(vector2.Y / 16f));
-							this.spriteBatch.Draw(Main.chain12Texture, new Vector2(vector2.X - Main.screenPosition.X, vector2.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain4Texture.Width, height)), color2, rotation2, new Vector2((float)Main.chain4Texture.Width * 0.5f, (float)Main.chain4Texture.Height * 0.5f), 1f, effects, 0f);
+							spriteBatch.Draw(Main.chain12Texture, new Vector2(vector2.X - Main.screenPosition.X, vector2.Y - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chain4Texture.Width, height)), color2, rotation2, new Vector2((float)Main.chain4Texture.Width * 0.5f, (float)Main.chain4Texture.Height * 0.5f), 1f, effects, 0f);
 						}
 					}
 				}
@@ -13360,7 +13366,7 @@ namespace Terraria
 					{
 						int x = (int)(num17 + (float)(Main.wofTexture.Width / 2)) / 16;
 						int y = (int)(num16 + (float)num20) / 16;
-						this.spriteBatch.Draw(Main.wofTexture, new Vector2(num17 - Main.screenPosition.X, num16 + (float)num20 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, num19 + num20, Main.wofTexture.Width, 16)), Lighting.GetColor(x, y), 0f, default(Vector2), 1f, effects2, 0f);
+						spriteBatch.Draw(Main.wofTexture, new Vector2(num17 - Main.screenPosition.X, num16 + (float)num20 - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, num19 + num20, Main.wofTexture.Width, 16)), Lighting.GetColor(x, y), 0f, default(Vector2), 1f, effects2, 0f);
 						num20 += 16;
 						if ((float)num20 >= num18)
 						{
@@ -13389,7 +13395,7 @@ namespace Terraria
 			Color immuneAlpha = drawPlayer.GetImmuneAlpha(Lighting.GetColor((int)((double)drawPlayer.position.X + (double)drawPlayer.width * 0.5) / 16, (int)((double)drawPlayer.position.Y + (double)drawPlayer.height * 0.5) / 16, new Color((int)(Main.mouseTextColor / 2 + 100), (int)(Main.mouseTextColor / 2 + 100), (int)(Main.mouseTextColor / 2 + 100), (int)(Main.mouseTextColor / 2 + 100))));
 			Rectangle value = new Rectangle(0, Main.ghostTexture.Height / 4 * drawPlayer.ghostFrame, Main.ghostTexture.Width, Main.ghostTexture.Height / 4);
 			Vector2 origin = new Vector2((float)value.Width * 0.5f, (float)value.Height * 0.5f);
-			this.spriteBatch.Draw(Main.ghostTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(value.Width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(value.Height / 2)))), new Rectangle?(value), immuneAlpha, 0f, origin, 1f, effects, 0f);
+			spriteBatch.Draw(Main.ghostTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(value.Width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(value.Height / 2)))), new Rectangle?(value), immuneAlpha, 0f, origin, 1f, effects, 0f);
 		}
 		protected Vector2 DrawPlayerItemPos(Player drawPlayer)
 		{
@@ -13765,12 +13771,12 @@ namespace Terraria
 			{
 				index = (int)drawPlayer.dye[0].dye;
 			}
-			this.LoadHair(drawPlayer.hair);
-			Color color = this.quickAlpha(Color.White, Alpha);
-			Color color2 = this.quickAlpha(drawPlayer.eyeColor, Alpha);
-			Color color3 = this.quickAlpha(drawPlayer.hairColor, Alpha);
-			Color color4 = this.quickAlpha(drawPlayer.skinColor, Alpha);
-			Color color5 = this.quickAlpha(Color.White, Alpha);
+			LoadHair(drawPlayer.hair);
+			Color color = quickAlpha(Color.White, Alpha);
+			Color color2 = quickAlpha(drawPlayer.eyeColor, Alpha);
+			Color color3 = quickAlpha(drawPlayer.hairColor, Alpha);
+			Color color4 = quickAlpha(drawPlayer.skinColor, Alpha);
+			Color color5 = quickAlpha(Color.White, Alpha);
 			SpriteEffects effects = SpriteEffects.None;
 			if (drawPlayer.direction < 0)
 			{
@@ -13787,18 +13793,18 @@ namespace Terraria
 			drawPlayer.position.Y = drawPlayer.position.Y - 4f;
 			if (drawPlayer.head > 0 && drawPlayer.head < 112)
 			{
-				this.LoadArmorHead(drawPlayer.head);
+				LoadArmorHead(drawPlayer.head);
 			}
 			if (drawPlayer.head != 38)
 			{
-				this.spriteBatch.Draw(Main.playerHeadTexture, new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color4, drawPlayer.headRotation, vector, Scale, effects, 0f);
-				this.spriteBatch.Draw(Main.playerEyeWhitesTexture, new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color, drawPlayer.headRotation, vector, Scale, effects, 0f);
-				this.spriteBatch.Draw(Main.playerEyesTexture, new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color2, drawPlayer.headRotation, vector, Scale, effects, 0f);
+				spriteBatch.Draw(Main.playerHeadTexture, new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color4, drawPlayer.headRotation, vector, Scale, effects, 0f);
+				spriteBatch.Draw(Main.playerEyeWhitesTexture, new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color, drawPlayer.headRotation, vector, Scale, effects, 0f);
+				spriteBatch.Draw(Main.playerEyesTexture, new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color2, drawPlayer.headRotation, vector, Scale, effects, 0f);
 			}
 			if (drawPlayer.head == 10 || drawPlayer.head == 12 || drawPlayer.head == 28 || drawPlayer.head == 62 || drawPlayer.head == 97 || drawPlayer.head == 106)
 			{
 				Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-				this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
+				spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				if (!drawPlayer.invis)
 				{
@@ -13808,7 +13814,7 @@ namespace Terraria
 					{
 						bodyFrame2.Y = 0;
 					}
-					this.spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame2), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
+					spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame2), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
 				}
 			}
 			if (drawPlayer.head == 14 || drawPlayer.head == 15 || drawPlayer.head == 16 || drawPlayer.head == 18 || drawPlayer.head == 21 || drawPlayer.head == 24 || drawPlayer.head == 25 || drawPlayer.head == 26 || drawPlayer.head == 40 || drawPlayer.head == 44 || drawPlayer.head == 51 || drawPlayer.head == 56 || drawPlayer.head == 59 || drawPlayer.head == 60 || drawPlayer.head == 67 || drawPlayer.head == 68 || drawPlayer.head == 69)
@@ -13821,7 +13827,7 @@ namespace Terraria
 				}
 				if (!drawPlayer.invis)
 				{
-					this.spriteBatch.Draw(Main.playerHairAltTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame3), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
+					spriteBatch.Draw(Main.playerHairAltTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame3), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
 				}
 			}
 			if (drawPlayer.head == 23)
@@ -13834,10 +13840,10 @@ namespace Terraria
 				}
 				if (!drawPlayer.invis)
 				{
-					this.spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame4), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
+					spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame4), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
 				}
 				Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-				this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
+				spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			}
 			else
@@ -13908,7 +13914,7 @@ namespace Terraria
 					}
 					bodyFrame5.Y += num;
 					Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-					this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f + (float)num) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame5), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
+					spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f + (float)num) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame5), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
 					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				}
 				else
@@ -13916,7 +13922,7 @@ namespace Terraria
 					if (drawPlayer.head > 0 && drawPlayer.head < 112 && drawPlayer.head != 28)
 					{
 						Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-						this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
+						spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.headRotation, vector, Scale, effects, 0f);
 						Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 					}
 					else
@@ -13927,7 +13933,7 @@ namespace Terraria
 						{
 							bodyFrame6.Y = 0;
 						}
-						this.spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame6), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
+						spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2), drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + vector, new Rectangle?(bodyFrame6), color3, drawPlayer.headRotation, vector, Scale, effects, 0f);
 					}
 				}
 			}
@@ -13972,17 +13978,17 @@ namespace Terraria
 			Color color12 = drawPlayer.GetImmuneAlpha2(Lighting.GetColor((int)((double)drawPlayer.position.X + (double)drawPlayer.width * 0.5) / 16, (int)((double)drawPlayer.position.Y + (double)drawPlayer.height * 0.75) / 16, Color.White));
 			if (drawPlayer.head > 0 && drawPlayer.head < 112)
 			{
-				this.LoadArmorHead(drawPlayer.head);
+				LoadArmorHead(drawPlayer.head);
 			}
 			if (drawPlayer.body > 0 && drawPlayer.body < 75)
 			{
-				this.LoadArmorBody(drawPlayer.body);
+				LoadArmorBody(drawPlayer.body);
 			}
 			if (drawPlayer.legs > 0 && drawPlayer.legs < 64)
 			{
-				this.LoadArmorLegs(drawPlayer.legs);
+				LoadArmorLegs(drawPlayer.legs);
 			}
-			this.LoadHair(drawPlayer.hair);
+			LoadHair(drawPlayer.hair);
 			if ((drawPlayer.head == 78 || drawPlayer.head == 79 || drawPlayer.head == 80) && drawPlayer.body == 51 && drawPlayer.legs == 47)
 			{
 				float num = (float)Main.mouseTextColor / 200f - 0.3f;
@@ -14122,7 +14128,7 @@ namespace Terraria
 					Main.dust[num13].velocity *= 0.25f;
 				}
 			}
-			if (drawPlayer.shadow == 0f && drawPlayer.palladiumRegen && drawPlayer.statLife < drawPlayer.statLifeMax && base.IsActive && !Main.gamePaused && drawPlayer.miscCounter % 10 == 0)
+			if (drawPlayer.shadow == 0f && drawPlayer.palladiumRegen && drawPlayer.statLife < drawPlayer.statLifeMax && IsActive && !Main.gamePaused && drawPlayer.miscCounter % 10 == 0)
 			{
 				Vector2 position;
 				position.X = drawPlayer.position.X + (float)Main.rand.Next(drawPlayer.width);
@@ -14291,7 +14297,7 @@ namespace Terraria
 				{
 					num16 = 10f;
 				}
-				this.spriteBatch.Draw(Main.flyingCarpetTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 28f * drawPlayer.gravDir + num16))), new Rectangle?(new Rectangle(0, Main.flyingCarpetTexture.Height / 6 * drawPlayer.carpetFrame, Main.flyingCarpetTexture.Width, Main.flyingCarpetTexture.Height / 6)), color13, drawPlayer.bodyRotation, new Vector2((float)(Main.flyingCarpetTexture.Width / 2), (float)(Main.flyingCarpetTexture.Height / 8)), 1f, effects, 0f);
+				spriteBatch.Draw(Main.flyingCarpetTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 28f * drawPlayer.gravDir + num16))), new Rectangle?(new Rectangle(0, Main.flyingCarpetTexture.Height / 6 * drawPlayer.carpetFrame, Main.flyingCarpetTexture.Width, Main.flyingCarpetTexture.Height / 6)), color13, drawPlayer.bodyRotation, new Vector2((float)(Main.flyingCarpetTexture.Width / 2), (float)(Main.flyingCarpetTexture.Height / 8)), 1f, effects, 0f);
 			}
 			bool flag = false;
 			if ((drawPlayer.wings == 0 || drawPlayer.velocity.Y == 0f) && (drawPlayer.inventory[drawPlayer.selectedItem].type == 1178 || drawPlayer.inventory[drawPlayer.selectedItem].type == 779 || drawPlayer.inventory[drawPlayer.selectedItem].type == 1295 || drawPlayer.turtleArmor))
@@ -14328,16 +14334,16 @@ namespace Terraria
 				}
 				if (num17 == 4)
 				{
-					this.spriteBatch.Draw(Main.BackPackTexture[num17], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.BackPackTexture[num17], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 				else
 				{
-					this.spriteBatch.Draw(Main.BackPackTexture[num17], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction))) + num18 * (float)drawPlayer.direction, (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + num19 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, 0, Main.BackPackTexture[num17].Width, Main.BackPackTexture[num17].Height)), color11, drawPlayer.bodyRotation, new Vector2((float)(Main.BackPackTexture[num17].Width / 2), (float)(Main.BackPackTexture[num17].Height / 2)), 1f, effects, 0f);
+					spriteBatch.Draw(Main.BackPackTexture[num17], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction))) + num18 * (float)drawPlayer.direction, (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + num19 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, 0, Main.BackPackTexture[num17].Width, Main.BackPackTexture[num17].Height)), color11, drawPlayer.bodyRotation, new Vector2((float)(Main.BackPackTexture[num17].Width / 2), (float)(Main.BackPackTexture[num17].Height / 2)), 1f, effects, 0f);
 				}
 			}
 			if (!flag && drawPlayer.wings > 0)
 			{
-				this.LoadWings(drawPlayer.wings);
+				LoadWings(drawPlayer.wings);
 				int num20 = 0;
 				int num21 = 0;
 				if (drawPlayer.wings == 5)
@@ -14362,7 +14368,7 @@ namespace Terraria
 				{
 					Main.pixelShader.CurrentTechnique.Passes[index2].Apply();
 				}
-				this.spriteBatch.Draw(Main.wingsTexture[drawPlayer.wings], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction)) + num21 * drawPlayer.direction), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + (float)num20 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, Main.wingsTexture[drawPlayer.wings].Height / 4 * drawPlayer.wingFrame, Main.wingsTexture[drawPlayer.wings].Width, Main.wingsTexture[drawPlayer.wings].Height / 4)), color14, drawPlayer.bodyRotation, new Vector2((float)(Main.wingsTexture[drawPlayer.wings].Width / 2), (float)(Main.wingsTexture[drawPlayer.wings].Height / 8)), 1f, effects, 0f);
+				spriteBatch.Draw(Main.wingsTexture[drawPlayer.wings], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction)) + num21 * drawPlayer.direction), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + (float)num20 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, Main.wingsTexture[drawPlayer.wings].Height / 4 * drawPlayer.wingFrame, Main.wingsTexture[drawPlayer.wings].Width, Main.wingsTexture[drawPlayer.wings].Height / 4)), color14, drawPlayer.bodyRotation, new Vector2((float)(Main.wingsTexture[drawPlayer.wings].Width / 2), (float)(Main.wingsTexture[drawPlayer.wings].Height / 8)), 1f, effects, 0f);
 				if (drawPlayer.wings == 3)
 				{
 					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
@@ -14370,13 +14376,13 @@ namespace Terraria
 			}
 			if (!drawPlayer.invis)
 			{
-				this.spriteBatch.Draw(Main.skinBodyTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
-				this.spriteBatch.Draw(Main.skinLegsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.legFrame), immuneAlpha, drawPlayer.legRotation, origin, 1f, effects, 0f);
+				spriteBatch.Draw(Main.skinBodyTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+				spriteBatch.Draw(Main.skinLegsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.legFrame), immuneAlpha, drawPlayer.legRotation, origin, 1f, effects, 0f);
 			}
 			if (drawPlayer.legs > 0 && drawPlayer.legs < 64)
 			{
 				Main.pixelShader.CurrentTechnique.Passes[index3].Apply();
-				this.spriteBatch.Draw(Main.armorLegTexture[drawPlayer.legs], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color12, drawPlayer.legRotation, vector, 1f, effects, 0f);
+				spriteBatch.Draw(Main.armorLegTexture[drawPlayer.legs], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color12, drawPlayer.legRotation, vector, 1f, effects, 0f);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			}
 			else
@@ -14385,13 +14391,13 @@ namespace Terraria
 				{
 					if (!drawPlayer.male)
 					{
-						this.spriteBatch.Draw(Main.femalePantsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color8, drawPlayer.legRotation, vector, 1f, effects, 0f);
-						this.spriteBatch.Draw(Main.femaleShoesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color9, drawPlayer.legRotation, vector, 1f, effects, 0f);
+						spriteBatch.Draw(Main.femalePantsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color8, drawPlayer.legRotation, vector, 1f, effects, 0f);
+						spriteBatch.Draw(Main.femaleShoesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color9, drawPlayer.legRotation, vector, 1f, effects, 0f);
 					}
 					else
 					{
-						this.spriteBatch.Draw(Main.playerPantsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color8, drawPlayer.legRotation, vector, 1f, effects, 0f);
-						this.spriteBatch.Draw(Main.playerShoesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color9, drawPlayer.legRotation, vector, 1f, effects, 0f);
+						spriteBatch.Draw(Main.playerPantsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color8, drawPlayer.legRotation, vector, 1f, effects, 0f);
+						spriteBatch.Draw(Main.playerShoesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.legFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.legFrame.Height + 4f))) + drawPlayer.legPosition + vector, new Rectangle?(drawPlayer.legFrame), color9, drawPlayer.legRotation, vector, 1f, effects, 0f);
 					}
 				}
 			}
@@ -14400,16 +14406,16 @@ namespace Terraria
 				Main.pixelShader.CurrentTechnique.Passes[index2].Apply();
 				if (!drawPlayer.male)
 				{
-					this.spriteBatch.Draw(Main.femaleBodyTexture[drawPlayer.body], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.femaleBodyTexture[drawPlayer.body], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 				else
 				{
-					this.spriteBatch.Draw(Main.armorBodyTexture[drawPlayer.body], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.armorBodyTexture[drawPlayer.body], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				if ((drawPlayer.body == 10 || drawPlayer.body == 11 || drawPlayer.body == 12 || drawPlayer.body == 13 || drawPlayer.body == 14 || drawPlayer.body == 43 || drawPlayer.body == 15 || drawPlayer.body == 16 || drawPlayer.body == 20 || drawPlayer.body == 39 || drawPlayer.body == 50 || drawPlayer.body == 38 || drawPlayer.body == 40 || drawPlayer.body == 57 || drawPlayer.body == 44 || drawPlayer.body == 52) && !drawPlayer.invis)
 				{
-					this.spriteBatch.Draw(Main.playerHandsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHandsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 			}
 			else
@@ -14418,27 +14424,27 @@ namespace Terraria
 				{
 					if (!drawPlayer.male)
 					{
-						this.spriteBatch.Draw(Main.femaleUnderShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
-						this.spriteBatch.Draw(Main.femaleShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color6, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.femaleUnderShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.femaleShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color6, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 					}
 					else
 					{
-						this.spriteBatch.Draw(Main.playerUnderShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
-						this.spriteBatch.Draw(Main.playerShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color6, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.playerUnderShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.playerShirtTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color6, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 					}
-					this.spriteBatch.Draw(Main.playerHandsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHandsTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 			}
 			if (!drawPlayer.invis && drawPlayer.head != 38)
 			{
-				this.spriteBatch.Draw(Main.playerHeadTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color4, drawPlayer.headRotation, vector2, 1f, effects, 0f);
-				this.spriteBatch.Draw(Main.playerEyeWhitesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color, drawPlayer.headRotation, vector2, 1f, effects, 0f);
-				this.spriteBatch.Draw(Main.playerEyesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color2, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+				spriteBatch.Draw(Main.playerHeadTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color4, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+				spriteBatch.Draw(Main.playerEyeWhitesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+				spriteBatch.Draw(Main.playerEyesTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color2, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 			}
 			if (drawPlayer.head == 10 || drawPlayer.head == 12 || drawPlayer.head == 28 || drawPlayer.head == 62 || drawPlayer.head == 97 || drawPlayer.head == 106)
 			{
 				Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-				this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+				spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				if (!drawPlayer.invis)
 				{
@@ -14448,7 +14454,7 @@ namespace Terraria
 					{
 						bodyFrame.Y = 0;
 					}
-					this.spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 				}
 			}
 			if (drawPlayer.head == 14 || drawPlayer.head == 15 || drawPlayer.head == 16 || drawPlayer.head == 18 || drawPlayer.head == 21 || drawPlayer.head == 24 || drawPlayer.head == 25 || drawPlayer.head == 26 || drawPlayer.head == 40 || drawPlayer.head == 44 || drawPlayer.head == 51 || drawPlayer.head == 56 || drawPlayer.head == 59 || drawPlayer.head == 60 || drawPlayer.head == 67 || drawPlayer.head == 68 || drawPlayer.head == 69)
@@ -14461,7 +14467,7 @@ namespace Terraria
 				}
 				if (!drawPlayer.invis)
 				{
-					this.spriteBatch.Draw(Main.playerHairAltTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame2), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHairAltTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame2), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 				}
 			}
 			if (drawPlayer.head == 23)
@@ -14474,10 +14480,10 @@ namespace Terraria
 				}
 				if (!drawPlayer.invis)
 				{
-					this.spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame3), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame3), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 				}
 				Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-				this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+				spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			}
 			else
@@ -14548,7 +14554,7 @@ namespace Terraria
 					}
 					bodyFrame4.Y += num22;
 					Main.pixelShader.CurrentTechnique.Passes[index].Apply();
-					this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f + (float)num22))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame4), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+					spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f + (float)num22))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame4), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				}
 				else
@@ -14558,9 +14564,9 @@ namespace Terraria
 						Main.pixelShader.CurrentTechnique.Passes[index].Apply();
 						if (drawPlayer.head > 0 && drawPlayer.head < 112)
 						{
-							this.LoadArmorHead(drawPlayer.head);
+							LoadArmorHead(drawPlayer.head);
 						}
-						this.spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+						spriteBatch.Draw(Main.armorHeadTexture[drawPlayer.head], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(drawPlayer.bodyFrame), color10, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 						Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 					}
 					else
@@ -14573,7 +14579,7 @@ namespace Terraria
 							{
 								bodyFrame5.Y = 0;
 							}
-							this.spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame5), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
+							spriteBatch.Draw(Main.playerHairTexture[drawPlayer.hair], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + vector2, new Rectangle?(bodyFrame5), color3, drawPlayer.headRotation, vector2, 1f, effects, 0f);
 						}
 					}
 				}
@@ -14585,20 +14591,20 @@ namespace Terraria
 					int num23 = -26;
 					int num24 = 0;
 					float rotation = 0f;
-					this.spriteBatch.Draw(Main.pulleyTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction)) + num24 * drawPlayer.direction), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + (float)num23 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, Main.pulleyTexture.Height / 2 * drawPlayer.pulleyFrame, Main.pulleyTexture.Width, Main.pulleyTexture.Height / 2)), color10, rotation, new Vector2((float)(Main.pulleyTexture.Width / 2), (float)(Main.pulleyTexture.Height / 4)), 1f, effects, 0f);
+					spriteBatch.Draw(Main.pulleyTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction)) + num24 * drawPlayer.direction), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + (float)num23 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, Main.pulleyTexture.Height / 2 * drawPlayer.pulleyFrame, Main.pulleyTexture.Width, Main.pulleyTexture.Height / 2)), color10, rotation, new Vector2((float)(Main.pulleyTexture.Width / 2), (float)(Main.pulleyTexture.Height / 4)), 1f, effects, 0f);
 				}
 				else
 				{
 					int num25 = -26;
 					int num26 = 10;
 					float rotation2 = 0.35f * (float)(-(float)drawPlayer.direction);
-					this.spriteBatch.Draw(Main.pulleyTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction)) + num26 * drawPlayer.direction), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + (float)num25 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, Main.pulleyTexture.Height / 2 * drawPlayer.pulleyFrame, Main.pulleyTexture.Width, Main.pulleyTexture.Height / 2)), color10, rotation2, new Vector2((float)(Main.pulleyTexture.Width / 2), (float)(Main.pulleyTexture.Height / 4)), 1f, effects, 0f);
+					spriteBatch.Draw(Main.pulleyTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction)) + num26 * drawPlayer.direction), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) + 2f * drawPlayer.gravDir + (float)num25 * drawPlayer.gravDir))), new Rectangle?(new Rectangle(0, Main.pulleyTexture.Height / 2 * drawPlayer.pulleyFrame, Main.pulleyTexture.Width, Main.pulleyTexture.Height / 2)), color10, rotation2, new Vector2((float)(Main.pulleyTexture.Width / 2), (float)(Main.pulleyTexture.Height / 4)), 1f, effects, 0f);
 				}
 			}
 			if (drawPlayer.heldProj >= 0)
 			{
 				Main.projectile[drawPlayer.heldProj].gfxOffY = drawPlayer.gfxOffY;
-				this.DrawProj(drawPlayer.heldProj);
+				DrawProj(drawPlayer.heldProj);
 			}
 			Color newColor = Lighting.GetColor((int)((double)drawPlayer.position.X + (double)drawPlayer.width * 0.5) / 16, (int)(((double)drawPlayer.position.Y + (double)drawPlayer.height * 0.5) / 16.0));
 			if (drawPlayer.inventory[drawPlayer.selectedItem].type == 678)
@@ -14655,12 +14661,12 @@ namespace Terraria
 								num30 -= Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width;
 							}
 						}
-						this.spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.position.X + (float)(drawPlayer.width / 2) - Main.screenPosition.X + origin2.X + (float)num30)), (float)((int)(drawPlayer.position.Y + (float)(drawPlayer.height / 2) - Main.screenPosition.Y + (float)num31))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), num29, origin2, drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+						spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.position.X + (float)(drawPlayer.width / 2) - Main.screenPosition.X + origin2.X + (float)num30)), (float)((int)(drawPlayer.position.Y + (float)(drawPlayer.height / 2) - Main.screenPosition.Y + (float)num31))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), num29, origin2, drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 					}
 					else
 					{
 						Vector2 vector3 = new Vector2((float)(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width / 2), (float)(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height / 2));
-						Vector2 vector4 = this.DrawPlayerItemPos(drawPlayer);
+						Vector2 vector4 = DrawPlayerItemPos(drawPlayer);
 						int num32 = (int)vector4.X;
 						vector3.Y = vector4.Y;
 						Vector2 origin3 = new Vector2((float)(-(float)num32), (float)(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height / 2));
@@ -14668,10 +14674,10 @@ namespace Terraria
 						{
 							origin3 = new Vector2((float)(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width + num32), (float)(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height / 2));
 						}
-						this.spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X + vector3.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y + vector3.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), drawPlayer.itemRotation, origin3, drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+						spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X + vector3.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y + vector3.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), drawPlayer.itemRotation, origin3, drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 						if (drawPlayer.inventory[drawPlayer.selectedItem].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X + vector3.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y + vector3.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetColor(newColor), drawPlayer.itemRotation, origin3, drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+							spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X + vector3.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y + vector3.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetColor(newColor), drawPlayer.itemRotation, origin3, drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 						}
 					}
 				}
@@ -14679,10 +14685,10 @@ namespace Terraria
 				{
 					if (drawPlayer.gravDir == -1f)
 					{
-						this.spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f - (float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f * (float)drawPlayer.direction, 0f), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+						spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f - (float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f * (float)drawPlayer.direction, 0f), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 						if (drawPlayer.inventory[drawPlayer.selectedItem].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetColor(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f - (float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f * (float)drawPlayer.direction, 0f), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+							spriteBatch.Draw(Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width, Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetColor(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f - (float)Main.itemTexture[drawPlayer.inventory[drawPlayer.selectedItem].type].Width * 0.5f * (float)drawPlayer.direction, 0f), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 						}
 					}
 					else
@@ -14713,23 +14719,23 @@ namespace Terraria
 							}
 						}
 						int type2 = drawPlayer.inventory[drawPlayer.selectedItem].type;
-						this.spriteBatch.Draw(Main.itemTexture[type2], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[type2].Width, Main.itemTexture[type2].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[type2].Width * 0.5f - (float)Main.itemTexture[type2].Width * 0.5f * (float)drawPlayer.direction, (float)Main.itemTexture[type2].Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+						spriteBatch.Draw(Main.itemTexture[type2], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[type2].Width, Main.itemTexture[type2].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[type2].Width * 0.5f - (float)Main.itemTexture[type2].Width * 0.5f * (float)drawPlayer.direction, (float)Main.itemTexture[type2].Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 						if (drawPlayer.inventory[drawPlayer.selectedItem].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[type2], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[type2].Width, Main.itemTexture[type2].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetColor(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[type2].Width * 0.5f - (float)Main.itemTexture[type2].Width * 0.5f * (float)drawPlayer.direction, (float)Main.itemTexture[type2].Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+							spriteBatch.Draw(Main.itemTexture[type2], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)), (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y))), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[type2].Width, Main.itemTexture[type2].Height)), drawPlayer.inventory[drawPlayer.selectedItem].GetColor(newColor), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[type2].Width * 0.5f - (float)Main.itemTexture[type2].Width * 0.5f * (float)drawPlayer.direction, (float)Main.itemTexture[type2].Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 						}
 						if (drawPlayer.inventory[drawPlayer.selectedItem].flame && drawPlayer.shadow == 0f)
 						{
 							try
 							{
-								this.LoadItemFlames(type2);
+								LoadItemFlames(type2);
 								if (Main.itemFlameTexture[type2] != null)
 								{
 									for (int i = 0; i < 7; i++)
 									{
 										float x = drawPlayer.itemFlamePos[i].X;
 										float y = drawPlayer.itemFlamePos[i].Y;
-										this.spriteBatch.Draw(Main.itemFlameTexture[type2], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)) + x, (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y)) + y), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[type2].Width, Main.itemTexture[type2].Height)), new Color(100, 100, 100, 0), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[type2].Width * 0.5f - (float)Main.itemTexture[type2].Width * 0.5f * (float)drawPlayer.direction, (float)Main.itemTexture[type2].Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
+										spriteBatch.Draw(Main.itemFlameTexture[type2], new Vector2((float)((int)(drawPlayer.itemLocation.X - Main.screenPosition.X)) + x, (float)((int)(drawPlayer.itemLocation.Y - Main.screenPosition.Y)) + y), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[type2].Width, Main.itemTexture[type2].Height)), new Color(100, 100, 100, 0), drawPlayer.itemRotation, new Vector2((float)Main.itemTexture[type2].Width * 0.5f - (float)Main.itemTexture[type2].Width * 0.5f * (float)drawPlayer.direction, (float)Main.itemTexture[type2].Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, effects2, 0f);
 									}
 								}
 							}
@@ -14745,13 +14751,13 @@ namespace Terraria
 				Main.pixelShader.CurrentTechnique.Passes[index2].Apply();
 				if (drawPlayer.body > 0 && drawPlayer.body < 75)
 				{
-					this.LoadArmorBody(drawPlayer.body);
+					LoadArmorBody(drawPlayer.body);
 				}
-				this.spriteBatch.Draw(Main.armorArmTexture[drawPlayer.body], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+				spriteBatch.Draw(Main.armorArmTexture[drawPlayer.body], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color11, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				if ((drawPlayer.body == 10 || drawPlayer.body == 11 || drawPlayer.body == 43 || drawPlayer.body == 12 || drawPlayer.body == 13 || drawPlayer.body == 14 || drawPlayer.body == 15 || drawPlayer.body == 16 || drawPlayer.body == 20 || drawPlayer.body == 39 || drawPlayer.body == 50 || drawPlayer.body == 38 || drawPlayer.body == 40 || drawPlayer.body == 57 || drawPlayer.body == 44 || drawPlayer.body == 52 || drawPlayer.body == 53 || drawPlayer.body == 68) && !drawPlayer.invis)
 				{
-					this.spriteBatch.Draw(Main.playerHands2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHands2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 			}
 			else
@@ -14760,14 +14766,14 @@ namespace Terraria
 				{
 					if (!drawPlayer.male)
 					{
-						this.spriteBatch.Draw(Main.femaleUnderShirt2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
-						this.spriteBatch.Draw(Main.femaleShirt2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color6, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.femaleUnderShirt2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.femaleShirt2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color6, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 					}
 					else
 					{
-						this.spriteBatch.Draw(Main.playerUnderShirt2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+						spriteBatch.Draw(Main.playerUnderShirt2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color7, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 					}
-					this.spriteBatch.Draw(Main.playerHands2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
+					spriteBatch.Draw(Main.playerHands2Texture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), color5, drawPlayer.bodyRotation, origin, 1f, effects, 0f);
 				}
 			}
 			if (drawPlayer.frozen)
@@ -14777,17 +14783,17 @@ namespace Terraria
 				color15.G = (byte)((double)color15.G * 0.55);
 				color15.B = (byte)((double)color15.B * 0.55);
 				color15.A = (byte)((double)color15.A * 0.55);
-				this.spriteBatch.Draw(Main.frozenTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.frozenTexture.Width, Main.frozenTexture.Height)), color15, drawPlayer.bodyRotation, new Vector2((float)(Main.frozenTexture.Width / 2), (float)(Main.frozenTexture.Height / 2)), 1f, effects, 0f);
+				spriteBatch.Draw(Main.frozenTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.frozenTexture.Width, Main.frozenTexture.Height)), color15, drawPlayer.bodyRotation, new Vector2((float)(Main.frozenTexture.Width / 2), (float)(Main.frozenTexture.Height / 2)), 1f, effects, 0f);
 			}
 			if (drawPlayer.iceBarrier && drawPlayer.shadow == 0f)
 			{
-				int num33 = this.iceBarrierTexture.Height / 12;
+				int num33 = iceBarrierTexture.Height / 12;
 				Color white = Color.White;
-				this.spriteBatch.Draw(this.iceBarrierTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(new Rectangle(0, num33 * (int)drawPlayer.iceBarrierFrame, this.iceBarrierTexture.Width, num33)), white, 0f, new Vector2((float)(Main.frozenTexture.Width / 2), (float)(Main.frozenTexture.Height / 2)), 1f, effects, 0f);
+				spriteBatch.Draw(iceBarrierTexture, new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(new Rectangle(0, num33 * (int)drawPlayer.iceBarrierFrame, iceBarrierTexture.Width, num33)), white, 0f, new Vector2((float)(Main.frozenTexture.Width / 2), (float)(Main.frozenTexture.Height / 2)), 1f, effects, 0f);
 			}
 			if (drawPlayer.gem >= 0 && drawPlayer.shadow == 0f)
 			{
-				this.spriteBatch.Draw(Main.gemTexture[drawPlayer.gem], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - 80f))), new Rectangle?(new Rectangle(0, 0, Main.gemTexture[drawPlayer.gem].Width, Main.gemTexture[drawPlayer.gem].Height)), new Color(250, 250, 250, (int)(Main.mouseTextColor / 2)), 0f, new Vector2((float)(Main.gemTexture[drawPlayer.gem].Width / 2), (float)(Main.gemTexture[drawPlayer.gem].Height / 2)), (float)Main.mouseTextColor / 1000f + 0.8f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.gemTexture[drawPlayer.gem], new Vector2((float)((int)(drawPlayer.position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2))), (float)((int)(drawPlayer.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - 80f))), new Rectangle?(new Rectangle(0, 0, Main.gemTexture[drawPlayer.gem].Width, Main.gemTexture[drawPlayer.gem].Height)), new Color(250, 250, 250, (int)(Main.mouseTextColor / 2)), 0f, new Vector2((float)(Main.gemTexture[drawPlayer.gem].Width / 2), (float)(Main.gemTexture[drawPlayer.gem].Height / 2)), (float)Main.mouseTextColor / 1000f + 0.8f, SpriteEffects.None, 0f);
 			}
 			if (drawPlayer.shadow == 0f)
 			{
@@ -15323,20 +15329,20 @@ namespace Terraria
 			}
 			if (Main.editSign)
 			{
-				this.textBlinkerCount++;
-				if (this.textBlinkerCount >= 20)
+				textBlinkerCount++;
+				if (textBlinkerCount >= 20)
 				{
-					if (this.textBlinkerState == 0)
+					if (textBlinkerState == 0)
 					{
-						this.textBlinkerState = 1;
+						textBlinkerState = 1;
 					}
 					else
 					{
-						this.textBlinkerState = 0;
+						textBlinkerState = 0;
 					}
-					this.textBlinkerCount = 0;
+					textBlinkerCount = 0;
 				}
-				if (this.textBlinkerState == 1)
+				if (textBlinkerState == 1)
 				{
 					string[] array2;
 					IntPtr intPtr;
@@ -15344,8 +15350,8 @@ namespace Terraria
 				}
 			}
 			num3++;
-			this.spriteBatch.Draw(Main.chatBackTexture, new Vector2((float)(Main.screenWidth / 2 - Main.chatBackTexture.Width / 2), 100f), new Rectangle?(new Rectangle(0, 0, Main.chatBackTexture.Width, (num3 + 1) * 30)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-			this.spriteBatch.Draw(Main.chatBackTexture, new Vector2((float)(Main.screenWidth / 2 - Main.chatBackTexture.Width / 2), (float)(100 + (num3 + 1) * 30)), new Rectangle?(new Rectangle(0, Main.chatBackTexture.Height - 30, Main.chatBackTexture.Width, 30)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.chatBackTexture, new Vector2((float)(Main.screenWidth / 2 - Main.chatBackTexture.Width / 2), 100f), new Rectangle?(new Rectangle(0, 0, Main.chatBackTexture.Width, (num3 + 1) * 30)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.chatBackTexture, new Vector2((float)(Main.screenWidth / 2 - Main.chatBackTexture.Width / 2), (float)(100 + (num3 + 1) * 30)), new Rectangle?(new Rectangle(0, Main.chatBackTexture.Height - 30, Main.chatBackTexture.Width, 30)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			for (int j = 0; j < num3; j++)
 			{
 				for (int k = 0; k < 5; k++)
@@ -15373,7 +15379,7 @@ namespace Terraria
 					{
 						color3 = color2;
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, array[j], new Vector2((float)num6, (float)num7), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, array[j], new Vector2((float)num6, (float)num7), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			num = (int)Main.mouseTextColor;
@@ -15609,7 +15615,7 @@ namespace Terraria
 				}
 				Vector2 vector = Main.fontMouseText.MeasureString(text);
 				vector *= 0.5f;
-				this.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2((float)num18 + vector.X, (float)num19 + vector.Y), color4, 0f, vector, scale, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text, new Vector2((float)num18 + vector.X, (float)num19 + vector.Y), color4, 0f, vector, scale, SpriteEffects.None, 0f);
 			}
 			string text4 = Lang.inter[52];
 			color2 = new Color(num, (int)((double)num / 1.1), num / 2, num);
@@ -15663,7 +15669,7 @@ namespace Terraria
 				}
 				Vector2 vector2 = Main.fontMouseText.MeasureString(text4);
 				vector2 *= 0.5f;
-				this.spriteBatch.DrawString(Main.fontMouseText, text4, new Vector2((float)num21 + vector2.X, (float)num22 + vector2.Y), color5, 0f, vector2, scale, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text4, new Vector2((float)num21 + vector2.X, (float)num22 + vector2.Y), color5, 0f, vector2, scale, SpriteEffects.None, 0f);
 			}
 			if (text2 != "")
 			{
@@ -15716,7 +15722,7 @@ namespace Terraria
 					}
 					Vector2 vector3 = Main.fontMouseText.MeasureString(text);
 					vector3 *= 0.5f;
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num24 + vector3.X, (float)num25 + vector3.Y), color6, 0f, vector3, scale, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num24 + vector3.X, (float)num25 + vector3.Y), color6, 0f, vector3, scale, SpriteEffects.None, 0f);
 				}
 			}
 			if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -15761,7 +15767,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 1;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15770,7 +15776,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 2;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15779,7 +15785,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 8;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15788,7 +15794,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 9;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15810,7 +15816,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 3;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15819,7 +15825,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 4;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15828,7 +15834,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 5;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15837,7 +15843,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 6;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15846,7 +15852,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 7;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15855,7 +15861,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 10;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15864,7 +15870,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 11;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15873,7 +15879,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 12;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15882,7 +15888,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 13;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15891,7 +15897,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 14;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15900,7 +15906,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 15;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15909,7 +15915,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 16;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -15918,7 +15924,7 @@ namespace Terraria
 							Main.playerInventory = true;
 							Main.npcChatText = "";
 							Main.npcShop = 17;
-							this.shop[Main.npcShop].SetupShop(Main.npcShop);
+							shop[Main.npcShop].SetupShop(Main.npcShop);
 							Main.PlaySound(12, -1, -1, 1);
 							return;
 						}
@@ -16244,7 +16250,7 @@ namespace Terraria
 								effects = SpriteEffects.FlipVertically;
 								num6 = 4;
 							}
-							this.spriteBatch.Draw(Main.bannerTexture[num], new Vector2((float)(num2 * 16 - (int)Main.screenPosition.X + num4), num7 - (float)((int)Main.screenPosition.Y) + (float)num5 + (float)num6), new Rectangle?(new Rectangle(0, 0, Main.bannerTexture[num].Width, Main.bannerTexture[num].Height)), Lighting.GetColor(num2, num3), 0f, new Vector2((float)(Main.bannerTexture[num].Width / 2), (float)(Main.bannerTexture[num].Height / 2)), 1f, effects, 0f);
+							spriteBatch.Draw(Main.bannerTexture[num], new Vector2((float)(num2 * 16 - (int)Main.screenPosition.X + num4), num7 - (float)((int)Main.screenPosition.Y) + (float)num5 + (float)num6), new Rectangle?(new Rectangle(0, 0, Main.bannerTexture[num].Width, Main.bannerTexture[num].Height)), Lighting.GetColor(num2, num3), 0f, new Vector2((float)(Main.bannerTexture[num].Width / 2), (float)(Main.bannerTexture[num].Height / 2)), 1f, effects, 0f);
 							int num8 = NPC.TypeToNum(Main.npc[i].type);
 							float scale = 1f;
 							float num9;
@@ -16260,12 +16266,12 @@ namespace Terraria
 							{
 								scale = 24f / num9;
 							}
-							this.spriteBatch.Draw(Main.npcHeadTexture[num8], new Vector2((float)(num2 * 16 - (int)Main.screenPosition.X + num4), num7 - (float)((int)Main.screenPosition.Y) + (float)num5 + 2f), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num8].Width, Main.npcHeadTexture[num8].Height)), Lighting.GetColor(num2, num3), 0f, new Vector2((float)(Main.npcHeadTexture[num8].Width / 2), (float)(Main.npcHeadTexture[num8].Height / 2)), scale, effects, 0f);
+							spriteBatch.Draw(Main.npcHeadTexture[num8], new Vector2((float)(num2 * 16 - (int)Main.screenPosition.X + num4), num7 - (float)((int)Main.screenPosition.Y) + (float)num5 + 2f), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num8].Width, Main.npcHeadTexture[num8].Height)), Lighting.GetColor(num2, num3), 0f, new Vector2((float)(Main.npcHeadTexture[num8].Width / 2), (float)(Main.npcHeadTexture[num8].Height / 2)), scale, effects, 0f);
 							num2 = num2 * 16 - (int)Main.screenPosition.X + num4 - Main.bannerTexture[num].Width / 2;
 							num3 = num3 * 16 - (int)Main.screenPosition.Y + num5 - Main.bannerTexture[num].Height / 2;
 							if (Main.mouseX >= num2 && Main.mouseX <= num2 + Main.bannerTexture[num].Width && Main.mouseY >= num3 && Main.mouseY <= num3 + Main.bannerTexture[num].Height)
 							{
-								this.MouseText(Main.npc[i].displayName + " the " + Main.npc[i].name, 0, 0);
+								MouseText(Main.npc[i].displayName + " the " + Main.npc[i].name, 0, 0);
 								if (Main.mouseRightRelease && Main.mouseRight)
 								{
 									Main.mouseRightRelease = false;
@@ -16282,21 +16288,21 @@ namespace Terraria
 		{
 			if (Main.chatMode)
 			{
-				this.textBlinkerCount++;
-				if (this.textBlinkerCount >= 20)
+				textBlinkerCount++;
+				if (textBlinkerCount >= 20)
 				{
-					if (this.textBlinkerState == 0)
+					if (textBlinkerState == 0)
 					{
-						this.textBlinkerState = 1;
+						textBlinkerState = 1;
 					}
 					else
 					{
-						this.textBlinkerState = 0;
+						textBlinkerState = 0;
 					}
-					this.textBlinkerCount = 0;
+					textBlinkerCount = 0;
 				}
 				string text = Main.chatText;
-				if (this.textBlinkerState == 1)
+				if (textBlinkerState == 1)
 				{
 					text += "|";
 				}
@@ -16304,27 +16310,27 @@ namespace Terraria
 				{
 					int i = Main.screenWidth - 300;
 					int num = 78;
-					this.spriteBatch.Draw(Main.textBackTexture, new Vector2((float)num, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(0, 0, Main.textBackTexture.Width - 100, Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.textBackTexture, new Vector2((float)num, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(0, 0, Main.textBackTexture.Width - 100, Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					i -= 400;
 					num += 400;
 					while (i > 0)
 					{
 						if (i > 300)
 						{
-							this.spriteBatch.Draw(Main.textBackTexture, new Vector2((float)num, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(100, 0, Main.textBackTexture.Width - 200, Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.textBackTexture, new Vector2((float)num, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(100, 0, Main.textBackTexture.Width - 200, Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							i -= 300;
 							num += 300;
 						}
 						else
 						{
-							this.spriteBatch.Draw(Main.textBackTexture, new Vector2((float)num, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(Main.textBackTexture.Width - i, 0, Main.textBackTexture.Width - (Main.textBackTexture.Width - i), Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.textBackTexture, new Vector2((float)num, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(Main.textBackTexture.Width - i, 0, Main.textBackTexture.Width - (Main.textBackTexture.Width - i), Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							i = 0;
 						}
 					}
 				}
 				else
 				{
-					this.spriteBatch.Draw(Main.textBackTexture, new Vector2(78f, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(0, 0, Main.textBackTexture.Width, Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.textBackTexture, new Vector2(78f, (float)(Main.screenHeight - 36)), new Rectangle?(new Rectangle(0, 0, Main.textBackTexture.Width, Main.textBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int j = 0; j < 5; j++)
 				{
@@ -16351,7 +16357,7 @@ namespace Terraria
 					{
 						black = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor);
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2((float)(88 + num2), (float)(Main.screenHeight - 30 + num3)), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text, new Vector2((float)(88 + num2), (float)(Main.screenHeight - 30 + num3)), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			int num4 = Main.startChatLine;
@@ -16392,7 +16398,7 @@ namespace Terraria
 						{
 							black2 = new Color((int)((byte)((float)Main.chatLine[k].color.R * num7)), (int)((byte)((float)Main.chatLine[k].color.G * num7)), (int)((byte)((float)Main.chatLine[k].color.B * num7)), (int)Main.mouseTextColor);
 						}
-						this.spriteBatch.DrawString(Main.fontMouseText, Main.chatLine[k].text, new Vector2((float)(88 + num8), (float)(Main.screenHeight - 30 + num9 - 28 - num6 * 21)), black2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, Main.chatLine[k].text, new Vector2((float)(88 + num8), (float)(Main.screenHeight - 30 + num9 - 28 - num6 * 21)), black2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 				}
 				num6++;
@@ -16406,13 +16412,13 @@ namespace Terraria
 				int num2 = 114 + Main.mH;
 				if (Main.player[Main.myPlayer].hostile)
 				{
-					this.spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num - 2), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-					this.spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num + 2), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+					spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num - 2), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num + 2), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 				}
 				else
 				{
-					this.spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num - 16), (float)(num2 + 14)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], -0.785f, default(Vector2), 1f, SpriteEffects.None, 0f);
-					this.spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num + 2), (float)(num2 + 14)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], -0.785f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num - 16), (float)(num2 + 14)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], -0.785f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[4], new Vector2((float)(num + 2), (float)(num2 + 14)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[4].Width, Main.itemTexture[4].Height)), Main.teamColor[Main.player[Main.myPlayer].team], -0.785f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				if (Main.mouseX > num && Main.mouseX < num + 34 && Main.mouseY > num2 - 2 && Main.mouseY < num2 + 34)
 				{
@@ -16471,11 +16477,11 @@ namespace Terraria
 						}
 					}
 				}
-				this.spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 50), (float)(num2 - 20)), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[0], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				this.spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 40), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[1], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				this.spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 60), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[2], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				this.spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 40), (float)(num2 + 20)), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[3], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				this.spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 60), (float)(num2 + 20)), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[4], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 50), (float)(num2 - 20)), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[0], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 40), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[1], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 60), (float)num2), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[2], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 40), (float)(num2 + 20)), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[3], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.teamTexture, new Vector2((float)(num + 60), (float)(num2 + 20)), new Rectangle?(new Rectangle(0, 0, Main.teamTexture.Width, Main.teamTexture.Height)), Main.teamColor[4], 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			}
 			bool flag = false;
 			Main.inventoryScale = 0.85f;
@@ -16552,13 +16558,13 @@ namespace Terraria
 					Main.hoverItemName = Lang.inter[3];
 				}
 			}
-			this.spriteBatch.Draw(Main.inventoryBack7Texture, new Vector2((float)num3, (float)num4), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.inventoryBack7Texture, new Vector2((float)num3, (float)num4), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 			white = Color.White;
 			if (Main.trashItem.type == 0 || Main.trashItem.stack == 0 || flag)
 			{
 				white = new Color(100, 100, 100, 100);
 				float num6 = Main.inventoryScale;
-				this.spriteBatch.Draw(Main.trashTexture, new Vector2((float)num3 + 26f * Main.inventoryScale - (float)Main.trashTexture.Width * 0.5f * num6, (float)num4 + 26f * Main.inventoryScale - (float)Main.trashTexture.Height * 0.5f * num6), new Rectangle?(new Rectangle(0, 0, Main.trashTexture.Width, Main.trashTexture.Height)), white, 0f, default(Vector2), num6, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.trashTexture, new Vector2((float)num3 + 26f * Main.inventoryScale - (float)Main.trashTexture.Width * 0.5f * num6, (float)num4 + 26f * Main.inventoryScale - (float)Main.trashTexture.Height * 0.5f * num6), new Rectangle?(new Rectangle(0, 0, Main.trashTexture.Width, Main.trashTexture.Height)), white, 0f, default(Vector2), num6, SpriteEffects.None, 0f);
 			}
 			else
 			{
@@ -16582,18 +16588,18 @@ namespace Terraria
 					white.B = (byte)Main.DiscoB;
 					white.A = 255;
 				}
-				this.spriteBatch.Draw(Main.itemTexture[Main.trashItem.type], new Vector2((float)num3 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Width * 0.5f * num7, (float)num4 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Height * 0.5f * num7), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.trashItem.type].Width, Main.itemTexture[Main.trashItem.type].Height)), Main.trashItem.GetAlpha(white), 0f, default(Vector2), num7, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.itemTexture[Main.trashItem.type], new Vector2((float)num3 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Width * 0.5f * num7, (float)num4 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Height * 0.5f * num7), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.trashItem.type].Width, Main.itemTexture[Main.trashItem.type].Height)), Main.trashItem.GetAlpha(white), 0f, default(Vector2), num7, SpriteEffects.None, 0f);
 				if (Main.trashItem.color != default(Color))
 				{
-					this.spriteBatch.Draw(Main.itemTexture[Main.trashItem.type], new Vector2((float)num3 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Width * 0.5f * num7, (float)num4 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Height * 0.5f * num7), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.trashItem.type].Width, Main.itemTexture[Main.trashItem.type].Height)), Main.trashItem.GetColor(white), 0f, default(Vector2), num7, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[Main.trashItem.type], new Vector2((float)num3 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Width * 0.5f * num7, (float)num4 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.trashItem.type].Height * 0.5f * num7), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.trashItem.type].Width, Main.itemTexture[Main.trashItem.type].Height)), Main.trashItem.GetColor(white), 0f, default(Vector2), num7, SpriteEffects.None, 0f);
 				}
 				white = Color.White;
 				if (Main.trashItem.stack > 1)
 				{
-					this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.trashItem.stack), new Vector2((float)num3 + 10f * Main.inventoryScale, (float)num4 + 26f * Main.inventoryScale), white, 0f, default(Vector2), num7, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.trashItem.stack), new Vector2((float)num3 + 10f * Main.inventoryScale, (float)num4 + 26f * Main.inventoryScale), white, 0f, default(Vector2), num7, SpriteEffects.None, 0f);
 				}
 			}
-			this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[4], new Vector2(40f, 0f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, Lang.inter[4], new Vector2(40f, 0f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			Main.inventoryScale = 0.85f;
 			if (Main.mouseX > 20 && Main.mouseX < (int)(20f + 560f * Main.inventoryScale) && Main.mouseY > 20 && Main.mouseY < (int)(20f + 224f * Main.inventoryScale))
 			{
@@ -16622,7 +16628,7 @@ namespace Terraria
 										{
 											if (Main.player[Main.myPlayer].SellItem(Main.player[Main.myPlayer].inventory[num10].value, Main.player[Main.myPlayer].inventory[num10].stack))
 											{
-												this.shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num10]);
+												shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num10]);
 												Main.player[Main.myPlayer].inventory[num10].SetDefaults(0, false);
 												Main.PlaySound(18, -1, -1, 1);
 											}
@@ -16630,7 +16636,7 @@ namespace Terraria
 											{
 												if (Main.player[Main.myPlayer].inventory[num10].value == 0)
 												{
-													this.shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num10]);
+													shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num10]);
 													Main.player[Main.myPlayer].inventory[num10].SetDefaults(0, false);
 													Main.PlaySound(7, -1, -1, 1);
 												}
@@ -16771,11 +16777,11 @@ namespace Terraria
 					}
 					if (k != 0)
 					{
-						this.spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num8, (float)num9), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num8, (float)num9), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 					}
 					else
 					{
-						this.spriteBatch.Draw(Main.inventoryBack9Texture, new Vector2((float)num8, (float)num9), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack9Texture, new Vector2((float)num8, (float)num9), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 					}
 					white2 = Color.White;
 					if (Main.player[Main.myPlayer].inventory[num10].type > 0 && Main.player[Main.myPlayer].inventory[num10].stack > 0)
@@ -16800,15 +16806,15 @@ namespace Terraria
 							white2.B = (byte)Main.DiscoB;
 							white2.A = 255;
 						}
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type], new Vector2((float)num8 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width * 0.5f * num13, (float)num9 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height * 0.5f * num13), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height)), Main.player[Main.myPlayer].inventory[num10].GetAlpha(white2), 0f, default(Vector2), num13, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type], new Vector2((float)num8 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width * 0.5f * num13, (float)num9 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height * 0.5f * num13), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height)), Main.player[Main.myPlayer].inventory[num10].GetAlpha(white2), 0f, default(Vector2), num13, SpriteEffects.None, 0f);
 						white2 = Color.White;
 						if (Main.player[Main.myPlayer].inventory[num10].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type], new Vector2((float)num8 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width * 0.5f * num13, (float)num9 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height * 0.5f * num13), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height)), Main.player[Main.myPlayer].inventory[num10].GetColor(white2), 0f, default(Vector2), num13, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type], new Vector2((float)num8 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width * 0.5f * num13, (float)num9 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height * 0.5f * num13), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num10].type].Height)), Main.player[Main.myPlayer].inventory[num10].GetColor(white2), 0f, default(Vector2), num13, SpriteEffects.None, 0f);
 						}
 						if (Main.player[Main.myPlayer].inventory[num10].stack > 1)
 						{
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[num10].stack), new Vector2((float)num8 + 10f * Main.inventoryScale, (float)num9 + 26f * Main.inventoryScale), white2, 0f, default(Vector2), num13, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[num10].stack), new Vector2((float)num8 + 10f * Main.inventoryScale, (float)num9 + 26f * Main.inventoryScale), white2, 0f, default(Vector2), num13, SpriteEffects.None, 0f);
 						}
 					}
 					if (k == 0)
@@ -16826,7 +16832,7 @@ namespace Terraria
 							color.G = 255;
 							color.A = 50;
 						}
-						this.spriteBatch.DrawString(Main.fontItemStack, text, new Vector2((float)(num8 + 6), (float)(num9 + 4)), color, 0f, default(Vector2), Main.inventoryScale * 0.8f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontItemStack, text, new Vector2((float)(num8 + 6), (float)(num9 + 4)), color, 0f, default(Vector2), Main.inventoryScale * 0.8f, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -16837,18 +16843,18 @@ namespace Terraria
 			{
 				num14 = 1;
 			}
-			this.spriteBatch.Draw(Main.HBLockTexture[num14], new Vector2((float)num15, (float)num16), new Rectangle?(new Rectangle(0, 0, Main.HBLockTexture[num14].Width, Main.HBLockTexture[num14].Height)), Main.inventoryBack, 0f, default(Vector2), 0.9f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.HBLockTexture[num14], new Vector2((float)num15, (float)num16), new Rectangle?(new Rectangle(0, 0, Main.HBLockTexture[num14].Width, Main.HBLockTexture[num14].Height)), Main.inventoryBack, 0f, default(Vector2), 0.9f, SpriteEffects.None, 0f);
 			if (Main.mouseX > num15 && (float)Main.mouseX < (float)num15 + (float)Main.HBLockTexture[num14].Width * 0.9f && Main.mouseY > num16 && (float)Main.mouseY < (float)num16 + (float)Main.HBLockTexture[num14].Height * 0.9f)
 			{
 				Main.player[Main.myPlayer].mouseInterface = true;
 				if (!Main.player[Main.myPlayer].hbLocked)
 				{
-					this.MouseText(Lang.inter[5], 0, 0);
+					MouseText(Lang.inter[5], 0, 0);
 					Main.mouseText = true;
 				}
 				else
 				{
-					this.MouseText(Lang.inter[6], 0, 0);
+					MouseText(Lang.inter[6], 0, 0);
 					Main.mouseText = true;
 				}
 				if (Main.mouseLeft && Main.mouseLeftRelease)
@@ -16927,7 +16933,7 @@ namespace Terraria
 							}
 						}
 					}
-					this.spriteBatch.Draw(this.mapIconTexture[num21], new Vector2((float)num19, (float)num20), new Rectangle?(new Rectangle(0, 0, this.mapIconTexture[num21].Width, this.mapIconTexture[num21].Height)), new Color(num22, num22, num22, num22), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(mapIconTexture[num21], new Vector2((float)num19, (float)num20), new Rectangle?(new Rectangle(0, 0, mapIconTexture[num21].Width, mapIconTexture[num21].Height)), new Color(num22, num22, num22, num22), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			if (Main.armorHide)
@@ -16955,30 +16961,30 @@ namespace Terraria
 			{
 				num25 += 72;
 			}
-			if (this.showNPCs)
+			if (showNPCs)
 			{
 				num24 = 0;
 			}
-			this.spriteBatch.Draw(Main.npcToggleTexture[num24], new Vector2((float)num25, (float)num26), new Rectangle?(new Rectangle(0, 0, Main.npcToggleTexture[num24].Width, Main.npcToggleTexture[num24].Height)), Color.White, 0f, default(Vector2), 0.9f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.npcToggleTexture[num24], new Vector2((float)num25, (float)num26), new Rectangle?(new Rectangle(0, 0, Main.npcToggleTexture[num24].Width, Main.npcToggleTexture[num24].Height)), Color.White, 0f, default(Vector2), 0.9f, SpriteEffects.None, 0f);
 			if (Main.mouseX > num25 && (float)Main.mouseX < (float)num25 + (float)Main.npcToggleTexture[num24].Width * 0.9f && Main.mouseY > num26 && (float)Main.mouseY < (float)num26 + (float)Main.npcToggleTexture[num24].Height * 0.9f)
 			{
 				Main.player[Main.myPlayer].mouseInterface = true;
 				if (Main.mouseLeft && Main.mouseLeftRelease)
 				{
 					Main.PlaySound(12, -1, -1, 1);
-					if (!this.showNPCs)
+					if (!showNPCs)
 					{
-						this.showNPCs = true;
+						showNPCs = true;
 					}
 					else
 					{
-						this.showNPCs = false;
+						showNPCs = false;
 					}
 				}
 			}
-			if (this.showNPCs)
+			if (showNPCs)
 			{
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[7], new Vector2((float)(Main.screenWidth - 64 - 28 - 3), (float)(152 + Main.mH)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[7], new Vector2((float)(Main.screenWidth - 64 - 28 - 3), (float)(152 + Main.mH)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f, SpriteEffects.None, 0f);
 				if (Main.mouseX > Main.screenWidth - 64 - 28 && Main.mouseX < (int)((float)(Main.screenWidth - 64 - 28) + 56f * Main.inventoryScale) && Main.mouseY > 174 + Main.mH && Main.mouseY < (int)((float)(174 + Main.mH) + 448f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
@@ -17041,11 +17047,11 @@ namespace Terraria
 							if (Main.mouseLeftRelease && Main.mouseLeft && Main.mouseItem.type == 0)
 							{
 								Main.PlaySound(12, -1, -1, 1);
-								this.mouseNPC = m;
+								mouseNPC = m;
 								Main.mouseLeftRelease = false;
 							}
 						}
-						this.spriteBatch.Draw(Main.inventoryBack11Texture, new Vector2((float)num31, (float)num32), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack11Texture, new Vector2((float)num31, (float)num32), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						white3 = Color.White;
 						int num33 = m;
 						float scale = 1f;
@@ -17062,13 +17068,13 @@ namespace Terraria
 						{
 							scale = 36f / num34;
 						}
-						this.spriteBatch.Draw(Main.npcHeadTexture[num33], new Vector2((float)num31 + 26f * Main.inventoryScale, (float)num32 + 26f * Main.inventoryScale), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num33].Width, Main.npcHeadTexture[num33].Height)), white3, 0f, new Vector2((float)(Main.npcHeadTexture[num33].Width / 2), (float)(Main.npcHeadTexture[num33].Height / 2)), scale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.npcHeadTexture[num33], new Vector2((float)num31 + 26f * Main.inventoryScale, (float)num32 + 26f * Main.inventoryScale), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num33].Width, Main.npcHeadTexture[num33].Height)), white3, 0f, new Vector2((float)(Main.npcHeadTexture[num33].Width / 2), (float)(Main.npcHeadTexture[num33].Height / 2)), scale, SpriteEffects.None, 0f);
 						num27++;
 					}
 				}
 				if (cursorText != "" && Main.mouseItem.type == 0)
 				{
-					this.MouseText(cursorText, 0, 0);
+					MouseText(cursorText, 0, 0);
 				}
 			}
 			else
@@ -17076,7 +17082,7 @@ namespace Terraria
 				Vector2 vector = Main.fontMouseText.MeasureString("Equip");
 				Vector2 vector2 = Main.fontMouseText.MeasureString(Lang.inter[45]);
 				float num35 = vector.X / vector2.X;
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[45], new Vector2((float)(Main.screenWidth - 64 - 28 + 4), (float)(152 + Main.mH) + (vector.Y - vector.Y * num35) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f * num35, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[45], new Vector2((float)(Main.screenWidth - 64 - 28 + 4), (float)(152 + Main.mH) + (vector.Y - vector.Y * num35) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f * num35, SpriteEffects.None, 0f);
 				if (Main.mouseX > Main.screenWidth - 64 - 28 && Main.mouseX < (int)((float)(Main.screenWidth - 64 - 28) + 56f * Main.inventoryScale) && Main.mouseY > 174 + Main.mH && Main.mouseY < (int)((float)(174 + Main.mH) + 448f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
@@ -17096,7 +17102,7 @@ namespace Terraria
 						text2 = Main.player[Main.myPlayer].statDefense + " " + Lang.inter[10];
 					}
 					Vector2 vector3 = Main.fontMouseText.MeasureString(text2);
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num37 - vector3.X - 10f, (float)num38 + (float)Main.inventoryBackTexture.Height * 0.5f - vector3.Y * 0.5f), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num37 - vector3.X - 10f, (float)num38 + (float)Main.inventoryBackTexture.Height * 0.5f - vector3.Y * 0.5f), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					if (Main.mouseX >= num37 && (float)Main.mouseX <= (float)num37 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num38 && (float)Main.mouseY <= (float)num38 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
 					{
 						Main.armorHide = true;
@@ -17138,7 +17144,7 @@ namespace Terraria
 							});
 						}
 					}
-					this.spriteBatch.Draw(Main.inventoryBack3Texture, new Vector2((float)num37, (float)num38), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.inventoryBack3Texture, new Vector2((float)num37, (float)num38), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 					white4 = Color.White;
 					if (Main.player[Main.myPlayer].armor[num36].type > 0 && Main.player[Main.myPlayer].armor[num36].stack > 0)
 					{
@@ -17155,21 +17161,21 @@ namespace Terraria
 							}
 						}
 						num39 *= Main.inventoryScale;
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type], new Vector2((float)num37 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width * 0.5f * num39, (float)num38 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height * 0.5f * num39), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height)), Main.player[Main.myPlayer].armor[num36].GetAlpha(white4), 0f, default(Vector2), num39, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type], new Vector2((float)num37 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width * 0.5f * num39, (float)num38 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height * 0.5f * num39), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height)), Main.player[Main.myPlayer].armor[num36].GetAlpha(white4), 0f, default(Vector2), num39, SpriteEffects.None, 0f);
 						if (Main.player[Main.myPlayer].armor[num36].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type], new Vector2((float)num37 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width * 0.5f * num39, (float)num38 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height * 0.5f * num39), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height)), Main.player[Main.myPlayer].armor[num36].GetColor(white4), 0f, default(Vector2), num39, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type], new Vector2((float)num37 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width * 0.5f * num39, (float)num38 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height * 0.5f * num39), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num36].type].Height)), Main.player[Main.myPlayer].armor[num36].GetColor(white4), 0f, default(Vector2), num39, SpriteEffects.None, 0f);
 						}
 						if (Main.player[Main.myPlayer].armor[num36].stack > 1)
 						{
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].armor[num36].stack), new Vector2((float)num37 + 10f * Main.inventoryScale, (float)num38 + 26f * Main.inventoryScale), white4, 0f, default(Vector2), num39, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].armor[num36].stack), new Vector2((float)num37 + 10f * Main.inventoryScale, (float)num38 + 26f * Main.inventoryScale), white4, 0f, default(Vector2), num39, SpriteEffects.None, 0f);
 						}
 					}
 				}
 				Vector2 vector4 = Main.fontMouseText.MeasureString("Social");
 				Vector2 vector5 = Main.fontMouseText.MeasureString(Lang.inter[11]);
 				float num40 = vector4.X / vector5.X;
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[11], new Vector2((float)(Main.screenWidth - 64 - 28 - 44), (float)(152 + Main.mH) + (vector4.Y - vector4.Y * num40) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f * num40, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[11], new Vector2((float)(Main.screenWidth - 64 - 28 - 44), (float)(152 + Main.mH) + (vector4.Y - vector4.Y * num40) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f * num40, SpriteEffects.None, 0f);
 				if (Main.mouseX > Main.screenWidth - 64 - 28 - 47 && Main.mouseX < (int)((float)(Main.screenWidth - 64 - 20 - 47) + 56f * Main.inventoryScale) && Main.mouseY > 174 + Main.mH && Main.mouseY < (int)((float)(174 + Main.mH) + 168f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
@@ -17199,7 +17205,7 @@ namespace Terraria
 						}
 					}
 					Vector2 vector6 = Main.fontMouseText.MeasureString(text3);
-					this.spriteBatch.DrawString(Main.fontMouseText, text3, new Vector2((float)num42 - vector6.X - 10f - 47f, (float)num43 + (float)Main.inventoryBackTexture.Height * 0.5f - vector6.Y * 0.5f), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text3, new Vector2((float)num42 - vector6.X - 10f - 47f, (float)num43 + (float)Main.inventoryBackTexture.Height * 0.5f - vector6.Y * 0.5f), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					if (Main.mouseX >= num42 && (float)Main.mouseX <= (float)num42 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num43 && (float)Main.mouseY <= (float)num43 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
 					{
 						Main.player[Main.myPlayer].mouseInterface = true;
@@ -17252,7 +17258,7 @@ namespace Terraria
 							});
 						}
 					}
-					this.spriteBatch.Draw(Main.inventoryBack8Texture, new Vector2((float)num42, (float)num43), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.inventoryBack8Texture, new Vector2((float)num42, (float)num43), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 					white5 = Color.White;
 					if (Main.player[Main.myPlayer].armor[num41].type > 0 && Main.player[Main.myPlayer].armor[num41].stack > 0)
 					{
@@ -17269,21 +17275,21 @@ namespace Terraria
 							}
 						}
 						num44 *= Main.inventoryScale;
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type], new Vector2((float)num42 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width * 0.5f * num44, (float)num43 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height * 0.5f * num44), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height)), Main.player[Main.myPlayer].armor[num41].GetAlpha(white5), 0f, default(Vector2), num44, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type], new Vector2((float)num42 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width * 0.5f * num44, (float)num43 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height * 0.5f * num44), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height)), Main.player[Main.myPlayer].armor[num41].GetAlpha(white5), 0f, default(Vector2), num44, SpriteEffects.None, 0f);
 						if (Main.player[Main.myPlayer].armor[num41].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type], new Vector2((float)num42 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width * 0.5f * num44, (float)num43 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height * 0.5f * num44), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height)), Main.player[Main.myPlayer].armor[num41].GetColor(white5), 0f, default(Vector2), num44, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type], new Vector2((float)num42 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width * 0.5f * num44, (float)num43 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height * 0.5f * num44), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Width, Main.itemTexture[Main.player[Main.myPlayer].armor[num41].type].Height)), Main.player[Main.myPlayer].armor[num41].GetColor(white5), 0f, default(Vector2), num44, SpriteEffects.None, 0f);
 						}
 						if (Main.player[Main.myPlayer].armor[num41].stack > 1)
 						{
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].armor[num41].stack), new Vector2((float)num42 + 10f * Main.inventoryScale, (float)num43 + 26f * Main.inventoryScale), white5, 0f, default(Vector2), num44, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].armor[num41].stack), new Vector2((float)num42 + 10f * Main.inventoryScale, (float)num43 + 26f * Main.inventoryScale), white5, 0f, default(Vector2), num44, SpriteEffects.None, 0f);
 						}
 					}
 				}
 				Vector2 vector7 = Main.fontMouseText.MeasureString("Dye");
 				Vector2 vector8 = Main.fontMouseText.MeasureString(Lang.inter[57]);
 				float num45 = vector7.X / vector8.X;
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[57], new Vector2((float)(Main.screenWidth - 64 - 28 - 44 - 40), (float)(152 + Main.mH) + (vector7.Y - vector7.Y * num45) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f * num45, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[57], new Vector2((float)(Main.screenWidth - 64 - 28 - 44 - 40), (float)(152 + Main.mH) + (vector7.Y - vector7.Y * num45) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.8f * num45, SpriteEffects.None, 0f);
 				if (Main.mouseX > Main.screenWidth - 64 - 28 - 47 && Main.mouseX < (int)((float)(Main.screenWidth - 64 - 20 - 47) + 56f * Main.inventoryScale) && Main.mouseY > 174 + Main.mH && Main.mouseY < (int)((float)(174 + Main.mH) + 168f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
@@ -17330,7 +17336,7 @@ namespace Terraria
 							});
 						}
 					}
-					this.spriteBatch.Draw(Main.inventoryBack12Texture, new Vector2((float)num47, (float)num48), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.inventoryBack12Texture, new Vector2((float)num47, (float)num48), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 					white6 = Color.White;
 					if (Main.player[Main.myPlayer].dye[num46].type > 0 && Main.player[Main.myPlayer].dye[num46].stack > 0)
 					{
@@ -17347,14 +17353,14 @@ namespace Terraria
 							}
 						}
 						num49 *= Main.inventoryScale;
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type], new Vector2((float)num47 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width * 0.5f * num49, (float)num48 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height * 0.5f * num49), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height)), Main.player[Main.myPlayer].dye[num46].GetAlpha(white6), 0f, default(Vector2), num49, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type], new Vector2((float)num47 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width * 0.5f * num49, (float)num48 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height * 0.5f * num49), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height)), Main.player[Main.myPlayer].dye[num46].GetAlpha(white6), 0f, default(Vector2), num49, SpriteEffects.None, 0f);
 						if (Main.player[Main.myPlayer].dye[num46].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type], new Vector2((float)num47 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width * 0.5f * num49, (float)num48 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height * 0.5f * num49), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height)), Main.player[Main.myPlayer].dye[num46].GetColor(white6), 0f, default(Vector2), num49, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type], new Vector2((float)num47 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width * 0.5f * num49, (float)num48 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height * 0.5f * num49), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Width, Main.itemTexture[Main.player[Main.myPlayer].dye[num46].type].Height)), Main.player[Main.myPlayer].dye[num46].GetColor(white6), 0f, default(Vector2), num49, SpriteEffects.None, 0f);
 						}
 						if (Main.player[Main.myPlayer].dye[num46].stack > 1)
 						{
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].dye[num46].stack), new Vector2((float)num47 + 10f * Main.inventoryScale, (float)num48 + 26f * Main.inventoryScale), white6, 0f, default(Vector2), num49, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].dye[num46].stack), new Vector2((float)num47 + 10f * Main.inventoryScale, (float)num48 + 26f * Main.inventoryScale), white6, 0f, default(Vector2), num49, SpriteEffects.None, 0f);
 						}
 					}
 				}
@@ -17530,10 +17536,10 @@ namespace Terraria
 								}
 							}
 						}
-						this.spriteBatch.DrawString(Main.fontMouseText, text5, new Vector2((float)(num52 + 50) + Main.fontMouseText.MeasureString(text4).X, (float)num53), white7, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text5, new Vector2((float)(num52 + 50) + Main.fontMouseText.MeasureString(text4).X, (float)num53), white7, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 						int num61 = num52 + 70;
 						int num62 = num53 + 40;
-						this.spriteBatch.Draw(Main.reforgeTexture, new Vector2((float)num61, (float)num62), new Rectangle?(new Rectangle(0, 0, Main.reforgeTexture.Width, Main.reforgeTexture.Height)), Color.White, 0f, new Vector2((float)(Main.reforgeTexture.Width / 2), (float)(Main.reforgeTexture.Height / 2)), Main.reforgeScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.reforgeTexture, new Vector2((float)num61, (float)num62), new Rectangle?(new Rectangle(0, 0, Main.reforgeTexture.Width, Main.reforgeTexture.Height)), Color.White, 0f, new Vector2((float)(Main.reforgeTexture.Width / 2), (float)(Main.reforgeTexture.Height / 2)), Main.reforgeScale, SpriteEffects.None, 0f);
 						if (Main.mouseX > num61 - Main.reforgeTexture.Width / 2 && Main.mouseX < num61 + Main.reforgeTexture.Width / 2 && Main.mouseY > num62 - Main.reforgeTexture.Height / 2 && Main.mouseY < num62 + Main.reforgeTexture.Height / 2)
 						{
 							Main.hoverItemName = Lang.inter[19];
@@ -17562,7 +17568,7 @@ namespace Terraria
 					{
 						text4 = Lang.inter[20];
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text4, new Vector2((float)(num52 + 50), (float)num53), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text4, new Vector2((float)(num52 + 50), (float)num53), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					Color white8 = new Color(100, 100, 100, 100);
 					if (Main.mouseX >= num52 && (float)Main.mouseX <= (float)num52 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num53 && (float)Main.mouseY <= (float)num53 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
 					{
@@ -17647,7 +17653,7 @@ namespace Terraria
 							});
 						}
 					}
-					this.spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num52, (float)num53), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num52, (float)num53), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 					white8 = Color.White;
 					if (Main.reforgeItem.type > 0 && Main.reforgeItem.stack > 0)
 					{
@@ -17664,14 +17670,14 @@ namespace Terraria
 							}
 						}
 						num64 *= Main.inventoryScale;
-						this.spriteBatch.Draw(Main.itemTexture[Main.reforgeItem.type], new Vector2((float)num52 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Width * 0.5f * num64, (float)num53 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Height * 0.5f * num64), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.reforgeItem.type].Width, Main.itemTexture[Main.reforgeItem.type].Height)), Main.reforgeItem.GetAlpha(white8), 0f, default(Vector2), num64, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.reforgeItem.type], new Vector2((float)num52 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Width * 0.5f * num64, (float)num53 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Height * 0.5f * num64), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.reforgeItem.type].Width, Main.itemTexture[Main.reforgeItem.type].Height)), Main.reforgeItem.GetAlpha(white8), 0f, default(Vector2), num64, SpriteEffects.None, 0f);
 						if (Main.reforgeItem.color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.reforgeItem.type], new Vector2((float)num52 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Width * 0.5f * num64, (float)num53 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Height * 0.5f * num64), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.reforgeItem.type].Width, Main.itemTexture[Main.reforgeItem.type].Height)), Main.reforgeItem.GetColor(white8), 0f, default(Vector2), num64, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.reforgeItem.type], new Vector2((float)num52 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Width * 0.5f * num64, (float)num53 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.reforgeItem.type].Height * 0.5f * num64), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.reforgeItem.type].Width, Main.itemTexture[Main.reforgeItem.type].Height)), Main.reforgeItem.GetColor(white8), 0f, default(Vector2), num64, SpriteEffects.None, 0f);
 						}
 						if (Main.reforgeItem.stack > 1)
 						{
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.reforgeItem.stack), new Vector2((float)num52 + 10f * Main.inventoryScale, (float)num53 + 26f * Main.inventoryScale), white8, 0f, default(Vector2), num64, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.reforgeItem.stack), new Vector2((float)num52 + 10f * Main.inventoryScale, (float)num53 + 26f * Main.inventoryScale), white8, 0f, default(Vector2), num64, SpriteEffects.None, 0f);
 						}
 					}
 				}
@@ -17695,7 +17701,7 @@ namespace Terraria
 						if (Main.guideItem.type > 0)
 						{
 							text6 = Lang.inter[21] + " " + Main.guideItem.name;
-							this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[22], new Vector2((float)num65, (float)(num66 + 118)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontMouseText, Lang.inter[22], new Vector2((float)num65, (float)(num66 + 118)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							int num67 = Main.focusRecipe;
 							int num68 = 0;
 							int num69 = 0;
@@ -17706,7 +17712,7 @@ namespace Terraria
 								{
 									if (num69 == 0 && !Main.recipe[Main.availableRecipe[num67]].needWater && !Main.recipe[Main.availableRecipe[num67]].needHoney)
 									{
-										this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[23], new Vector2((float)num65, (float)(num66 + 118 + num70)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.DrawString(Main.fontMouseText, Lang.inter[23], new Vector2((float)num65, (float)(num66 + 118 + num70)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										break;
 									}
 									break;
@@ -17714,26 +17720,26 @@ namespace Terraria
 								else
 								{
 									num68++;
-									this.spriteBatch.DrawString(Main.fontMouseText, Main.tileName[Main.recipe[Main.availableRecipe[num67]].requiredTile[num69]], new Vector2((float)num65, (float)(num66 + 118 + num70)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontMouseText, Main.tileName[Main.recipe[Main.availableRecipe[num67]].requiredTile[num69]], new Vector2((float)num65, (float)(num66 + 118 + num70)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									num69++;
 								}
 							}
 							if (Main.recipe[Main.availableRecipe[num67]].needWater)
 							{
 								int num71 = (num68 + 1) * 26;
-								this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[53], new Vector2((float)num65, (float)(num66 + 118 + num71)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontMouseText, Lang.inter[53], new Vector2((float)num65, (float)(num66 + 118 + num71)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							if (Main.recipe[Main.availableRecipe[num67]].needHoney)
 							{
 								int num72 = (num68 + 1) * 26;
-								this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[58], new Vector2((float)num65, (float)(num66 + 118 + num72)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontMouseText, Lang.inter[58], new Vector2((float)num65, (float)(num66 + 118 + num72)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 						}
 						else
 						{
 							text6 = Lang.inter[24];
 						}
-						this.spriteBatch.DrawString(Main.fontMouseText, text6, new Vector2((float)(num65 + 50), (float)(num66 + 12)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text6, new Vector2((float)(num65 + 50), (float)(num66 + 12)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 						Color white9 = new Color(100, 100, 100, 100);
 						if (Main.mouseX >= num65 && (float)Main.mouseX <= (float)num65 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num66 && (float)Main.mouseY <= (float)num66 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
 						{
@@ -17818,7 +17824,7 @@ namespace Terraria
 								});
 							}
 						}
-						this.spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num65, (float)num66), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num65, (float)num66), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						white9 = Color.White;
 						if (Main.guideItem.type > 0 && Main.guideItem.stack > 0)
 						{
@@ -17842,15 +17848,15 @@ namespace Terraria
 								white9.B = (byte)Main.DiscoB;
 								white9.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[Main.guideItem.type], new Vector2((float)num65 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Width * 0.5f * num74, (float)num66 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Height * 0.5f * num74), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.guideItem.type].Width, Main.itemTexture[Main.guideItem.type].Height)), Main.guideItem.GetAlpha(white9), 0f, default(Vector2), num74, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.guideItem.type], new Vector2((float)num65 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Width * 0.5f * num74, (float)num66 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Height * 0.5f * num74), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.guideItem.type].Width, Main.itemTexture[Main.guideItem.type].Height)), Main.guideItem.GetAlpha(white9), 0f, default(Vector2), num74, SpriteEffects.None, 0f);
 							white9 = Color.White;
 							if (Main.guideItem.color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.guideItem.type], new Vector2((float)num65 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Width * 0.5f * num74, (float)num66 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Height * 0.5f * num74), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.guideItem.type].Width, Main.itemTexture[Main.guideItem.type].Height)), Main.guideItem.GetColor(white9), 0f, default(Vector2), num74, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.guideItem.type], new Vector2((float)num65 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Width * 0.5f * num74, (float)num66 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.guideItem.type].Height * 0.5f * num74), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.guideItem.type].Width, Main.itemTexture[Main.guideItem.type].Height)), Main.guideItem.GetColor(white9), 0f, default(Vector2), num74, SpriteEffects.None, 0f);
 							}
 							if (Main.guideItem.stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.guideItem.stack), new Vector2((float)num65 + 10f * Main.inventoryScale, (float)num66 + 26f * Main.inventoryScale), white9, 0f, default(Vector2), num74, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.guideItem.stack), new Vector2((float)num65 + 10f * Main.inventoryScale, (float)num66 + 26f * Main.inventoryScale), white9, 0f, default(Vector2), num74, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -17860,7 +17866,7 @@ namespace Terraria
 			{
 				if (Main.numAvailableRecipes > 0)
 				{
-					this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[25], new Vector2(76f, (float)(414 + num50)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, Lang.inter[25], new Vector2(76f, (float)(414 + num50)), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int num75 = 0; num75 < Recipe.maxRecipes; num75++)
 				{
@@ -18003,7 +18009,7 @@ namespace Terraria
 							{
 								num78 = 0.0;
 							}
-							this.spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num76, (float)num77), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color((int)((byte)num78), (int)((byte)num78), (int)((byte)num78), (int)((byte)num78)), 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num76, (float)num77), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color((int)((byte)num78), (int)((byte)num78), (int)((byte)num78), (int)((byte)num78)), 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 							if (Main.recipe[Main.availableRecipe[num75]].createItem.type > 0 && Main.recipe[Main.availableRecipe[num75]].createItem.stack > 0)
 							{
 								float num80 = 1f;
@@ -18027,15 +18033,15 @@ namespace Terraria
 									color4.B = (byte)Main.DiscoB;
 									color4.A = 255;
 								}
-								this.spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type], new Vector2((float)num76 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width * 0.5f * num80, (float)num77 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height * 0.5f * num80), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num75]].createItem.GetAlpha(color4), 0f, default(Vector2), num80, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type], new Vector2((float)num76 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width * 0.5f * num80, (float)num77 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height * 0.5f * num80), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num75]].createItem.GetAlpha(color4), 0f, default(Vector2), num80, SpriteEffects.None, 0f);
 								color4 = color5;
 								if (Main.recipe[Main.availableRecipe[num75]].createItem.color != default(Color))
 								{
-									this.spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type], new Vector2((float)num76 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width * 0.5f * num80, (float)num77 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height * 0.5f * num80), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num75]].createItem.GetColor(color4), 0f, default(Vector2), num80, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type], new Vector2((float)num76 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width * 0.5f * num80, (float)num77 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height * 0.5f * num80), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num75]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num75]].createItem.GetColor(color4), 0f, default(Vector2), num80, SpriteEffects.None, 0f);
 								}
 								if (Main.recipe[Main.availableRecipe[num75]].createItem.stack > 1)
 								{
-									this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.recipe[Main.availableRecipe[num75]].createItem.stack), new Vector2((float)num76 + 10f * Main.inventoryScale, (float)num77 + 26f * Main.inventoryScale), color4, 0f, default(Vector2), num80, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.recipe[Main.availableRecipe[num75]].createItem.stack), new Vector2((float)num76 + 10f * Main.inventoryScale, (float)num77 + 26f * Main.inventoryScale), color4, 0f, default(Vector2), num80, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -18119,7 +18125,7 @@ namespace Terraria
 						{
 							num84 = 0.0;
 						}
-						this.spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num82, (float)num83), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color((int)((byte)num84), (int)((byte)num84), (int)((byte)num84), (int)((byte)num84)), 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num82, (float)num83), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color((int)((byte)num84), (int)((byte)num84), (int)((byte)num84), (int)((byte)num84)), 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						if (Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type > 0 && Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].stack > 0)
 						{
 							float num86 = 1f;
@@ -18143,15 +18149,15 @@ namespace Terraria
 								color6.B = (byte)Main.DiscoB;
 								color6.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type], new Vector2((float)num82 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width * 0.5f * num86, (float)num83 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height * 0.5f * num86), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height)), Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].GetAlpha(color6), 0f, default(Vector2), num86, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type], new Vector2((float)num82 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width * 0.5f * num86, (float)num83 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height * 0.5f * num86), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height)), Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].GetAlpha(color6), 0f, default(Vector2), num86, SpriteEffects.None, 0f);
 							if (Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type], new Vector2((float)num82 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width * 0.5f * num86, (float)num83 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height * 0.5f * num86), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height)), Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].GetColor(color6), 0f, default(Vector2), num86, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type], new Vector2((float)num82 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width * 0.5f * num86, (float)num83 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height * 0.5f * num86), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].type].Height)), Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].GetColor(color6), 0f, default(Vector2), num86, SpriteEffects.None, 0f);
 							}
 							color6 = color7;
 							if (Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].stack), new Vector2((float)num82 + 10f * Main.inventoryScale, (float)num83 + 26f * Main.inventoryScale), color6, 0f, default(Vector2), num86, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.recipe[Main.availableRecipe[Main.focusRecipe]].requiredItem[num81].stack), new Vector2((float)num82 + 10f * Main.inventoryScale, (float)num83 + 26f * Main.inventoryScale), color6, 0f, default(Vector2), num86, SpriteEffects.None, 0f);
 							}
 						}
 						num81++;
@@ -18169,10 +18175,10 @@ namespace Terraria
 					{
 						num88 -= 50;
 					}
-					this.spriteBatch.Draw(Main.craftButtonTexture, new Vector2((float)num87, (float)num88), new Rectangle?(new Rectangle(0, 0, Main.craftButtonTexture.Width, Main.craftButtonTexture.Height)), Color.White, 0f, new Vector2((float)(Main.craftButtonTexture.Width / 2), (float)(Main.craftButtonTexture.Height / 2)), Main.reforgeScale, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.craftButtonTexture, new Vector2((float)num87, (float)num88), new Rectangle?(new Rectangle(0, 0, Main.craftButtonTexture.Width, Main.craftButtonTexture.Height)), Color.White, 0f, new Vector2((float)(Main.craftButtonTexture.Width / 2), (float)(Main.craftButtonTexture.Height / 2)), Main.reforgeScale, SpriteEffects.None, 0f);
 					if (Main.mouseX > num87 - Main.craftButtonTexture.Width / 2 && Main.mouseX < num87 + Main.craftButtonTexture.Width / 2 && Main.mouseY > num88 - Main.craftButtonTexture.Height / 2 && Main.mouseY < num88 + Main.craftButtonTexture.Height / 2)
 					{
-						this.MouseText("Crafting window", 0, 0);
+						MouseText("Crafting window", 0, 0);
 						Main.player[Main.myPlayer].mouseInterface = true;
 						if (Main.mouseLeft && Main.mouseLeftRelease)
 						{
@@ -18230,7 +18236,7 @@ namespace Terraria
 							Main.PlaySound(12, -1, -1, 1);
 						}
 					}
-					this.spriteBatch.Draw(Main.craftUpButtonTexture, new Vector2((float)num98, (float)num99), new Rectangle?(new Rectangle(0, 0, Main.craftUpButtonTexture.Width, Main.craftUpButtonTexture.Height)), new Color(200, 200, 200, 200), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.craftUpButtonTexture, new Vector2((float)num98, (float)num99), new Rectangle?(new Rectangle(0, 0, Main.craftUpButtonTexture.Width, Main.craftUpButtonTexture.Height)), new Color(200, 200, 200, 200), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				if (Main.recStart < Main.numAvailableRecipes - num92 * num93)
 				{
@@ -18248,7 +18254,7 @@ namespace Terraria
 							}
 						}
 					}
-					this.spriteBatch.Draw(Main.craftDownButtonTexture, new Vector2((float)num98, (float)num99), new Rectangle?(new Rectangle(0, 0, Main.craftUpButtonTexture.Width, Main.craftUpButtonTexture.Height)), new Color(200, 200, 200, 200), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.craftDownButtonTexture, new Vector2((float)num98, (float)num99), new Rectangle?(new Rectangle(0, 0, Main.craftUpButtonTexture.Width, Main.craftUpButtonTexture.Height)), new Color(200, 200, 200, 200), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				int num100 = Main.recStart;
 				while (num100 < Recipe.maxRecipes && num100 < Main.numAvailableRecipes)
@@ -18291,7 +18297,7 @@ namespace Terraria
 						{
 							num103 = 0.0;
 						}
-						this.spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num101, (float)num102), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color((int)((byte)num103), (int)((byte)num103), (int)((byte)num103), (int)((byte)num103)), 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack4Texture, new Vector2((float)num101, (float)num102), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color((int)((byte)num103), (int)((byte)num103), (int)((byte)num103), (int)((byte)num103)), 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						if (Main.recipe[Main.availableRecipe[num100]].createItem.type > 0 && Main.recipe[Main.availableRecipe[num100]].createItem.stack > 0)
 						{
 							float num105 = 1f;
@@ -18315,15 +18321,15 @@ namespace Terraria
 								color8.B = (byte)Main.DiscoB;
 								color8.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type], new Vector2((float)num101 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width * 0.5f * num105, (float)num102 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height * 0.5f * num105), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num100]].createItem.GetAlpha(color8), 0f, default(Vector2), num105, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type], new Vector2((float)num101 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width * 0.5f * num105, (float)num102 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height * 0.5f * num105), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num100]].createItem.GetAlpha(color8), 0f, default(Vector2), num105, SpriteEffects.None, 0f);
 							color8 = color9;
 							if (Main.recipe[Main.availableRecipe[num100]].createItem.color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type], new Vector2((float)num101 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width * 0.5f * num105, (float)num102 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height * 0.5f * num105), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num100]].createItem.GetColor(color8), 0f, default(Vector2), num105, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type], new Vector2((float)num101 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width * 0.5f * num105, (float)num102 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height * 0.5f * num105), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Width, Main.itemTexture[Main.recipe[Main.availableRecipe[num100]].createItem.type].Height)), Main.recipe[Main.availableRecipe[num100]].createItem.GetColor(color8), 0f, default(Vector2), num105, SpriteEffects.None, 0f);
 							}
 							if (Main.recipe[Main.availableRecipe[num100]].createItem.stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.recipe[Main.availableRecipe[num100]].createItem.stack), new Vector2((float)num101 + 10f * Main.inventoryScale, (float)num102 + 26f * Main.inventoryScale), color8, 0f, default(Vector2), num105, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.recipe[Main.availableRecipe[num100]].createItem.stack), new Vector2((float)num101 + 10f * Main.inventoryScale, (float)num102 + 26f * Main.inventoryScale), color8, 0f, default(Vector2), num105, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -18346,7 +18352,7 @@ namespace Terraria
 			Vector2 vector9 = Main.fontMouseText.MeasureString("Coins");
 			Vector2 vector10 = Main.fontMouseText.MeasureString(Lang.inter[26]);
 			float num106 = vector9.X / vector10.X;
-			this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[26], new Vector2(496f, 84f + (vector9.Y - vector9.Y * num106) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.75f * num106, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, Lang.inter[26], new Vector2(496f, 84f + (vector9.Y - vector9.Y * num106) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.75f * num106, SpriteEffects.None, 0f);
 			Main.inventoryScale = 0.6f;
 			for (int num107 = 0; num107 < 4; num107++)
 			{
@@ -18369,7 +18375,7 @@ namespace Terraria
 									{
 										if (Main.player[Main.myPlayer].SellItem(Main.player[Main.myPlayer].inventory[num110].value, Main.player[Main.myPlayer].inventory[num110].stack))
 										{
-											this.shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num110]);
+											shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num110]);
 											Main.player[Main.myPlayer].inventory[num110].SetDefaults(0, false);
 											Main.PlaySound(18, -1, -1, 1);
 										}
@@ -18377,7 +18383,7 @@ namespace Terraria
 										{
 											if (Main.player[Main.myPlayer].inventory[num110].value == 0)
 											{
-												this.shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num110]);
+												shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num110]);
 												Main.player[Main.myPlayer].inventory[num110].SetDefaults(0, false);
 												Main.PlaySound(7, -1, -1, 1);
 											}
@@ -18473,7 +18479,7 @@ namespace Terraria
 						});
 					}
 				}
-				this.spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num108, (float)num109), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num108, (float)num109), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 				white11 = Color.White;
 				if (Main.player[Main.myPlayer].inventory[num110].type > 0 && Main.player[Main.myPlayer].inventory[num110].stack > 0)
 				{
@@ -18490,21 +18496,21 @@ namespace Terraria
 						}
 					}
 					num112 *= Main.inventoryScale;
-					this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type], new Vector2((float)num108 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width * 0.5f * num112, (float)num109 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height * 0.5f * num112), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height)), Main.player[Main.myPlayer].inventory[num110].GetAlpha(white11), 0f, default(Vector2), num112, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type], new Vector2((float)num108 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width * 0.5f * num112, (float)num109 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height * 0.5f * num112), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height)), Main.player[Main.myPlayer].inventory[num110].GetAlpha(white11), 0f, default(Vector2), num112, SpriteEffects.None, 0f);
 					if (Main.player[Main.myPlayer].inventory[num110].color != default(Color))
 					{
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type], new Vector2((float)num108 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width * 0.5f * num112, (float)num109 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height * 0.5f * num112), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height)), Main.player[Main.myPlayer].inventory[num110].GetColor(white11), 0f, default(Vector2), num112, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type], new Vector2((float)num108 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width * 0.5f * num112, (float)num109 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height * 0.5f * num112), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num110].type].Height)), Main.player[Main.myPlayer].inventory[num110].GetColor(white11), 0f, default(Vector2), num112, SpriteEffects.None, 0f);
 					}
 					if (Main.player[Main.myPlayer].inventory[num110].stack > 1)
 					{
-						this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[num110].stack), new Vector2((float)num108 + 10f * Main.inventoryScale, (float)num109 + 26f * Main.inventoryScale), white11, 0f, default(Vector2), num112, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[num110].stack), new Vector2((float)num108 + 10f * Main.inventoryScale, (float)num109 + 26f * Main.inventoryScale), white11, 0f, default(Vector2), num112, SpriteEffects.None, 0f);
 					}
 				}
 			}
 			Vector2 vector11 = Main.fontMouseText.MeasureString("Ammo");
 			Vector2 vector12 = Main.fontMouseText.MeasureString(Lang.inter[27]);
 			float num113 = vector11.X / vector12.X;
-			this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[27], new Vector2(532f, 84f + (vector11.Y - vector11.Y * num113) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.75f * num113, SpriteEffects.None, 0f);
+			spriteBatch.DrawString(Main.fontMouseText, Lang.inter[27], new Vector2(532f, 84f + (vector11.Y - vector11.Y * num113) / 2f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 0.75f * num113, SpriteEffects.None, 0f);
 			Main.inventoryScale = 0.6f;
 			for (int num114 = 0; num114 < 4; num114++)
 			{
@@ -18527,7 +18533,7 @@ namespace Terraria
 									{
 										if (Main.player[Main.myPlayer].SellItem(Main.player[Main.myPlayer].inventory[num117].value, Main.player[Main.myPlayer].inventory[num117].stack))
 										{
-											this.shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num117]);
+											shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num117]);
 											Main.player[Main.myPlayer].inventory[num117].SetDefaults(0, false);
 											Main.PlaySound(18, -1, -1, 1);
 										}
@@ -18535,7 +18541,7 @@ namespace Terraria
 										{
 											if (Main.player[Main.myPlayer].inventory[num117].value == 0)
 											{
-												this.shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num117]);
+												shop[Main.npcShop].AddShop(Main.player[Main.myPlayer].inventory[num117]);
 												Main.player[Main.myPlayer].inventory[num117].SetDefaults(0, false);
 												Main.PlaySound(7, -1, -1, 1);
 											}
@@ -18632,7 +18638,7 @@ namespace Terraria
 						});
 					}
 				}
-				this.spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num115, (float)num116), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num115, (float)num116), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 				white12 = Color.White;
 				if (Main.player[Main.myPlayer].inventory[num117].type > 0 && Main.player[Main.myPlayer].inventory[num117].stack > 0)
 				{
@@ -18649,14 +18655,14 @@ namespace Terraria
 						}
 					}
 					num119 *= Main.inventoryScale;
-					this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type], new Vector2((float)num115 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width * 0.5f * num119, (float)num116 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height * 0.5f * num119), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height)), Main.player[Main.myPlayer].inventory[num117].GetAlpha(white12), 0f, default(Vector2), num119, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type], new Vector2((float)num115 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width * 0.5f * num119, (float)num116 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height * 0.5f * num119), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height)), Main.player[Main.myPlayer].inventory[num117].GetAlpha(white12), 0f, default(Vector2), num119, SpriteEffects.None, 0f);
 					if (Main.player[Main.myPlayer].inventory[num117].color != default(Color))
 					{
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type], new Vector2((float)num115 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width * 0.5f * num119, (float)num116 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height * 0.5f * num119), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height)), Main.player[Main.myPlayer].inventory[num117].GetColor(white12), 0f, default(Vector2), num119, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type], new Vector2((float)num115 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width * 0.5f * num119, (float)num116 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height * 0.5f * num119), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[num117].type].Height)), Main.player[Main.myPlayer].inventory[num117].GetColor(white12), 0f, default(Vector2), num119, SpriteEffects.None, 0f);
 					}
 					if (Main.player[Main.myPlayer].inventory[num117].stack > 1)
 					{
-						this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[num117].stack), new Vector2((float)num115 + 10f * Main.inventoryScale, (float)num116 + 26f * Main.inventoryScale), white12, 0f, default(Vector2), num119, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[num117].stack), new Vector2((float)num115 + 10f * Main.inventoryScale, (float)num116 + 26f * Main.inventoryScale), white12, 0f, default(Vector2), num119, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -18666,9 +18672,9 @@ namespace Terraria
 			}
 			if (Main.npcShop > 0)
 			{
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[28], new Vector2(504f, (float)this.invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[28], new Vector2(504f, (float)invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				Main.inventoryScale = 0.755f;
-				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > this.invBottom && Main.mouseY < (int)((float)this.invBottom + 224f * Main.inventoryScale))
+				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > invBottom && Main.mouseY < (int)((float)invBottom + 224f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
 				}
@@ -18677,7 +18683,7 @@ namespace Terraria
 					for (int num121 = 0; num121 < 4; num121++)
 					{
 						int num122 = (int)(73f + (float)(num120 * 56) * Main.inventoryScale);
-						int num123 = (int)((float)this.invBottom + (float)(num121 * 56) * Main.inventoryScale);
+						int num123 = (int)((float)invBottom + (float)(num121 * 56) * Main.inventoryScale);
 						int num124 = num120 + num121 * 10;
 						Color white13 = new Color(100, 100, 100, 100);
 						if (Main.mouseX >= num122 && (float)Main.mouseX <= (float)num122 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num123 && (float)Main.mouseY <= (float)num123 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
@@ -18685,33 +18691,33 @@ namespace Terraria
 							Main.player[Main.myPlayer].mouseInterface = true;
 							if (Main.mouseLeftRelease && Main.mouseLeft)
 							{
-								if (Main.mouseItem.type == 0 && this.shop[Main.npcShop].item[num124].type > 0)
+								if (Main.mouseItem.type == 0 && shop[Main.npcShop].item[num124].type > 0)
 								{
-									if ((Main.player[Main.myPlayer].selectedItem != num124 || Main.player[Main.myPlayer].itemAnimation <= 0) && Main.player[Main.myPlayer].itemTime == 0 && Main.player[Main.myPlayer].BuyItem(this.shop[Main.npcShop].item[num124].value))
+									if ((Main.player[Main.myPlayer].selectedItem != num124 || Main.player[Main.myPlayer].itemAnimation <= 0) && Main.player[Main.myPlayer].itemTime == 0 && Main.player[Main.myPlayer].BuyItem(shop[Main.npcShop].item[num124].value))
 									{
-										if (this.shop[Main.npcShop].item[num124].buyOnce)
+										if (shop[Main.npcShop].item[num124].buyOnce)
 										{
-											int prefix = (int)this.shop[Main.npcShop].item[num124].prefix;
-											Main.mouseItem.netDefaults(this.shop[Main.npcShop].item[num124].netID);
+											int prefix = (int)shop[Main.npcShop].item[num124].prefix;
+											Main.mouseItem.netDefaults(shop[Main.npcShop].item[num124].netID);
 											Main.mouseItem.Prefix(prefix);
 										}
 										else
 										{
-											Main.mouseItem.netDefaults(this.shop[Main.npcShop].item[num124].netID);
+											Main.mouseItem.netDefaults(shop[Main.npcShop].item[num124].netID);
 											Main.mouseItem.Prefix(-1);
 										}
 										Main.mouseItem.position.X = Main.player[Main.myPlayer].position.X + (float)(Main.player[Main.myPlayer].width / 2) - (float)(Main.mouseItem.width / 2);
 										Main.mouseItem.position.Y = Main.player[Main.myPlayer].position.Y + (float)(Main.player[Main.myPlayer].height / 2) - (float)(Main.mouseItem.height / 2);
 										ItemText.NewText(Main.mouseItem, Main.mouseItem.stack);
-										if (this.shop[Main.npcShop].item[num124].buyOnce)
+										if (shop[Main.npcShop].item[num124].buyOnce)
 										{
-											this.shop[Main.npcShop].item[num124].stack--;
-											if (this.shop[Main.npcShop].item[num124].stack <= 0)
+											shop[Main.npcShop].item[num124].stack--;
+											if (shop[Main.npcShop].item[num124].stack <= 0)
 											{
-												this.shop[Main.npcShop].item[num124].SetDefaults(0, false);
+												shop[Main.npcShop].item[num124].SetDefaults(0, false);
 											}
 										}
-										if (this.shop[Main.npcShop].item[num124].value > 0)
+										if (shop[Main.npcShop].item[num124].value > 0)
 										{
 											Main.PlaySound(18, -1, -1, 1);
 										}
@@ -18723,11 +18729,11 @@ namespace Terraria
 								}
 								else
 								{
-									if (this.shop[Main.npcShop].item[num124].type == 0 && Main.mouseItem.type > 0 && (Main.mouseItem.type < 71 || Main.mouseItem.type > 74))
+									if (shop[Main.npcShop].item[num124].type == 0 && Main.mouseItem.type > 0 && (Main.mouseItem.type < 71 || Main.mouseItem.type > 74))
 									{
 										if (Main.player[Main.myPlayer].SellItem(Main.mouseItem.value, Main.mouseItem.stack))
 										{
-											this.shop[Main.npcShop].AddShop(Main.mouseItem);
+											shop[Main.npcShop].AddShop(Main.mouseItem);
 											Main.mouseItem.stack = 0;
 											Main.mouseItem.type = 0;
 											Main.PlaySound(18, -1, -1, 1);
@@ -18736,7 +18742,7 @@ namespace Terraria
 										{
 											if (Main.mouseItem.value == 0)
 											{
-												this.shop[Main.npcShop].AddShop(Main.mouseItem);
+												shop[Main.npcShop].AddShop(Main.mouseItem);
 												Main.mouseItem.stack = 0;
 												Main.mouseItem.type = 0;
 												Main.PlaySound(7, -1, -1, 1);
@@ -18748,12 +18754,12 @@ namespace Terraria
 							}
 							else
 							{
-								if (Main.stackSplit <= 1 && Main.mouseRight && this.shop[Main.npcShop].item[num124].type > 0 && (Main.mouseItem.IsTheSameAs(this.shop[Main.npcShop].item[num124]) || Main.mouseItem.type == 0))
+								if (Main.stackSplit <= 1 && Main.mouseRight && shop[Main.npcShop].item[num124].type > 0 && (Main.mouseItem.IsTheSameAs(shop[Main.npcShop].item[num124]) || Main.mouseItem.type == 0))
 								{
 									int num125 = Main.superFastStack + 1;
 									for (int num126 = 0; num126 < num125; num126++)
 									{
-										if ((Main.mouseItem.stack < Main.mouseItem.maxStack || Main.mouseItem.type == 0) && Main.player[Main.myPlayer].BuyItem(this.shop[Main.npcShop].item[num124].value))
+										if ((Main.mouseItem.stack < Main.mouseItem.maxStack || Main.mouseItem.type == 0) && Main.player[Main.myPlayer].BuyItem(shop[Main.npcShop].item[num124].value))
 										{
 											if (num126 == 0)
 											{
@@ -18761,7 +18767,7 @@ namespace Terraria
 											}
 											if (Main.mouseItem.type == 0)
 											{
-												Main.mouseItem.netDefaults(this.shop[Main.npcShop].item[num124].netID);
+												Main.mouseItem.netDefaults(shop[Main.npcShop].item[num124].netID);
 												Main.mouseItem.stack = 0;
 											}
 											Main.mouseItem.stack++;
@@ -18773,66 +18779,66 @@ namespace Terraria
 											{
 												Main.stackSplit = Main.stackDelay;
 											}
-											if (this.shop[Main.npcShop].item[num124].buyOnce)
+											if (shop[Main.npcShop].item[num124].buyOnce)
 											{
-												this.shop[Main.npcShop].item[num124].stack--;
-												if (this.shop[Main.npcShop].item[num124].stack <= 0)
+												shop[Main.npcShop].item[num124].stack--;
+												if (shop[Main.npcShop].item[num124].stack <= 0)
 												{
-													this.shop[Main.npcShop].item[num124].SetDefaults(0, false);
+													shop[Main.npcShop].item[num124].SetDefaults(0, false);
 												}
 											}
 										}
 									}
 								}
 							}
-							Main.hoverItemName = this.shop[Main.npcShop].item[num124].name;
-							Main.toolTip = (Item)this.shop[Main.npcShop].item[num124].Clone();
+							Main.hoverItemName = shop[Main.npcShop].item[num124].name;
+							Main.toolTip = (Item)shop[Main.npcShop].item[num124].Clone();
 							Main.toolTip.buy = true;
-							if (this.shop[Main.npcShop].item[num124].stack > 1)
+							if (shop[Main.npcShop].item[num124].stack > 1)
 							{
 								object obj = Main.hoverItemName;
 								Main.hoverItemName = string.Concat(new object[]
 								{
 									obj,
 									" (",
-									this.shop[Main.npcShop].item[num124].stack,
+									shop[Main.npcShop].item[num124].stack,
 									")"
 								});
 							}
 						}
-						this.spriteBatch.Draw(Main.inventoryBack6Texture, new Vector2((float)num122, (float)num123), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack6Texture, new Vector2((float)num122, (float)num123), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						white13 = Color.White;
-						if (this.shop[Main.npcShop].item[num124].type > 0 && this.shop[Main.npcShop].item[num124].stack > 0)
+						if (shop[Main.npcShop].item[num124].type > 0 && shop[Main.npcShop].item[num124].stack > 0)
 						{
 							float num127 = 1f;
-							if (Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width > 32 || Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height > 32)
+							if (Main.itemTexture[shop[Main.npcShop].item[num124].type].Width > 32 || Main.itemTexture[shop[Main.npcShop].item[num124].type].Height > 32)
 							{
-								if (Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width > Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height)
+								if (Main.itemTexture[shop[Main.npcShop].item[num124].type].Width > Main.itemTexture[shop[Main.npcShop].item[num124].type].Height)
 								{
-									num127 = 32f / (float)Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width;
+									num127 = 32f / (float)Main.itemTexture[shop[Main.npcShop].item[num124].type].Width;
 								}
 								else
 								{
-									num127 = 32f / (float)Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height;
+									num127 = 32f / (float)Main.itemTexture[shop[Main.npcShop].item[num124].type].Height;
 								}
 							}
 							num127 *= Main.inventoryScale;
-							if (this.shop[Main.npcShop].item[num124].type == 662 || this.shop[Main.npcShop].item[num124].type == 663)
+							if (shop[Main.npcShop].item[num124].type == 662 || shop[Main.npcShop].item[num124].type == 663)
 							{
 								white13.R = (byte)Main.DiscoR;
 								white13.G = (byte)Main.DiscoG;
 								white13.B = (byte)Main.DiscoB;
 								white13.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[this.shop[Main.npcShop].item[num124].type], new Vector2((float)num122 + 26f * Main.inventoryScale - (float)Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width * 0.5f * num127, (float)num123 + 26f * Main.inventoryScale - (float)Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height * 0.5f * num127), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width, Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height)), this.shop[Main.npcShop].item[num124].GetAlpha(white13), 0f, default(Vector2), num127, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[shop[Main.npcShop].item[num124].type], new Vector2((float)num122 + 26f * Main.inventoryScale - (float)Main.itemTexture[shop[Main.npcShop].item[num124].type].Width * 0.5f * num127, (float)num123 + 26f * Main.inventoryScale - (float)Main.itemTexture[shop[Main.npcShop].item[num124].type].Height * 0.5f * num127), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[shop[Main.npcShop].item[num124].type].Width, Main.itemTexture[shop[Main.npcShop].item[num124].type].Height)), shop[Main.npcShop].item[num124].GetAlpha(white13), 0f, default(Vector2), num127, SpriteEffects.None, 0f);
 							white13 = Color.White;
-							if (this.shop[Main.npcShop].item[num124].color != default(Color))
+							if (shop[Main.npcShop].item[num124].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[this.shop[Main.npcShop].item[num124].type], new Vector2((float)num122 + 26f * Main.inventoryScale - (float)Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width * 0.5f * num127, (float)num123 + 26f * Main.inventoryScale - (float)Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height * 0.5f * num127), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Width, Main.itemTexture[this.shop[Main.npcShop].item[num124].type].Height)), this.shop[Main.npcShop].item[num124].GetColor(white13), 0f, default(Vector2), num127, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[shop[Main.npcShop].item[num124].type], new Vector2((float)num122 + 26f * Main.inventoryScale - (float)Main.itemTexture[shop[Main.npcShop].item[num124].type].Width * 0.5f * num127, (float)num123 + 26f * Main.inventoryScale - (float)Main.itemTexture[shop[Main.npcShop].item[num124].type].Height * 0.5f * num127), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[shop[Main.npcShop].item[num124].type].Width, Main.itemTexture[shop[Main.npcShop].item[num124].type].Height)), shop[Main.npcShop].item[num124].GetColor(white13), 0f, default(Vector2), num127, SpriteEffects.None, 0f);
 							}
-							if (this.shop[Main.npcShop].item[num124].stack > 1)
+							if (shop[Main.npcShop].item[num124].stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(this.shop[Main.npcShop].item[num124].stack), new Vector2((float)num122 + 10f * Main.inventoryScale, (float)num123 + 26f * Main.inventoryScale), white13, 0f, default(Vector2), num127, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(shop[Main.npcShop].item[num124].stack), new Vector2((float)num122 + 10f * Main.inventoryScale, (float)num123 + 26f * Main.inventoryScale), white13, 0f, default(Vector2), num127, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -18845,20 +18851,20 @@ namespace Terraria
 			if (Main.player[Main.myPlayer].chest != -1)
 			{
 				Main.inventoryScale = 0.755f;
-				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > this.invBottom && Main.mouseY < (int)((float)this.invBottom + 224f * Main.inventoryScale))
+				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > invBottom && Main.mouseY < (int)((float)invBottom + 224f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
 				}
 				for (int num128 = 0; num128 < 3; num128++)
 				{
 					int num129 = 506;
-					int num130 = this.invBottom + 40;
-					float num131 = this.chestLootScale;
+					int num130 = invBottom + 40;
+					float num131 = chestLootScale;
 					string text7 = Lang.inter[29];
 					if (num128 == 1)
 					{
 						num130 += 26;
-						num131 = this.chestDepositScale;
+						num131 = chestDepositScale;
 						text7 = Lang.inter[30];
 					}
 					else
@@ -18866,42 +18872,42 @@ namespace Terraria
 						if (num128 == 2)
 						{
 							num130 += 52;
-							num131 = this.chestStackScale;
+							num131 = chestStackScale;
 							text7 = Lang.inter[31];
 						}
 					}
 					Vector2 vector13 = Main.fontMouseText.MeasureString(text7) / 2f;
 					Color color10 = new Color((int)((byte)((float)Main.mouseTextColor * num131)), (int)((byte)((float)Main.mouseTextColor * num131)), (int)((byte)((float)Main.mouseTextColor * num131)), (int)((byte)((float)Main.mouseTextColor * num131)));
 					num129 += (int)(vector13.X * num131);
-					this.spriteBatch.DrawString(Main.fontMouseText, text7, new Vector2((float)num129, (float)num130), color10, 0f, vector13, num131, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text7, new Vector2((float)num129, (float)num130), color10, 0f, vector13, num131, SpriteEffects.None, 0f);
 					vector13 *= num131;
 					if ((float)Main.mouseX > (float)num129 - vector13.X && (float)Main.mouseX < (float)num129 + vector13.X && (float)Main.mouseY > (float)num130 - vector13.Y && (float)Main.mouseY < (float)num130 + vector13.Y)
 					{
 						if (num128 == 0)
 						{
-							if (!this.chestLootHover)
+							if (!chestLootHover)
 							{
 								Main.PlaySound(12, -1, -1, 1);
 							}
-							this.chestLootHover = true;
+							chestLootHover = true;
 						}
 						else
 						{
 							if (num128 == 1)
 							{
-								if (!this.chestDepositHover)
+								if (!chestDepositHover)
 								{
 									Main.PlaySound(12, -1, -1, 1);
 								}
-								this.chestDepositHover = true;
+								chestDepositHover = true;
 							}
 							else
 							{
-								if (!this.chestStackHover)
+								if (!chestStackHover)
 								{
 									Main.PlaySound(12, -1, -1, 1);
 								}
-								this.chestStackHover = true;
+								chestStackHover = true;
 							}
 						}
 						Main.player[Main.myPlayer].mouseInterface = true;
@@ -19237,17 +19243,17 @@ namespace Terraria
 						num131 -= 0.05f;
 						if (num128 == 0)
 						{
-							this.chestLootHover = false;
+							chestLootHover = false;
 						}
 						else
 						{
 							if (num128 == 1)
 							{
-								this.chestDepositHover = false;
+								chestDepositHover = false;
 							}
 							else
 							{
-								this.chestStackHover = false;
+								chestStackHover = false;
 							}
 						}
 					}
@@ -19261,35 +19267,35 @@ namespace Terraria
 					}
 					if (num128 == 0)
 					{
-						this.chestLootScale = num131;
+						chestLootScale = num131;
 					}
 					else
 					{
 						if (num128 == 1)
 						{
-							this.chestDepositScale = num131;
+							chestDepositScale = num131;
 						}
 						else
 						{
-							this.chestStackScale = num131;
+							chestStackScale = num131;
 						}
 					}
 				}
 			}
 			else
 			{
-				this.chestLootScale = 0.75f;
-				this.chestDepositScale = 0.75f;
-				this.chestStackScale = 0.75f;
-				this.chestLootHover = false;
-				this.chestDepositHover = false;
-				this.chestStackHover = false;
+				chestLootScale = 0.75f;
+				chestDepositScale = 0.75f;
+				chestStackScale = 0.75f;
+				chestLootHover = false;
+				chestDepositHover = false;
+				chestStackHover = false;
 			}
 			if (Main.player[Main.myPlayer].chest > -1)
 			{
-				this.spriteBatch.DrawString(Main.fontMouseText, Main.chestText, new Vector2(504f, (float)this.invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Main.chestText, new Vector2(504f, (float)invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				Main.inventoryScale = 0.755f;
-				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 280f * Main.inventoryScale) && Main.mouseY > this.invBottom && Main.mouseY < (int)((float)this.invBottom + 224f * Main.inventoryScale))
+				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 280f * Main.inventoryScale) && Main.mouseY > invBottom && Main.mouseY < (int)((float)invBottom + 224f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
 				}
@@ -19298,7 +19304,7 @@ namespace Terraria
 					for (int num153 = 0; num153 < 4; num153++)
 					{
 						int num154 = (int)(73f + (float)(num152 * 56) * Main.inventoryScale);
-						int num155 = (int)((float)this.invBottom + (float)(num153 * 56) * Main.inventoryScale);
+						int num155 = (int)((float)invBottom + (float)(num153 * 56) * Main.inventoryScale);
 						int num156 = num152 + num153 * 10;
 						Color white14 = new Color(100, 100, 100, 100);
 						if (Main.mouseX >= num154 && (float)Main.mouseX <= (float)num154 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num155 && (float)Main.mouseY <= (float)num155 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
@@ -19402,7 +19408,7 @@ namespace Terraria
 								});
 							}
 						}
-						this.spriteBatch.Draw(Main.inventoryBack5Texture, new Vector2((float)num154, (float)num155), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack5Texture, new Vector2((float)num154, (float)num155), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						white14 = Color.White;
 						if (Main.chest[Main.player[Main.myPlayer].chest].item[num156].type > 0 && Main.chest[Main.player[Main.myPlayer].chest].item[num156].stack > 0)
 						{
@@ -19426,15 +19432,15 @@ namespace Terraria
 								white14.B = (byte)Main.DiscoB;
 								white14.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type], new Vector2((float)num154 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width * 0.5f * num158, (float)num155 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height * 0.5f * num158), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height)), Main.chest[Main.player[Main.myPlayer].chest].item[num156].GetAlpha(white14), 0f, default(Vector2), num158, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type], new Vector2((float)num154 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width * 0.5f * num158, (float)num155 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height * 0.5f * num158), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height)), Main.chest[Main.player[Main.myPlayer].chest].item[num156].GetAlpha(white14), 0f, default(Vector2), num158, SpriteEffects.None, 0f);
 							white14 = Color.White;
 							if (Main.chest[Main.player[Main.myPlayer].chest].item[num156].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type], new Vector2((float)num154 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width * 0.5f * num158, (float)num155 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height * 0.5f * num158), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height)), Main.chest[Main.player[Main.myPlayer].chest].item[num156].GetColor(white14), 0f, default(Vector2), num158, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type], new Vector2((float)num154 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width * 0.5f * num158, (float)num155 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height * 0.5f * num158), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Width, Main.itemTexture[Main.chest[Main.player[Main.myPlayer].chest].item[num156].type].Height)), Main.chest[Main.player[Main.myPlayer].chest].item[num156].GetColor(white14), 0f, default(Vector2), num158, SpriteEffects.None, 0f);
 							}
 							if (Main.chest[Main.player[Main.myPlayer].chest].item[num156].stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.chest[Main.player[Main.myPlayer].chest].item[num156].stack), new Vector2((float)num154 + 10f * Main.inventoryScale, (float)num155 + 26f * Main.inventoryScale), white14, 0f, default(Vector2), num158, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.chest[Main.player[Main.myPlayer].chest].item[num156].stack), new Vector2((float)num154 + 10f * Main.inventoryScale, (float)num155 + 26f * Main.inventoryScale), white14, 0f, default(Vector2), num158, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -19442,9 +19448,9 @@ namespace Terraria
 			}
 			if (Main.player[Main.myPlayer].chest == -2)
 			{
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[32], new Vector2(504f, (float)this.invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[32], new Vector2(504f, (float)invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				Main.inventoryScale = 0.755f;
-				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > this.invBottom && Main.mouseY < (int)((float)this.invBottom + 224f * Main.inventoryScale))
+				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > invBottom && Main.mouseY < (int)((float)invBottom + 224f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
 				}
@@ -19453,7 +19459,7 @@ namespace Terraria
 					for (int num160 = 0; num160 < 4; num160++)
 					{
 						int num161 = (int)(73f + (float)(num159 * 56) * Main.inventoryScale);
-						int num162 = (int)((float)this.invBottom + (float)(num160 * 56) * Main.inventoryScale);
+						int num162 = (int)((float)invBottom + (float)(num160 * 56) * Main.inventoryScale);
 						int num163 = num159 + num160 * 10;
 						Color white15 = new Color(100, 100, 100, 100);
 						if (Main.mouseX >= num161 && (float)Main.mouseX <= (float)num161 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num162 && (float)Main.mouseY <= (float)num162 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
@@ -19545,7 +19551,7 @@ namespace Terraria
 								});
 							}
 						}
-						this.spriteBatch.Draw(Main.inventoryBack2Texture, new Vector2((float)num161, (float)num162), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack2Texture, new Vector2((float)num161, (float)num162), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						white15 = Color.White;
 						if (Main.player[Main.myPlayer].bank[num163].type > 0 && Main.player[Main.myPlayer].bank[num163].stack > 0)
 						{
@@ -19569,15 +19575,15 @@ namespace Terraria
 								white15.B = (byte)Main.DiscoB;
 								white15.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type], new Vector2((float)num161 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width * 0.5f * num165, (float)num162 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height * 0.5f * num165), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height)), Main.player[Main.myPlayer].bank[num163].GetAlpha(white15), 0f, default(Vector2), num165, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type], new Vector2((float)num161 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width * 0.5f * num165, (float)num162 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height * 0.5f * num165), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height)), Main.player[Main.myPlayer].bank[num163].GetAlpha(white15), 0f, default(Vector2), num165, SpriteEffects.None, 0f);
 							white15 = Color.White;
 							if (Main.player[Main.myPlayer].bank[num163].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type], new Vector2((float)num161 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width * 0.5f * num165, (float)num162 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height * 0.5f * num165), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height)), Main.player[Main.myPlayer].bank[num163].GetColor(white15), 0f, default(Vector2), num165, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type], new Vector2((float)num161 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width * 0.5f * num165, (float)num162 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height * 0.5f * num165), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank[num163].type].Height)), Main.player[Main.myPlayer].bank[num163].GetColor(white15), 0f, default(Vector2), num165, SpriteEffects.None, 0f);
 							}
 							if (Main.player[Main.myPlayer].bank[num163].stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].bank[num163].stack), new Vector2((float)num161 + 10f * Main.inventoryScale, (float)num162 + 26f * Main.inventoryScale), white15, 0f, default(Vector2), num165, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].bank[num163].stack), new Vector2((float)num161 + 10f * Main.inventoryScale, (float)num162 + 26f * Main.inventoryScale), white15, 0f, default(Vector2), num165, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -19585,9 +19591,9 @@ namespace Terraria
 			}
 			if (Main.player[Main.myPlayer].chest == -3)
 			{
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[33], new Vector2(504f, (float)this.invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[33], new Vector2(504f, (float)invBottom), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				Main.inventoryScale = 0.755f;
-				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > this.invBottom && Main.mouseY < (int)((float)this.invBottom + 224f * Main.inventoryScale))
+				if (Main.mouseX > 73 && Main.mouseX < (int)(73f + 560f * Main.inventoryScale) && Main.mouseY > invBottom && Main.mouseY < (int)((float)invBottom + 224f * Main.inventoryScale))
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
 				}
@@ -19596,7 +19602,7 @@ namespace Terraria
 					for (int num167 = 0; num167 < 4; num167++)
 					{
 						int num168 = (int)(73f + (float)(num166 * 56) * Main.inventoryScale);
-						int num169 = (int)((float)this.invBottom + (float)(num167 * 56) * Main.inventoryScale);
+						int num169 = (int)((float)invBottom + (float)(num167 * 56) * Main.inventoryScale);
 						int num170 = num166 + num167 * 10;
 						Color white16 = new Color(100, 100, 100, 100);
 						if (Main.mouseX >= num168 && (float)Main.mouseX <= (float)num168 + (float)Main.inventoryBackTexture.Width * Main.inventoryScale && Main.mouseY >= num169 && (float)Main.mouseY <= (float)num169 + (float)Main.inventoryBackTexture.Height * Main.inventoryScale)
@@ -19688,7 +19694,7 @@ namespace Terraria
 								});
 							}
 						}
-						this.spriteBatch.Draw(Main.inventoryBack2Texture, new Vector2((float)num168, (float)num169), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.inventoryBack2Texture, new Vector2((float)num168, (float)num169), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), Main.inventoryBack, 0f, default(Vector2), Main.inventoryScale, SpriteEffects.None, 0f);
 						white16 = Color.White;
 						if (Main.player[Main.myPlayer].bank2[num170].type > 0 && Main.player[Main.myPlayer].bank2[num170].stack > 0)
 						{
@@ -19712,15 +19718,15 @@ namespace Terraria
 								white16.B = (byte)Main.DiscoB;
 								white16.A = 255;
 							}
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type], new Vector2((float)num168 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width * 0.5f * num172, (float)num169 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height * 0.5f * num172), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height)), Main.player[Main.myPlayer].bank2[num170].GetAlpha(white16), 0f, default(Vector2), num172, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type], new Vector2((float)num168 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width * 0.5f * num172, (float)num169 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height * 0.5f * num172), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height)), Main.player[Main.myPlayer].bank2[num170].GetAlpha(white16), 0f, default(Vector2), num172, SpriteEffects.None, 0f);
 							white16 = Color.White;
 							if (Main.player[Main.myPlayer].bank2[num170].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type], new Vector2((float)num168 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width * 0.5f * num172, (float)num169 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height * 0.5f * num172), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height)), Main.player[Main.myPlayer].bank2[num170].GetColor(white16), 0f, default(Vector2), num172, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type], new Vector2((float)num168 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width * 0.5f * num172, (float)num169 + 26f * Main.inventoryScale - (float)Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height * 0.5f * num172), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Width, Main.itemTexture[Main.player[Main.myPlayer].bank2[num170].type].Height)), Main.player[Main.myPlayer].bank2[num170].GetColor(white16), 0f, default(Vector2), num172, SpriteEffects.None, 0f);
 							}
 							if (Main.player[Main.myPlayer].bank2[num170].stack > 1)
 							{
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].bank2[num170].stack), new Vector2((float)num168 + 10f * Main.inventoryScale, (float)num169 + 26f * Main.inventoryScale), white16, 0f, default(Vector2), num172, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].bank2[num170].stack), new Vector2((float)num168 + 10f * Main.inventoryScale, (float)num169 + 26f * Main.inventoryScale), white16, 0f, default(Vector2), num172, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -19747,7 +19753,7 @@ namespace Terraria
 				{
 					Main.player[Main.myPlayer].showItemIcon = false;
 					string cursorText = Main.player[Main.myPlayer].statLife + "/" + Main.player[Main.myPlayer].statLifeMax;
-					this.MouseText(cursorText, 0, 0);
+					MouseText(cursorText, 0, 0);
 					Main.mouseText = true;
 				}
 			}
@@ -19759,7 +19765,7 @@ namespace Terraria
 				{
 					Main.player[Main.myPlayer].showItemIcon = false;
 					string cursorText2 = Main.player[Main.myPlayer].statMana + "/" + Main.player[Main.myPlayer].statManaMax2;
-					this.MouseText(cursorText2, 0, 0);
+					MouseText(cursorText2, 0, 0);
 					Main.mouseText = true;
 				}
 			}
@@ -19790,7 +19796,7 @@ namespace Terraria
 								text = text + " <" + Main.player[Main.item[i].owner].name + ">";
 							}
 							Main.rare = Main.item[i].rare;
-							this.MouseText(text, Main.rare, 0);
+							MouseText(text, Main.rare, 0);
 							Main.mouseText = true;
 							break;
 						}
@@ -19822,7 +19828,7 @@ namespace Terraria
 						{
 							text2 += " (PvP)";
 						}
-						this.MouseText(text2, 0, Main.player[j].difficulty);
+						MouseText(text2, 0, Main.player[j].difficulty);
 					}
 				}
 			}
@@ -19832,7 +19838,7 @@ namespace Terraria
 				{
 					if (Main.npc[k].active)
 					{
-						this.LoadNPC(Main.npc[k].type);
+						LoadNPC(Main.npc[k].type);
 						Rectangle value3 = new Rectangle((int)((double)Main.npc[k].position.X + (double)Main.npc[k].width * 0.5 - (double)Main.npcTexture[Main.npc[k].type].Width * 0.5), (int)(Main.npc[k].position.Y + (float)Main.npc[k].height - (float)(Main.npcTexture[Main.npc[k].type].Height / Main.npcFrameCount[Main.npc[k].type])), Main.npcTexture[Main.npc[k].type].Width, Main.npcTexture[Main.npc[k].type].Height / Main.npcFrameCount[Main.npc[k].type]);
 						if (Main.npc[k].type >= 87 && Main.npc[k].type <= 92)
 						{
@@ -19859,7 +19865,7 @@ namespace Terraria
 									effects = SpriteEffects.FlipHorizontally;
 									num6 = Main.npc[k].width / 2 + 8;
 								}
-								this.spriteBatch.Draw(Main.chatTexture, new Vector2(Main.npc[k].position.X + (float)(Main.npc[k].width / 2) - Main.screenPosition.X - (float)(Main.chatTexture.Width / 2) - (float)num6, Main.npc[k].position.Y - (float)Main.chatTexture.Height - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chatTexture.Width, Main.chatTexture.Height)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, effects, 0f);
+								spriteBatch.Draw(Main.chatTexture, new Vector2(Main.npc[k].position.X + (float)(Main.npc[k].width / 2) - Main.screenPosition.X - (float)(Main.chatTexture.Width / 2) - (float)num6, Main.npc[k].position.Y - (float)Main.chatTexture.Height - Main.screenPosition.Y), new Rectangle?(new Rectangle(0, 0, Main.chatTexture.Width, Main.chatTexture.Height)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, effects, 0f);
 								if (Main.mouseRight && Main.npcChatRelease)
 								{
 									Main.npcChatRelease = false;
@@ -19898,7 +19904,7 @@ namespace Terraria
 									Main.npc[num7].lifeMax
 								});
 							}
-							this.MouseText(text3, 0, 0);
+							MouseText(text3, 0, 0);
 							return;
 						}
 					}
@@ -19924,8 +19930,8 @@ namespace Terraria
 			Vector2 vector = Main.fontMouseText.MeasureString(text);
 			if (!Main.player[Main.myPlayer].ghost)
 			{
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[0], new Vector2((float)(500 + 13 * num) - vector.X * 0.5f + (float)Main.sX, 6f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				this.spriteBatch.DrawString(Main.fontMouseText, Main.player[Main.myPlayer].statLife + "/" + Main.player[Main.myPlayer].statLifeMax, new Vector2((float)(500 + 13 * num) + vector.X * 0.5f + (float)Main.sX, 6f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, new Vector2(Main.fontMouseText.MeasureString(Main.player[Main.myPlayer].statLife + "/" + Main.player[Main.myPlayer].statLifeMax).X, 0f), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[0], new Vector2((float)(500 + 13 * num) - vector.X * 0.5f + (float)Main.sX, 6f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Main.player[Main.myPlayer].statLife + "/" + Main.player[Main.myPlayer].statLifeMax, new Vector2((float)(500 + 13 * num) + vector.X * 0.5f + (float)Main.sX, 6f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, new Vector2(Main.fontMouseText.MeasureString(Main.player[Main.myPlayer].statLife + "/" + Main.player[Main.myPlayer].statLifeMax).X, 0f), 1f, SpriteEffects.None, 0f);
 			}
 			Main.heartLife = 20f;
 			if (Main.player[Main.myPlayer].statLifeMax > 400)
@@ -19986,11 +19992,11 @@ namespace Terraria
 					if (num2 > 0)
 					{
 						num2--;
-						this.spriteBatch.Draw(Main.heart2Texture, new Vector2((float)(500 + 26 * (num3 - 1) + num7 + Main.sX + Main.heartTexture.Width / 2), 32f + ((float)Main.heartTexture.Height - (float)Main.heartTexture.Height * num4) / 2f + (float)num8 + (float)(Main.heartTexture.Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.heartTexture.Width, Main.heartTexture.Height)), new Color(num5, num5, num5, num9), 0f, new Vector2((float)(Main.heartTexture.Width / 2), (float)(Main.heartTexture.Height / 2)), num4, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.heart2Texture, new Vector2((float)(500 + 26 * (num3 - 1) + num7 + Main.sX + Main.heartTexture.Width / 2), 32f + ((float)Main.heartTexture.Height - (float)Main.heartTexture.Height * num4) / 2f + (float)num8 + (float)(Main.heartTexture.Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.heartTexture.Width, Main.heartTexture.Height)), new Color(num5, num5, num5, num9), 0f, new Vector2((float)(Main.heartTexture.Width / 2), (float)(Main.heartTexture.Height / 2)), num4, SpriteEffects.None, 0f);
 					}
 					else
 					{
-						this.spriteBatch.Draw(Main.heartTexture, new Vector2((float)(500 + 26 * (num3 - 1) + num7 + Main.sX + Main.heartTexture.Width / 2), 32f + ((float)Main.heartTexture.Height - (float)Main.heartTexture.Height * num4) / 2f + (float)num8 + (float)(Main.heartTexture.Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.heartTexture.Width, Main.heartTexture.Height)), new Color(num5, num5, num5, num9), 0f, new Vector2((float)(Main.heartTexture.Width / 2), (float)(Main.heartTexture.Height / 2)), num4, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.heartTexture, new Vector2((float)(500 + 26 * (num3 - 1) + num7 + Main.sX + Main.heartTexture.Width / 2), 32f + ((float)Main.heartTexture.Height - (float)Main.heartTexture.Height * num4) / 2f + (float)num8 + (float)(Main.heartTexture.Height / 2)), new Rectangle?(new Rectangle(0, 0, Main.heartTexture.Width, Main.heartTexture.Height)), new Color(num5, num5, num5, num9), 0f, new Vector2((float)(Main.heartTexture.Width / 2), (float)(Main.heartTexture.Height / 2)), num4, SpriteEffects.None, 0f);
 					}
 				}
 				num3++;
@@ -19999,7 +20005,7 @@ namespace Terraria
 			if (Main.player[Main.myPlayer].statManaMax2 > 0)
 			{
 				int arg_585_0 = Main.player[Main.myPlayer].statManaMax2 / 20;
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[2], new Vector2((float)(750 + Main.sX), 6f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[2], new Vector2((float)(750 + Main.sX), 6f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				for (int i = 1; i < Main.player[Main.myPlayer].statManaMax2 / Main.starMana + 1; i++)
 				{
 					bool flag2 = false;
@@ -20036,7 +20042,7 @@ namespace Terraria
 						num10 += Main.cursorScale - 1f;
 					}
 					int num13 = (int)((double)((float)num11) * 0.9);
-					this.spriteBatch.Draw(Main.manaTexture, new Vector2((float)(775 + Main.sX), (float)(30 + Main.manaTexture.Height / 2) + ((float)Main.manaTexture.Height - (float)Main.manaTexture.Height * num10) / 2f + (float)(28 * (i - 1))), new Rectangle?(new Rectangle(0, 0, Main.manaTexture.Width, Main.manaTexture.Height)), new Color(num11, num11, num11, num13), 0f, new Vector2((float)(Main.manaTexture.Width / 2), (float)(Main.manaTexture.Height / 2)), num10, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.manaTexture, new Vector2((float)(775 + Main.sX), (float)(30 + Main.manaTexture.Height / 2) + ((float)Main.manaTexture.Height - (float)Main.manaTexture.Height * num10) / 2f + (float)(28 * (i - 1))), new Rectangle?(new Rectangle(0, 0, Main.manaTexture.Width, Main.manaTexture.Height)), new Color(num11, num11, num11, num13), 0f, new Vector2((float)(Main.manaTexture.Width / 2), (float)(Main.manaTexture.Height / 2)), num10, SpriteEffects.None, 0f);
 				}
 			}
 			bool flag3 = false;
@@ -20055,7 +20061,7 @@ namespace Terraria
 			{
 				int num14 = 76 + Main.mH;
 				int arg_88F_0 = Main.player[Main.myPlayer].breathMax / 20;
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[1], new Vector2((float)(500 + 13 * num) - Main.fontMouseText.MeasureString(Lang.inter[1]).X * 0.5f + (float)Main.sX, (float)(6 + num14)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[1], new Vector2((float)(500 + 13 * num) - Main.fontMouseText.MeasureString(Lang.inter[1]).X * 0.5f + (float)Main.sX, (float)(6 + num14)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				int num15 = 20;
 				for (int j = 1; j < Main.player[Main.myPlayer].breathMax / num15 + 1; j++)
 				{
@@ -20086,7 +20092,7 @@ namespace Terraria
 						num19 -= 260;
 						num20 += 26;
 					}
-					this.spriteBatch.Draw(Main.bubbleTexture, new Vector2((float)(500 + 26 * (j - 1) + num19 + Main.sX), 32f + ((float)Main.bubbleTexture.Height - (float)Main.bubbleTexture.Height * num16) / 2f + (float)num20 + (float)num14), new Rectangle?(new Rectangle(0, 0, Main.bubbleTexture.Width, Main.bubbleTexture.Height)), new Color(num17, num17, num17, num17), 0f, default(Vector2), num16, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.bubbleTexture, new Vector2((float)(500 + 26 * (j - 1) + num19 + Main.sX), 32f + ((float)Main.bubbleTexture.Height - (float)Main.bubbleTexture.Height * num16) / 2f + (float)num20 + (float)num14), new Rectangle?(new Rectangle(0, 0, Main.bubbleTexture.Width, Main.bubbleTexture.Height)), new Color(num17, num17, num17, num17), 0f, default(Vector2), num16, SpriteEffects.None, 0f);
 				}
 			}
 			if (Main.player[Main.myPlayer].lavaTime < Main.player[Main.myPlayer].lavaMax && !Main.player[Main.myPlayer].ghost && flag3)
@@ -20094,7 +20100,7 @@ namespace Terraria
 				int num21 = 76 + Main.mH;
 				int num22 = Main.player[Main.myPlayer].lavaMax / 10;
 				int arg_AFC_0 = Main.player[Main.myPlayer].breathMax / num22;
-				this.spriteBatch.DrawString(Main.fontMouseText, Lang.inter[56], new Vector2(630f - Main.fontMouseText.MeasureString(Lang.inter[56]).X * 0.5f + (float)Main.sX, (float)(6 + num21)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Lang.inter[56], new Vector2(630f - Main.fontMouseText.MeasureString(Lang.inter[56]).X * 0.5f + (float)Main.sX, (float)(6 + num21)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				for (int k = 1; k < Main.player[Main.myPlayer].lavaMax / num22 + 1; k++)
 				{
 					float num23 = 1f;
@@ -20124,7 +20130,7 @@ namespace Terraria
 						num26 -= 260;
 						num27 += 26;
 					}
-					this.spriteBatch.Draw(Main.flameTexture, new Vector2((float)(500 + 26 * (k - 1) + num26 + Main.sX), 32f + ((float)Main.flameTexture.Height - (float)Main.flameTexture.Height * num23) / 2f + (float)num27 + (float)num21), new Rectangle?(new Rectangle(0, 0, Main.bubbleTexture.Width, Main.bubbleTexture.Height)), new Color(num24, num24, num24, num24), 0f, default(Vector2), num23, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.flameTexture, new Vector2((float)(500 + 26 * (k - 1) + num26 + Main.sX), 32f + ((float)Main.flameTexture.Height - (float)Main.flameTexture.Height * num23) / 2f + (float)num27 + (float)num21), new Rectangle?(new Rectangle(0, 0, Main.bubbleTexture.Width, Main.bubbleTexture.Height)), new Color(num24, num24, num24, num24), 0f, default(Vector2), num23, SpriteEffects.None, 0f);
 				}
 			}
 			Main.buffString = "";
@@ -20144,7 +20150,7 @@ namespace Terraria
 						int num30 = 32 + l * 38;
 						int num31 = 76;
 						Color color = new Color(Main.buffAlpha[l], Main.buffAlpha[l], Main.buffAlpha[l], Main.buffAlpha[l]);
-						this.spriteBatch.Draw(Main.buffTexture[num29], new Vector2((float)num30, (float)num31), new Rectangle?(new Rectangle(0, 0, Main.buffTexture[num29].Width, Main.buffTexture[num29].Height)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.buffTexture[num29], new Vector2((float)num30, (float)num31), new Rectangle?(new Rectangle(0, 0, Main.buffTexture[num29].Width, Main.buffTexture[num29].Height)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 						if (!Main.vanityPet[num29] && !Main.lightPet[num29] && num29 != 64 && num29 != 60 && num29 != 49 && num29 != 28 && num29 != 34 && num29 != 37 && num29 != 38 && num29 != 40 && num29 != 41 && num29 != 27 && num29 != 19 && num29 != 42 && num29 != 43 && num29 != 45 && (!Main.player[Main.myPlayer].honeyWet || num29 != 48) && num29 != 62 && num29 != 67 && num29 != 68 && Main.player[Main.myPlayer].buffTime[l] > 2)
 						{
 							string text2;
@@ -20156,7 +20162,7 @@ namespace Terraria
 							{
 								text2 = Math.Round((double)Main.player[Main.myPlayer].buffTime[l] / 60.0) + " s";
 							}
-							this.spriteBatch.DrawString(Main.fontItemStack, text2, new Vector2((float)num30, (float)(num31 + Main.buffTexture[num29].Height)), color, 0f, default(Vector2), 0.8f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, text2, new Vector2((float)num30, (float)(num31 + Main.buffTexture[num29].Height)), color, 0f, default(Vector2), 0.8f, SpriteEffects.None, 0f);
 						}
 						if (Main.mouseX < num30 + Main.buffTexture[num29].Width && Main.mouseY < num31 + Main.buffTexture[num29].Height && Main.mouseX > num30 && Main.mouseY > num31)
 						{
@@ -20197,10 +20203,10 @@ namespace Terraria
 						Main.buffString = Main.buffTip[num32];
 						if (Main.meleeBuff[num32])
 						{
-							this.MouseText(Main.buffName[num32], -10, 0);
+							MouseText(Main.buffName[num32], -10, 0);
 							return;
 						}
-						this.MouseText(Main.buffName[num32], 0, 0);
+						MouseText(Main.buffName[num32], 0, 0);
 					}
 				}
 			}
@@ -20215,7 +20221,7 @@ namespace Terraria
 					text = Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].AffixName();
 				}
 				Vector2 vector = Main.fontMouseText.MeasureString(text) / 2f;
-				this.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(236f - vector.X, 0f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(236f - vector.X, 0f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				int num = 20;
 				for (int i = 0; i < 10; i++)
 				{
@@ -20237,7 +20243,7 @@ namespace Terraria
 					int num3 = (int)(20f + 22f * (1f - num2));
 					int num4 = (int)(75f + 150f * num2);
 					Color color = new Color(255, 255, 255, num4);
-					this.spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num, (float)num3), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), num2, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.inventoryBackTexture, new Vector2((float)num, (float)num3), new Rectangle?(new Rectangle(0, 0, Main.inventoryBackTexture.Width, Main.inventoryBackTexture.Height)), new Color(100, 100, 100, 100), 0f, default(Vector2), num2, SpriteEffects.None, 0f);
 					if (!Main.player[Main.myPlayer].hbLocked && Main.mouseX >= num && (float)Main.mouseX <= (float)num + (float)Main.inventoryBackTexture.Width * Main.hotbarScale[i] && Main.mouseY >= num3 && (float)Main.mouseY <= (float)num3 + (float)Main.inventoryBackTexture.Height * Main.hotbarScale[i] && !Main.player[Main.myPlayer].channel)
 					{
 						Main.player[Main.myPlayer].mouseInterface = true;
@@ -20283,15 +20289,15 @@ namespace Terraria
 							color.B = (byte)Main.DiscoB;
 							color.A = 255;
 						}
-						this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type], new Vector2((float)num + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width * 0.5f * num5, (float)num3 + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height * 0.5f * num5), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height)), Main.player[Main.myPlayer].inventory[i].GetAlpha(color), 0f, default(Vector2), num5, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type], new Vector2((float)num + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width * 0.5f * num5, (float)num3 + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height * 0.5f * num5), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height)), Main.player[Main.myPlayer].inventory[i].GetAlpha(color), 0f, default(Vector2), num5, SpriteEffects.None, 0f);
 						color = color2;
 						if (Main.player[Main.myPlayer].inventory[i].color != default(Color))
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type], new Vector2((float)num + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width * 0.5f * num5, (float)num3 + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height * 0.5f * num5), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height)), Main.player[Main.myPlayer].inventory[i].GetColor(color), 0f, default(Vector2), num5, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type], new Vector2((float)num + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width * 0.5f * num5, (float)num3 + 26f * num2 - (float)Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height * 0.5f * num5), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[i].type].Height)), Main.player[Main.myPlayer].inventory[i].GetColor(color), 0f, default(Vector2), num5, SpriteEffects.None, 0f);
 						}
 						if (Main.player[Main.myPlayer].inventory[i].stack > 1)
 						{
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[i].stack), new Vector2((float)num + 10f * num2, (float)num3 + 26f * num2), color, 0f, default(Vector2), num5, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.player[Main.myPlayer].inventory[i].stack), new Vector2((float)num + 10f * num2, (float)num3 + 26f * num2), color, 0f, default(Vector2), num5, SpriteEffects.None, 0f);
 						}
 						if (Main.player[Main.myPlayer].inventory[i].useAmmo > 0)
 						{
@@ -20304,7 +20310,7 @@ namespace Terraria
 									num6 += Main.player[Main.myPlayer].inventory[j].stack;
 								}
 							}
-							this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(num6), new Vector2((float)num + 8f * num2, (float)num3 + 30f * num2), color, 0f, default(Vector2), num2 * 0.8f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontItemStack, string.Concat(num6), new Vector2((float)num + 8f * num2, (float)num3 + 30f * num2), color, 0f, default(Vector2), num2 * 0.8f, SpriteEffects.None, 0f);
 						}
 						else
 						{
@@ -20319,7 +20325,7 @@ namespace Terraria
 										num7 += Main.player[Main.myPlayer].inventory[k].stack;
 									}
 								}
-								this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(num7), new Vector2((float)num + 8f * num2, (float)num3 + 30f * num2), color, 0f, default(Vector2), num2 * 0.8f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontItemStack, string.Concat(num7), new Vector2((float)num + 8f * num2, (float)num3 + 30f * num2), color, 0f, default(Vector2), num2 * 0.8f, SpriteEffects.None, 0f);
 							}
 							else
 							{
@@ -20333,7 +20339,7 @@ namespace Terraria
 											num8 += Main.player[Main.myPlayer].inventory[l].stack;
 										}
 									}
-									this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(num8), new Vector2((float)num + 8f * num2, (float)num3 + 30f * num2), color, 0f, default(Vector2), num2 * 0.8f, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontItemStack, string.Concat(num8), new Vector2((float)num + 8f * num2, (float)num3 + 30f * num2), color, 0f, default(Vector2), num2 * 0.8f, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -20342,7 +20348,7 @@ namespace Terraria
 						{
 							text2 = "0";
 						}
-						this.spriteBatch.DrawString(Main.fontItemStack, text2, new Vector2((float)num + 8f * Main.hotbarScale[i], (float)num3 + 4f * Main.hotbarScale[i]), new Color((int)(color.R / 2), (int)(color.G / 2), (int)(color.B / 2), (int)(color.A / 2)), 0f, default(Vector2), num5, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontItemStack, text2, new Vector2((float)num + 8f * Main.hotbarScale[i], (float)num3 + 4f * Main.hotbarScale[i]), new Color((int)(color.R / 2), (int)(color.G / 2), (int)(color.B / 2), (int)(color.A / 2)), 0f, default(Vector2), num5, SpriteEffects.None, 0f);
 						if (Main.player[Main.myPlayer].inventory[i].potion)
 						{
 							Color alpha = Main.player[Main.myPlayer].inventory[i].GetAlpha(color);
@@ -20352,7 +20358,7 @@ namespace Terraria
 							float num12 = (float)alpha.B * num9;
 							float num13 = (float)alpha.A * num9;
 							alpha = new Color((int)((byte)num10), (int)((byte)num11), (int)((byte)num12), (int)((byte)num13));
-							this.spriteBatch.Draw(Main.cdTexture, new Vector2((float)num + 26f * Main.hotbarScale[i] - (float)Main.cdTexture.Width * 0.5f * num5, (float)num3 + 26f * Main.hotbarScale[i] - (float)Main.cdTexture.Height * 0.5f * num5), new Rectangle?(new Rectangle(0, 0, Main.cdTexture.Width, Main.cdTexture.Height)), alpha, 0f, default(Vector2), num5, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.cdTexture, new Vector2((float)num + 26f * Main.hotbarScale[i] - (float)Main.cdTexture.Width * 0.5f * num5, (float)num3 + 26f * Main.hotbarScale[i] - (float)Main.cdTexture.Height * 0.5f * num5), new Rectangle?(new Rectangle(0, 0, Main.cdTexture.Width, Main.cdTexture.Height)), alpha, 0f, default(Vector2), num5, SpriteEffects.None, 0f);
 						}
 					}
 					num += (int)((float)Main.inventoryBackTexture.Width * Main.hotbarScale[i]) + 4;
@@ -20371,17 +20377,17 @@ namespace Terraria
 				{
 					for (int j = 0; j <= num4 + 1; j++)
 					{
-						this.spriteBatch.Draw(Main.gridTexture, new Vector2((float)(i * Main.gridTexture.Width + num), (float)(j * Main.gridTexture.Height + num2)), new Rectangle?(new Rectangle(0, 0, Main.gridTexture.Width, Main.gridTexture.Height)), new Color(100, 100, 100, 15), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.gridTexture, new Vector2((float)(i * Main.gridTexture.Width + num), (float)(j * Main.gridTexture.Height + num2)), new Rectangle?(new Rectangle(0, 0, Main.gridTexture.Width, Main.gridTexture.Height)), new Color(100, 100, 100, 15), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 				}
 			}
-			if (this.showNPCs)
+			if (showNPCs)
 			{
 				if (Main.ignoreErrors)
 				{
 					try
 					{
-						this.DrawNPCHouse();
+						DrawNPCHouse();
 						goto IL_147;
 					}
 					catch
@@ -20389,7 +20395,7 @@ namespace Terraria
 						goto IL_147;
 					}
 				}
-				this.DrawNPCHouse();
+				DrawNPCHouse();
 			}
 			IL_147:
 			Main.mH = 0;
@@ -20402,7 +20408,7 @@ namespace Terraria
 					{
 						try
 						{
-							this.DrawMap();
+							DrawMap();
 							goto IL_185;
 						}
 						catch
@@ -20410,7 +20416,7 @@ namespace Terraria
 							goto IL_185;
 						}
 					}
-					this.DrawMap();
+					DrawMap();
 				}
 				IL_185:
 				if (Main.mH + 600 > Main.screenHeight)
@@ -20498,7 +20504,7 @@ namespace Terraria
 						{
 							float num5 = 10f;
 							num5 += Main.NPCAddHeight(k);
-							this.DrawHB(Main.npc[k].position.X + (float)(Main.npc[k].width / 2), Main.npc[k].position.Y + (float)Main.npc[k].height + num5 + Main.npc[k].gfxOffY, Main.npc[k].life, Main.npc[k].lifeMax, Lighting.Brightness((int)((Main.npc[k].position.X + (float)(Main.npc[k].width / 2)) / 16f), (int)((Main.npc[k].position.Y + (float)(Main.npc[k].height / 2) + Main.npc[k].gfxOffY) / 16f)), scale);
+							DrawHB(Main.npc[k].position.X + (float)(Main.npc[k].width / 2), Main.npc[k].position.Y + (float)Main.npc[k].height + num5 + Main.npc[k].gfxOffY, Main.npc[k].life, Main.npc[k].lifeMax, Lighting.Brightness((int)((Main.npc[k].position.X + (float)(Main.npc[k].width / 2)) / 16f), (int)((Main.npc[k].position.Y + (float)(Main.npc[k].height / 2) + Main.npc[k].gfxOffY) / 16f)), scale);
 						}
 						else
 						{
@@ -20506,7 +20512,7 @@ namespace Terraria
 							{
 								float num6 = -24f;
 								num6 -= Main.NPCAddHeight(k) / 2f;
-								this.DrawHB(Main.npc[k].position.X + (float)(Main.npc[k].width / 2), Main.npc[k].position.Y + num6 + Main.npc[k].gfxOffY, Main.npc[k].life, Main.npc[k].lifeMax, Lighting.Brightness((int)((Main.npc[k].position.X + (float)(Main.npc[k].width / 2)) / 16f), (int)((Main.npc[k].position.Y + (float)(Main.npc[k].height / 2) + Main.npc[k].gfxOffY) / 16f)), scale);
+								DrawHB(Main.npc[k].position.X + (float)(Main.npc[k].width / 2), Main.npc[k].position.Y + num6 + Main.npc[k].gfxOffY, Main.npc[k].life, Main.npc[k].lifeMax, Lighting.Brightness((int)((Main.npc[k].position.X + (float)(Main.npc[k].width / 2)) / 16f), (int)((Main.npc[k].position.Y + (float)(Main.npc[k].height / 2) + Main.npc[k].gfxOffY) / 16f)), scale);
 							}
 						}
 					}
@@ -20518,14 +20524,14 @@ namespace Terraria
 						if (Main.hbPosition == 1)
 						{
 							int num7 = 10;
-							this.DrawHB(Main.player[l].position.X + (float)(Main.player[l].width / 2), Main.player[l].position.Y + (float)Main.player[l].height + (float)num7 + Main.player[l].gfxOffY, Main.player[l].statLife, Main.player[l].statLifeMax, Lighting.Brightness((int)((Main.player[l].position.X + (float)(Main.player[l].width / 2)) / 16f), (int)((Main.player[l].position.Y + (float)(Main.player[l].height / 2) + Main.player[l].gfxOffY) / 16f)), 1f);
+							DrawHB(Main.player[l].position.X + (float)(Main.player[l].width / 2), Main.player[l].position.Y + (float)Main.player[l].height + (float)num7 + Main.player[l].gfxOffY, Main.player[l].statLife, Main.player[l].statLifeMax, Lighting.Brightness((int)((Main.player[l].position.X + (float)(Main.player[l].width / 2)) / 16f), (int)((Main.player[l].position.Y + (float)(Main.player[l].height / 2) + Main.player[l].gfxOffY) / 16f)), 1f);
 						}
 						else
 						{
 							if (Main.hbPosition == 2)
 							{
 								int num8 = -20;
-								this.DrawHB(Main.player[l].position.X + (float)(Main.player[l].width / 2), Main.player[l].position.Y + (float)num8 + Main.player[l].gfxOffY, Main.player[l].statLife, Main.player[l].statLifeMax, Lighting.Brightness((int)((Main.player[l].position.X + (float)(Main.player[l].width / 2)) / 16f), (int)((Main.player[l].position.Y + (float)(Main.player[l].height / 2) + Main.player[l].gfxOffY) / 16f)), 1f);
+								DrawHB(Main.player[l].position.X + (float)(Main.player[l].width / 2), Main.player[l].position.Y + (float)num8 + Main.player[l].gfxOffY, Main.player[l].statLife, Main.player[l].statLifeMax, Lighting.Brightness((int)((Main.player[l].position.X + (float)(Main.player[l].width / 2)) / 16f), (int)((Main.player[l].position.Y + (float)(Main.player[l].height / 2) + Main.player[l].gfxOffY) / 16f)), 1f);
 							}
 						}
 					}
@@ -20577,7 +20583,7 @@ namespace Terraria
 							}
 						}
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2((float)num9, (float)num10), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text, new Vector2((float)num9, (float)num10), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int n = 0; n < Main.maxMsg; n++)
 				{
@@ -20586,22 +20592,22 @@ namespace Terraria
 					int num12 = 120;
 					num12 += n * 13;
 					string text2 = n + ": ";
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 					num11 += 30;
 					text2 = "rx:" + string.Format("{0:0,0}", Main.rxMsgType[n]);
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 					num11 += 70;
 					text2 = string.Format("{0:0,0}", Main.rxDataType[n]);
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 					num11 += 70;
 					text2 = n + ": ";
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 					num11 += 30;
 					text2 = "tx:" + string.Format("{0:0,0}", Main.txMsgType[n]);
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 					num11 += 70;
 					text2 = string.Format("{0:0,0}", Main.txDataType[n]);
-					this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2((float)num11, (float)num12), Color.White, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 				}
 			}
 			if (Main.drawDiag)
@@ -20640,7 +20646,7 @@ namespace Terraria
 					{
 						text3 = "Total Render:";
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text3, new Vector2((float)num14, (float)num15), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text3, new Vector2((float)num14, (float)num15), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int num16 = 0; num16 < 7; num16++)
 				{
@@ -20676,7 +20682,7 @@ namespace Terraria
 					{
 						text4 = Main.renderTimer[0] + Main.renderTimer[1] + Main.renderTimer[2] + Main.renderTimer[3] + Main.renderTimer[4] + Main.renderTimer[5] + "ms";
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text4, new Vector2((float)num17, (float)num18), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text4, new Vector2((float)num17, (float)num18), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int num19 = 0; num19 < 6; num19++)
 				{
@@ -20708,7 +20714,7 @@ namespace Terraria
 					{
 						text5 = "Total Lighting:";
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text5, new Vector2((float)num20, (float)num21), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text5, new Vector2((float)num20, (float)num21), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int num22 = 0; num22 < 6; num22++)
 				{
@@ -20740,7 +20746,7 @@ namespace Terraria
 					{
 						text6 = Main.lightTimer[0] + Main.lightTimer[1] + Main.lightTimer[2] + Main.lightTimer[3] + Main.lightTimer[4] + "ms";
 					}
-					this.spriteBatch.DrawString(Main.fontMouseText, text6, new Vector2((float)num23, (float)num24), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text6, new Vector2((float)num23, (float)num24), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				int num25 = 5;
 				for (int num26 = 0; num26 < num25; num26++)
@@ -20749,7 +20755,7 @@ namespace Terraria
 					int num28 = 456;
 					num28 += num26 * 16;
 					string text7 = "Render #" + num26 + ":";
-					this.spriteBatch.DrawString(Main.fontMouseText, text7, new Vector2((float)num27, (float)num28), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text7, new Vector2((float)num27, (float)num28), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int num29 = 0; num29 < num25; num29++)
 				{
@@ -20757,7 +20763,7 @@ namespace Terraria
 					int num31 = 456;
 					num31 += num29 * 16;
 					string text8 = Main.drawTimer[num29] + "ms";
-					this.spriteBatch.DrawString(Main.fontMouseText, text8, new Vector2((float)num30, (float)num31), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text8, new Vector2((float)num30, (float)num31), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				for (int num32 = 0; num32 < num25; num32++)
 				{
@@ -20765,18 +20771,18 @@ namespace Terraria
 					int num34 = 456;
 					num34 += num32 * 16;
 					string text9 = Main.drawTimerMax[num32] + "ms";
-					this.spriteBatch.DrawString(Main.fontMouseText, text9, new Vector2((float)num33, (float)num34), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontMouseText, text9, new Vector2((float)num33, (float)num34), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				int num35 = 20;
 				int num36 = 456 + 16 * num25 + 16;
 				string text10 = "Update:";
-				this.spriteBatch.DrawString(Main.fontMouseText, text10, new Vector2((float)num35, (float)num36), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text10, new Vector2((float)num35, (float)num36), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				num35 = 180;
 				text10 = Main.upTimer + "ms";
-				this.spriteBatch.DrawString(Main.fontMouseText, text10, new Vector2((float)num35, (float)num36), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text10, new Vector2((float)num35, (float)num36), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				num35 = 230;
 				text10 = Main.upTimerMax + "ms";
-				this.spriteBatch.DrawString(Main.fontMouseText, text10, new Vector2((float)num35, (float)num36), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text10, new Vector2((float)num35, (float)num36), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			}
 			if (Main.signBubble)
 			{
@@ -20793,7 +20799,7 @@ namespace Terraria
 					num37 += 8;
 				}
 				num38 -= 22;
-				this.spriteBatch.Draw(Main.chat2Texture, new Vector2((float)num37, (float)num38), new Rectangle?(new Rectangle(0, 0, Main.chat2Texture.Width, Main.chat2Texture.Height)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, effects, 0f);
+				spriteBatch.Draw(Main.chat2Texture, new Vector2((float)num37, (float)num38), new Rectangle?(new Rectangle(0, 0, Main.chat2Texture.Width, Main.chat2Texture.Height)), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, effects, 0f);
 				Main.signBubble = false;
 			}
 			for (int num39 = 0; num39 < 255; num39++)
@@ -20862,17 +20868,17 @@ namespace Terraria
 							Vector2 position2 = Main.fontMouseText.MeasureString(text12);
 							position2.X = position.X + Main.fontMouseText.MeasureString(text11).X / 2f - position2.X / 2f;
 							position2.Y = position.Y + Main.fontMouseText.MeasureString(text11).Y / 2f - position2.Y / 2f - 20f;
-							this.spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X - 2f, position2.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-							this.spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X + 2f, position2.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-							this.spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X, position2.Y - 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-							this.spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X, position2.Y + 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-							this.spriteBatch.DrawString(Main.fontMouseText, text12, position2, color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X - 2f, position2.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X + 2f, position2.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X, position2.Y - 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontMouseText, text12, new Vector2(position2.X, position2.Y + 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontMouseText, text12, position2, color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 						}
-						this.spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X - 2f, position.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-						this.spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X + 2f, position.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-						this.spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X, position.Y - 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-						this.spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X, position.Y + 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-						this.spriteBatch.DrawString(Main.fontMouseText, text11, position, color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X - 2f, position.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X + 2f, position.Y), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X, position.Y - 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text11, new Vector2(position.X, position.Y + 2f), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text11, position, color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -20887,7 +20893,7 @@ namespace Terraria
 				{
 					if (Main.npcChatText != "" || Main.player[Main.myPlayer].sign != -1)
 					{
-						this.DrawChat();
+						DrawChat();
 					}
 					goto IL_1AF7;
 				}
@@ -20898,7 +20904,7 @@ namespace Terraria
 			}
 			if (Main.npcChatText != "" || Main.player[Main.myPlayer].sign != -1)
 			{
-				this.DrawChat();
+				DrawChat();
 			}
 			IL_1AF7:
 			Main.inventoryBack = new Color(220, 220, 220, 220);
@@ -20920,7 +20926,7 @@ namespace Terraria
 			{
 				try
 				{
-					this.DrawInterfaceBars();
+					DrawInterfaceBars();
 					goto IL_1BB1;
 				}
 				catch
@@ -20928,7 +20934,7 @@ namespace Terraria
 					goto IL_1BB1;
 				}
 			}
-			this.DrawInterfaceBars();
+			DrawInterfaceBars();
 			IL_1BB1:
 			if (Main.player[Main.myPlayer].dead)
 			{
@@ -20951,7 +20957,7 @@ namespace Terraria
 				{
 					try
 					{
-						this.DrawInventory();
+						DrawInventory();
 						goto IL_20A1;
 					}
 					catch
@@ -20959,7 +20965,7 @@ namespace Terraria
 						goto IL_20A1;
 					}
 				}
-				this.DrawInventory();
+				DrawInventory();
 			}
 			else
 			{
@@ -21127,7 +21133,7 @@ namespace Terraria
 								{
 									black = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor);
 								}
-								this.spriteBatch.DrawString(Main.fontMouseText, text13, new Vector2((float)(22 + num55), (float)(110 + 22 * num47 + num56 + 48)), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontMouseText, text13, new Vector2((float)(22 + num55), (float)(110 + 22 * num47 + num56 + 48)), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -21188,7 +21194,7 @@ namespace Terraria
 					{
 						color2 = Color.White;
 					}
-					this.spriteBatch.DrawString(Main.fontDeathText, text16, new Vector2((float)(num57 + num61), (float)(num58 + num62)), color2, 0f, new Vector2(vector4.X / 2f, vector4.Y / 2f), (Main.exitScale - 0.2f) * num59, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontDeathText, text16, new Vector2((float)(num57 + num61), (float)(num58 + num62)), color2, 0f, new Vector2(vector4.X / 2f, vector4.Y / 2f), (Main.exitScale - 0.2f) * num59, SpriteEffects.None, 0f);
 				}
 				if ((float)Main.mouseX > (float)num57 - vector4.X / 2f && (float)Main.mouseX < (float)num57 + vector4.X / 2f && (float)Main.mouseY > (float)num58 - vector4.Y / 2f && (float)Main.mouseY < (float)num58 + vector4.Y / 2f - 10f)
 				{
@@ -21213,7 +21219,7 @@ namespace Terraria
 			{
 				try
 				{
-					this.DrawHotbar();
+					DrawHotbar();
 					goto IL_2317;
 				}
 				catch
@@ -21221,7 +21227,7 @@ namespace Terraria
 					goto IL_2317;
 				}
 			}
-			this.DrawHotbar();
+			DrawHotbar();
 			IL_2317:
 			if (Main.mouseItem.stack <= 0)
 			{
@@ -21230,14 +21236,14 @@ namespace Terraria
 			if (Main.hoverItemName != null && Main.hoverItemName != "" && Main.mouseItem.type == 0)
 			{
 				Main.player[Main.myPlayer].showItemIcon = false;
-				this.MouseText(Main.hoverItemName, Main.rare, 0);
+				MouseText(Main.hoverItemName, Main.rare, 0);
 				Main.mouseText = true;
 			}
 			if (Main.ignoreErrors)
 			{
 				try
 				{
-					this.DrawPlayerChat();
+					DrawPlayerChat();
 					goto IL_2393;
 				}
 				catch
@@ -21245,18 +21251,18 @@ namespace Terraria
 					goto IL_2393;
 				}
 			}
-			this.DrawPlayerChat();
+			DrawPlayerChat();
 			IL_2393:
 			if (Main.player[Main.myPlayer].dead)
 			{
 				string text17 = Lang.inter[38];
-				this.spriteBatch.DrawString(Main.fontDeathText, text17, new Vector2((float)(Main.screenWidth / 2 - text17.Length * 10), (float)(Main.screenHeight / 2 - 20)), Main.player[Main.myPlayer].GetDeathAlpha(new Color(0, 0, 0, 0)), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontDeathText, text17, new Vector2((float)(Main.screenWidth / 2 - text17.Length * 10), (float)(Main.screenHeight / 2 - 20)), Main.player[Main.myPlayer].GetDeathAlpha(new Color(0, 0, 0, 0)), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 			}
-			this.spriteBatch.Draw(Main.cursorTexture, new Vector2((float)(Main.mouseX + 1), (float)(Main.mouseY + 1)), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), new Color((int)((float)Main.cursorColor.R * 0.2f), (int)((float)Main.cursorColor.G * 0.2f), (int)((float)Main.cursorColor.B * 0.2f), (int)((float)Main.cursorColor.A * 0.5f)), 0f, default(Vector2), Main.cursorScale * 1.1f, SpriteEffects.None, 0f);
-			this.spriteBatch.Draw(Main.cursorTexture, new Vector2((float)Main.mouseX, (float)Main.mouseY), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), Main.cursorColor, 0f, default(Vector2), Main.cursorScale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.cursorTexture, new Vector2((float)(Main.mouseX + 1), (float)(Main.mouseY + 1)), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), new Color((int)((float)Main.cursorColor.R * 0.2f), (int)((float)Main.cursorColor.G * 0.2f), (int)((float)Main.cursorColor.B * 0.2f), (int)((float)Main.cursorColor.A * 0.5f)), 0f, default(Vector2), Main.cursorScale * 1.1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.cursorTexture, new Vector2((float)Main.mouseX, (float)Main.mouseY), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), Main.cursorColor, 0f, default(Vector2), Main.cursorScale, SpriteEffects.None, 0f);
 			if (Main.mouseItem.type > 0 && Main.mouseItem.stack > 0)
 			{
-				this.mouseNPC = -1;
+				mouseNPC = -1;
 				Main.player[Main.myPlayer].showItemIcon = false;
 				Main.player[Main.myPlayer].showItemIcon2 = 0;
 				Main.mouseText = true;
@@ -21283,34 +21289,34 @@ namespace Terraria
 					white.A = 255;
 				}
 				num63 *= num64;
-				this.spriteBatch.Draw(Main.itemTexture[Main.mouseItem.type], new Vector2((float)Main.mouseX + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Width * 0.5f * num63, (float)Main.mouseY + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Height * 0.5f * num63), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.mouseItem.type].Width, Main.itemTexture[Main.mouseItem.type].Height)), Main.mouseItem.GetAlpha(white), 0f, default(Vector2), num63, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.itemTexture[Main.mouseItem.type], new Vector2((float)Main.mouseX + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Width * 0.5f * num63, (float)Main.mouseY + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Height * 0.5f * num63), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.mouseItem.type].Width, Main.itemTexture[Main.mouseItem.type].Height)), Main.mouseItem.GetAlpha(white), 0f, default(Vector2), num63, SpriteEffects.None, 0f);
 				if (Main.mouseItem.color != default(Color))
 				{
-					this.spriteBatch.Draw(Main.itemTexture[Main.mouseItem.type], new Vector2((float)Main.mouseX + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Width * 0.5f * num63, (float)Main.mouseY + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Height * 0.5f * num63), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.mouseItem.type].Width, Main.itemTexture[Main.mouseItem.type].Height)), Main.mouseItem.GetColor(white), 0f, default(Vector2), num63, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[Main.mouseItem.type], new Vector2((float)Main.mouseX + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Width * 0.5f * num63, (float)Main.mouseY + 26f * num64 - (float)Main.itemTexture[Main.mouseItem.type].Height * 0.5f * num63), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.mouseItem.type].Width, Main.itemTexture[Main.mouseItem.type].Height)), Main.mouseItem.GetColor(white), 0f, default(Vector2), num63, SpriteEffects.None, 0f);
 				}
 				if (Main.mouseItem.stack > 1)
 				{
 					white = Color.White;
-					this.spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.mouseItem.stack), new Vector2((float)Main.mouseX + 10f * num64, (float)Main.mouseY + 26f * num64), white, 0f, default(Vector2), num63, SpriteEffects.None, 0f);
+					spriteBatch.DrawString(Main.fontItemStack, string.Concat(Main.mouseItem.stack), new Vector2((float)Main.mouseX + 10f * num64, (float)Main.mouseY + 26f * num64), white, 0f, default(Vector2), num63, SpriteEffects.None, 0f);
 				}
 			}
 			else
 			{
-				if (this.mouseNPC > -1)
+				if (mouseNPC > -1)
 				{
 					Main.player[Main.myPlayer].mouseInterface = true;
 					Main.mouseText = false;
 					float num65 = 1f;
 					num65 *= Main.cursorScale;
-					this.spriteBatch.Draw(Main.npcHeadTexture[this.mouseNPC], new Vector2((float)Main.mouseX + 26f * num65 - (float)Main.npcHeadTexture[this.mouseNPC].Width * 0.5f * num65, (float)Main.mouseY + 26f * num65 - (float)Main.npcHeadTexture[this.mouseNPC].Height * 0.5f * num65), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[this.mouseNPC].Width, Main.npcHeadTexture[this.mouseNPC].Height)), Color.White, 0f, default(Vector2), num65, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.npcHeadTexture[mouseNPC], new Vector2((float)Main.mouseX + 26f * num65 - (float)Main.npcHeadTexture[mouseNPC].Width * 0.5f * num65, (float)Main.mouseY + 26f * num65 - (float)Main.npcHeadTexture[mouseNPC].Height * 0.5f * num65), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[mouseNPC].Width, Main.npcHeadTexture[mouseNPC].Height)), Color.White, 0f, default(Vector2), num65, SpriteEffects.None, 0f);
 					if (Main.mouseRight && Main.mouseRightRelease)
 					{
 						Main.PlaySound(12, -1, -1, 1);
-						this.mouseNPC = -1;
+						mouseNPC = -1;
 					}
 					if (Main.mouseLeft && Main.mouseLeftRelease)
 					{
-						if (this.mouseNPC == 0)
+						if (mouseNPC == 0)
 						{
 							int x = (int)(((float)Main.mouseX + Main.screenPosition.X) / 16f);
 							int y = (int)(((float)Main.mouseY + Main.screenPosition.Y) / 16f);
@@ -21325,7 +21331,7 @@ namespace Terraria
 							int num66 = 0;
 							for (int num67 = 0; num67 < 200; num67++)
 							{
-								if (Main.npc[num67].active && Main.npc[num67].type == NPC.NumToType(this.mouseNPC))
+								if (Main.npc[num67].active && Main.npc[num67].type == NPC.NumToType(mouseNPC))
 								{
 									num66 = num67;
 									break;
@@ -21337,14 +21343,14 @@ namespace Terraria
 								int y2 = (int)(((float)Main.mouseY + Main.screenPosition.Y) / 16f);
 								if (WorldGen.MoveNPC(x2, y2, num66))
 								{
-									this.mouseNPC = -1;
+									mouseNPC = -1;
 									WorldGen.moveRoom(x2, y2, num66);
 									Main.PlaySound(12, -1, -1, 1);
 								}
 							}
 							else
 							{
-								this.mouseNPC = 0;
+								mouseNPC = 0;
 							}
 						}
 					}
@@ -21354,7 +21360,7 @@ namespace Terraria
 			{
 				try
 				{
-					this.DrawMouseOver();
+					DrawMouseOver();
 					goto IL_2B69;
 				}
 				catch
@@ -21362,7 +21368,7 @@ namespace Terraria
 					goto IL_2B69;
 				}
 			}
-			this.DrawMouseOver();
+			DrawMouseOver();
 			IL_2B69:
 			if (Main.mouseRight)
 			{
@@ -21396,10 +21402,10 @@ namespace Terraria
 				{
 					effects2 = SpriteEffects.FlipHorizontally;
 				}
-				this.spriteBatch.Draw(Main.itemTexture[num68], new Vector2((float)(Main.mouseX + 10), (float)(Main.mouseY + 10)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[num68].Width, Main.itemTexture[num68].Height)), color3, 0f, default(Vector2), scale3, effects2, 0f);
+				spriteBatch.Draw(Main.itemTexture[num68], new Vector2((float)(Main.mouseX + 10), (float)(Main.mouseY + 10)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[num68].Width, Main.itemTexture[num68].Height)), color3, 0f, default(Vector2), scale3, effects2, 0f);
 				if (Main.player[Main.myPlayer].showItemIcon2 == 0 && Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].color != default(Color))
 				{
-					this.spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].type], new Vector2((float)(Main.mouseX + 10), (float)(Main.mouseY + 10)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].type].Height)), color4, 0f, default(Vector2), scale3, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.itemTexture[Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].type], new Vector2((float)(Main.mouseX + 10), (float)(Main.mouseY + 10)), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].type].Width, Main.itemTexture[Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].type].Height)), color4, 0f, default(Vector2), scale3, SpriteEffects.None, 0f);
 				}
 			}
 			Main.player[Main.myPlayer].showItemIcon = false;
@@ -21408,7 +21414,7 @@ namespace Terraria
 		protected void QuitGame()
 		{
 			Steam.Kill();
-			base.Exit();
+			Exit();
 		}
 		protected Color randColor()
 		{
@@ -21538,7 +21544,7 @@ namespace Terraria
 			{
 				Main.chatLine[i] = new ChatLine();
 			}
-			this.DrawFPS();
+			DrawFPS();
 			Main.screenLastPosition = Main.screenPosition;
 			Main.screenPosition.Y = (float)(Main.worldSurface * 16.0 - (double)Main.screenHeight);
 			if (Main.grabSky)
@@ -21560,56 +21566,56 @@ namespace Terraria
 			Main.background = 0;
 			byte b = (byte)((255 + Main.tileColor.R * 2) / 3);
 			Color color = new Color((int)b, (int)b, (int)b, 255);
-			this.logoRotation += this.logoRotationSpeed * 3E-05f;
-			if ((double)this.logoRotation > 0.1)
+			logoRotation += logoRotationSpeed * 3E-05f;
+			if ((double)logoRotation > 0.1)
 			{
-				this.logoRotationDirection = -1f;
+				logoRotationDirection = -1f;
 			}
 			else
 			{
-				if ((double)this.logoRotation < -0.1)
+				if ((double)logoRotation < -0.1)
 				{
-					this.logoRotationDirection = 1f;
+					logoRotationDirection = 1f;
 				}
 			}
-			if (this.logoRotationSpeed < 20f & this.logoRotationDirection == 1f)
+			if (logoRotationSpeed < 20f & logoRotationDirection == 1f)
 			{
-				this.logoRotationSpeed += 1f;
+				logoRotationSpeed += 1f;
 			}
 			else
 			{
-				if (this.logoRotationSpeed > -20f & this.logoRotationDirection == -1f)
+				if (logoRotationSpeed > -20f & logoRotationDirection == -1f)
 				{
-					this.logoRotationSpeed -= 1f;
+					logoRotationSpeed -= 1f;
 				}
 			}
-			this.logoScale += this.logoScaleSpeed * 1E-05f;
-			if ((double)this.logoScale > 1.1)
+			logoScale += logoScaleSpeed * 1E-05f;
+			if ((double)logoScale > 1.1)
 			{
-				this.logoScaleDirection = -1f;
+				logoScaleDirection = -1f;
 			}
 			else
 			{
-				if ((double)this.logoScale < 0.9)
+				if ((double)logoScale < 0.9)
 				{
-					this.logoScaleDirection = 1f;
+					logoScaleDirection = 1f;
 				}
 			}
-			if (this.logoScaleSpeed < 50f & this.logoScaleDirection == 1f)
+			if (logoScaleSpeed < 50f & logoScaleDirection == 1f)
 			{
-				this.logoScaleSpeed += 1f;
+				logoScaleSpeed += 1f;
 			}
 			else
 			{
-				if (this.logoScaleSpeed > -50f & this.logoScaleDirection == -1f)
+				if (logoScaleSpeed > -50f & logoScaleDirection == -1f)
 				{
-					this.logoScaleSpeed -= 1f;
+					logoScaleSpeed -= 1f;
 				}
 			}
 			Color color2 = new Color((int)((byte)((float)color.R * ((float)Main.LogoA / 255f))), (int)((byte)((float)color.G * ((float)Main.LogoA / 255f))), (int)((byte)((float)color.B * ((float)Main.LogoA / 255f))), (int)((byte)((float)color.A * ((float)Main.LogoA / 255f))));
 			Color color3 = new Color((int)((byte)((float)color.R * ((float)Main.LogoB / 255f))), (int)((byte)((float)color.G * ((float)Main.LogoB / 255f))), (int)((byte)((float)color.B * ((float)Main.LogoB / 255f))), (int)((byte)((float)color.A * ((float)Main.LogoB / 255f))));
-			this.spriteBatch.Draw(Main.logoTexture, new Vector2((float)(Main.screenWidth / 2), 100f), new Rectangle?(new Rectangle(0, 0, Main.logoTexture.Width, Main.logoTexture.Height)), color2, this.logoRotation, new Vector2((float)(Main.logoTexture.Width / 2), (float)(Main.logoTexture.Height / 2)), this.logoScale, SpriteEffects.None, 0f);
-			this.spriteBatch.Draw(Main.logo2Texture, new Vector2((float)(Main.screenWidth / 2), 100f), new Rectangle?(new Rectangle(0, 0, Main.logoTexture.Width, Main.logoTexture.Height)), color3, this.logoRotation, new Vector2((float)(Main.logoTexture.Width / 2), (float)(Main.logoTexture.Height / 2)), this.logoScale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.logoTexture, new Vector2((float)(Main.screenWidth / 2), 100f), new Rectangle?(new Rectangle(0, 0, Main.logoTexture.Width, Main.logoTexture.Height)), color2, logoRotation, new Vector2((float)(Main.logoTexture.Width / 2), (float)(Main.logoTexture.Height / 2)), logoScale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.logo2Texture, new Vector2((float)(Main.screenWidth / 2), 100f), new Rectangle?(new Rectangle(0, 0, Main.logoTexture.Width, Main.logoTexture.Height)), color3, logoRotation, new Vector2((float)(Main.logoTexture.Width / 2), (float)(Main.logoTexture.Height / 2)), logoScale, SpriteEffects.None, 0f);
 			if (Main.dayTime)
 			{
 				Main.LogoA += 2;
@@ -21672,25 +21678,25 @@ namespace Terraria
 			}
 			if (Main.menuMode == 1212)
 			{
-				if (this.focusMenu == 2)
+				if (focusMenu == 2)
 				{
 					array9[0] = "Wählen Sie die Sprache";
 				}
 				else
 				{
-					if (this.focusMenu == 3)
+					if (focusMenu == 3)
 					{
 						array9[0] = "Selezionare la lingua";
 					}
 					else
 					{
-						if (this.focusMenu == 4)
+						if (focusMenu == 4)
 						{
 							array9[0] = "Sélectionnez la langue";
 						}
 						else
 						{
-							if (this.focusMenu == 5)
+							if (focusMenu == 5)
 							{
 								array9[0] = "Seleccione el idioma";
 							}
@@ -21715,44 +21721,44 @@ namespace Terraria
 				array9[4] = "Française";
 				array9[5] = "Español";
 				num4 = 6;
-				if (this.selectedMenu >= 1)
+				if (selectedMenu >= 1)
 				{
-					Lang.lang = this.selectedMenu;
+					Lang.lang = selectedMenu;
 					Lang.setLang(false);
 					Main.menuMode = 0;
 					Main.PlaySound(10, -1, -1, 1);
-					this.SaveSettings();
+					SaveSettings();
 				}
 			}
 			else
 			{
 				if (Main.menuMode == 1213)
 				{
-					if (this.focusMenu == 1)
+					if (focusMenu == 1)
 					{
 						array9[0] = "Select language";
 					}
 					else
 					{
-						if (this.focusMenu == 2)
+						if (focusMenu == 2)
 						{
 							array9[0] = "Wählen Sie die Sprache";
 						}
 						else
 						{
-							if (this.focusMenu == 3)
+							if (focusMenu == 3)
 							{
 								array9[0] = "Selezionare la lingua";
 							}
 							else
 							{
-								if (this.focusMenu == 4)
+								if (focusMenu == 4)
 								{
 									array9[0] = "Sélectionnez la langue";
 								}
 								else
 								{
-									if (this.focusMenu == 5)
+									if (focusMenu == 5)
 									{
 										array9[0] = "Seleccione el idioma";
 									}
@@ -21780,19 +21786,19 @@ namespace Terraria
 					array9[5] = "Español";
 					array9[6] = Lang.menu[5];
 					num4 = 7;
-					if (this.selectedMenu == 6)
+					if (selectedMenu == 6)
 					{
 						Main.menuMode = 11;
 						Main.PlaySound(11, -1, -1, 1);
 					}
 					else
 					{
-						if (this.selectedMenu >= 1)
+						if (selectedMenu >= 1)
 						{
-							Lang.lang = this.selectedMenu;
+							Lang.lang = selectedMenu;
 							Lang.setLang(false);
 							Main.PlaySound(12, -1, -1, 1);
-							this.SaveSettings();
+							SaveSettings();
 						}
 					}
 				}
@@ -21848,7 +21854,7 @@ namespace Terraria
 						array4[10] = 20;
 						array4[10] = 40;
 						array9[10] = Lang.menu[2];
-						if (this.selectedMenu == 10)
+						if (selectedMenu == 10)
 						{
 							Netplay.disconnect = true;
 							Main.PlaySound(11, -1, -1, 1);
@@ -21865,21 +21871,21 @@ namespace Terraria
 								Main.PlaySound(12, -1, -1, 1);
 							}
 							array9[0] = Lang.menu[3];
-							this.textBlinkerCount++;
-							if (this.textBlinkerCount >= 20)
+							textBlinkerCount++;
+							if (textBlinkerCount >= 20)
 							{
-								if (this.textBlinkerState == 0)
+								if (textBlinkerState == 0)
 								{
-									this.textBlinkerState = 1;
+									textBlinkerState = 1;
 								}
 								else
 								{
-									this.textBlinkerState = 0;
+									textBlinkerState = 0;
 								}
-								this.textBlinkerCount = 0;
+								textBlinkerCount = 0;
 							}
 							array9[1] = Netplay.password;
-							if (this.textBlinkerState == 1)
+							if (textBlinkerState == 1)
 							{
 								string[] array10;
 								(array10 = array9)[1] = array10[1] + "|";
@@ -21897,7 +21903,7 @@ namespace Terraria
 							array9[2] = Lang.menu[4];
 							array9[3] = Lang.menu[5];
 							num4 = 4;
-							if (this.selectedMenu == 3)
+							if (selectedMenu == 3)
 							{
 								Main.PlaySound(11, -1, -1, 1);
 								Main.menuMode = 0;
@@ -21906,7 +21912,7 @@ namespace Terraria
 							}
 							else
 							{
-								if (this.selectedMenu == 2 || Main.inputTextEnter)
+								if (selectedMenu == 2 || Main.inputTextEnter)
 								{
 									NetMessage.SendData(38, -1, -1, Netplay.password, 0, 0f, 0f, 0f, 0);
 									Main.menuMode = 14;
@@ -21922,7 +21928,7 @@ namespace Terraria
 								array[0] = true;
 								num = 300;
 								array9[1] = Lang.menu[6];
-								if (this.selectedMenu != 1)
+								if (selectedMenu != 1)
 								{
 									goto IL_443A;
 								}
@@ -21933,7 +21939,7 @@ namespace Terraria
 								Main.netMode = 0;
 								try
 								{
-									this.tServer.Kill();
+									tServer.Kill();
 									goto IL_443A;
 								}
 								catch
@@ -21950,21 +21956,21 @@ namespace Terraria
 									Main.PlaySound(12, -1, -1, 1);
 								}
 								array9[0] = Lang.menu[7];
-								this.textBlinkerCount++;
-								if (this.textBlinkerCount >= 20)
+								textBlinkerCount++;
+								if (textBlinkerCount >= 20)
 								{
-									if (this.textBlinkerState == 0)
+									if (textBlinkerState == 0)
 									{
-										this.textBlinkerState = 1;
+										textBlinkerState = 1;
 									}
 									else
 									{
-										this.textBlinkerState = 0;
+										textBlinkerState = 0;
 									}
-									this.textBlinkerCount = 0;
+									textBlinkerCount = 0;
 								}
 								array9[1] = Netplay.password;
-								if (this.textBlinkerState == 1)
+								if (textBlinkerState == 1)
 								{
 									string[] array10;
 									(array10 = array9)[1] = array10[1] + "|";
@@ -21982,7 +21988,7 @@ namespace Terraria
 								array9[2] = Lang.menu[4];
 								array9[3] = Lang.menu[5];
 								num4 = 4;
-								if (this.selectedMenu == 3)
+								if (selectedMenu == 3)
 								{
 									Main.PlaySound(11, -1, -1, 1);
 									Main.menuMode = 6;
@@ -21990,10 +21996,10 @@ namespace Terraria
 								}
 								else
 								{
-									if (this.selectedMenu == 2 || Main.inputTextEnter || Main.autoPass)
+									if (selectedMenu == 2 || Main.inputTextEnter || Main.autoPass)
 									{
-										this.tServer.StartInfo.FileName = "TerrariaServer.exe";
-										this.tServer.StartInfo.Arguments = string.Concat(new object[]
+										tServer.StartInfo.FileName = "TerrariaServer.exe";
+										tServer.StartInfo.Arguments = string.Concat(new object[]
 										{
 											"-autoshutdown -world \"",
 											Main.worldPathName,
@@ -22004,12 +22010,12 @@ namespace Terraria
 										});
 										if (Main.libPath != "")
 										{
-											ProcessStartInfo expr_CE4 = this.tServer.StartInfo;
+											ProcessStartInfo expr_CE4 = tServer.StartInfo;
 											expr_CE4.Arguments = expr_CE4.Arguments + " -loadlib " + Main.libPath;
 										}
-										this.tServer.StartInfo.UseShellExecute = false;
-										this.tServer.StartInfo.CreateNoWindow = true;
-										this.tServer.Start();
+										tServer.StartInfo.UseShellExecute = false;
+										tServer.StartInfo.CreateNoWindow = true;
+										tServer.Start();
 										Netplay.SetIP("127.0.0.1");
 										Main.autoPass = true;
 										Main.statusText = Lang.menu[8];
@@ -22028,7 +22034,7 @@ namespace Terraria
 									num = 80;
 									num3 = 400;
 									array9[1] = Lang.menu[5];
-									if (this.selectedMenu == 1)
+									if (selectedMenu == 1)
 									{
 										Netplay.disconnect = true;
 										Main.PlaySound(11, -1, -1, 1);
@@ -22048,7 +22054,7 @@ namespace Terraria
 										array4[2] = 50;
 										array9[1] = Lang.menu[10];
 										array9[2] = Lang.menu[6];
-										if (this.selectedMenu == 1)
+										if (selectedMenu == 1)
 										{
 											if (File.Exists(Main.worldPathName + ".bak"))
 											{
@@ -22065,7 +22071,7 @@ namespace Terraria
 												Main.netMode = 0;
 											}
 										}
-										if (this.selectedMenu == 2)
+										if (selectedMenu == 2)
 										{
 											Main.PlaySound(11, -1, -1, 1);
 											Main.menuMode = 0;
@@ -22085,7 +22091,7 @@ namespace Terraria
 											array4[2] = 50;
 											array9[1] = Lang.menu[11];
 											array9[2] = Lang.menu[5];
-											if (this.selectedMenu == 2)
+											if (selectedMenu == 2)
 											{
 												Main.PlaySound(11, -1, -1, 1);
 												Main.menuMode = 0;
@@ -22124,21 +22130,21 @@ namespace Terraria
 														array9[2] = Lang.menu[14];
 														array9[3] = Lang.menu[15];
 														num4 = 4;
-														if (this.selectedMenu == 3)
+														if (selectedMenu == 3)
 														{
-															this.QuitGame();
+															QuitGame();
 														}
-														if (this.selectedMenu == 1)
+														if (selectedMenu == 1)
 														{
 															Main.PlaySound(10, -1, -1, 1);
 															Main.menuMode = 12;
 														}
-														if (this.selectedMenu == 2)
+														if (selectedMenu == 2)
 														{
 															Main.PlaySound(10, -1, -1, 1);
 															Main.menuMode = 11;
 														}
-														if (this.selectedMenu == 0)
+														if (selectedMenu == 0)
 														{
 															Main.PlaySound(10, -1, -1, 1);
 															Main.menuMode = 1;
@@ -22192,7 +22198,7 @@ namespace Terraria
 															bool[] array11 = new bool[num4];
 															if (Main.numLoadPlayers > 7 + Main.menuSkip)
 															{
-																this.menuWide[6] = true;
+																menuWide[6] = true;
 																array6[6] = 0;
 																array11[6] = true;
 																array9[6] = "▼";
@@ -22202,7 +22208,7 @@ namespace Terraria
 															}
 															if (Main.menuSkip > 0)
 															{
-																this.menuWide[0] = true;
+																menuWide[0] = true;
 																array6[0] = 0;
 																array11[0] = true;
 																array9[0] = "▲";
@@ -22213,14 +22219,14 @@ namespace Terraria
 															array11[7] = true;
 															array11[8] = true;
 															array11[9] = true;
-															if (this.focusMenu >= 0 && this.focusMenu < Main.numLoadPlayers && !array11[this.focusMenu])
+															if (focusMenu >= 0 && focusMenu < Main.numLoadPlayers && !array11[focusMenu])
 															{
-																num6 = this.focusMenu + Main.menuSkip;
+																num6 = focusMenu + Main.menuSkip;
 																Vector2 vector = Main.fontDeathText.MeasureString(array9[num6 - Main.menuSkip]);
 																num7 = (int)((double)(Main.screenWidth / 2) + (double)vector.X * 0.5 + 10.0);
-																num8 = num + num3 * this.focusMenu + 4;
+																num8 = num + num3 * focusMenu + 4;
 															}
-															if (this.selectedMenu == 0 && Main.menuSkip > 0)
+															if (selectedMenu == 0 && Main.menuSkip > 0)
 															{
 																Main.PlaySound(12, -1, -1, 1);
 																Main.menuSkip -= 5;
@@ -22231,7 +22237,7 @@ namespace Terraria
 															}
 															else
 															{
-																if (this.selectedMenu == 6 && Main.menuSkip < Main.numLoadPlayers - 7)
+																if (selectedMenu == 6 && Main.menuSkip < Main.numLoadPlayers - 7)
 																{
 																	Main.PlaySound(12, -1, -1, 1);
 																	Main.menuSkip += 5;
@@ -22242,7 +22248,7 @@ namespace Terraria
 																}
 																else
 																{
-																	if (this.selectedMenu == 9)
+																	if (selectedMenu == 9)
 																	{
 																		Main.autoJoin = false;
 																		Main.autoPass = false;
@@ -22260,7 +22266,7 @@ namespace Terraria
 																	}
 																	else
 																	{
-																		if (this.selectedMenu == 7)
+																		if (selectedMenu == 7)
 																		{
 																			Main.loadPlayer[Main.numLoadPlayers] = new Player();
 																			Main.loadPlayer[Main.numLoadPlayers].inventory[0].SetDefaults("Copper Shortsword");
@@ -22274,21 +22280,21 @@ namespace Terraria
 																		}
 																		else
 																		{
-																			if (this.selectedMenu == 8)
+																			if (selectedMenu == 8)
 																			{
 																				Main.PlaySound(10, -1, -1, 1);
 																				Main.menuMode = 4;
 																			}
 																			else
 																			{
-																				if (this.selectedMenu >= 0)
+																				if (selectedMenu >= 0)
 																				{
 																					if (Main.menuMultiplayer)
 																					{
 																						Main.ServerSideCharacter = false;
-																						this.selectedPlayer = this.selectedMenu + Main.menuSkip;
-																						Main.player[Main.myPlayer] = (Player)Main.loadPlayer[this.selectedPlayer].Clone();
-																						Main.playerPathName = Main.loadPlayerPath[this.selectedPlayer];
+																						selectedPlayer = selectedMenu + Main.menuSkip;
+																						Main.player[Main.myPlayer] = (Player)Main.loadPlayer[selectedPlayer].Clone();
+																						Main.playerPathName = Main.loadPlayerPath[selectedPlayer];
 																						Main.PlaySound(10, -1, -1, 1);
 																						if (Main.autoJoin)
 																						{
@@ -22325,9 +22331,9 @@ namespace Terraria
 																					{
 																						Main.ServerSideCharacter = false;
 																						Main.myPlayer = 0;
-																						this.selectedPlayer = this.selectedMenu + Main.menuSkip;
-																						Main.player[Main.myPlayer] = (Player)Main.loadPlayer[this.selectedPlayer].Clone();
-																						Main.playerPathName = Main.loadPlayerPath[this.selectedPlayer];
+																						selectedPlayer = selectedMenu + Main.menuSkip;
+																						Main.player[Main.myPlayer] = (Player)Main.loadPlayer[selectedPlayer].Clone();
+																						Main.playerPathName = Main.loadPlayerPath[selectedPlayer];
 																						Main.LoadWorlds();
 																						Main.PlaySound(10, -1, -1, 1);
 																						Main.menuMode = 6;
@@ -22343,25 +22349,25 @@ namespace Terraria
 														{
 															if (Main.menuMode == 2)
 															{
-																if (this.selectedMenu == 0)
+																if (selectedMenu == 0)
 																{
 																	Main.menuMode = 17;
 																	Main.PlaySound(10, -1, -1, 1);
-																	this.selColor = Main.loadPlayer[Main.numLoadPlayers].hairColor;
+																	selColor = Main.loadPlayer[Main.numLoadPlayers].hairColor;
 																}
-																if (this.selectedMenu == 1)
+																if (selectedMenu == 1)
 																{
 																	Main.menuMode = 18;
 																	Main.PlaySound(10, -1, -1, 1);
-																	this.selColor = Main.loadPlayer[Main.numLoadPlayers].eyeColor;
+																	selColor = Main.loadPlayer[Main.numLoadPlayers].eyeColor;
 																}
-																if (this.selectedMenu == 2)
+																if (selectedMenu == 2)
 																{
 																	Main.menuMode = 19;
 																	Main.PlaySound(10, -1, -1, 1);
-																	this.selColor = Main.loadPlayer[Main.numLoadPlayers].skinColor;
+																	selColor = Main.loadPlayer[Main.numLoadPlayers].skinColor;
 																}
-																if (this.selectedMenu == 3)
+																if (selectedMenu == 3)
 																{
 																	Main.menuMode = 20;
 																	Main.PlaySound(10, -1, -1, 1);
@@ -22397,7 +22403,7 @@ namespace Terraria
 																{
 																	array9[4] = Lang.menu[23];
 																}
-																if (this.selectedMenu == 4)
+																if (selectedMenu == 4)
 																{
 																	if (Main.loadPlayer[num6].male)
 																	{
@@ -22427,25 +22433,25 @@ namespace Terraria
 																		array9[5] = Lang.menu[26];
 																	}
 																}
-																if (this.selectedMenu == 5)
+																if (selectedMenu == 5)
 																{
 																	Main.PlaySound(10, -1, -1, 1);
 																	Main.menuMode = 222;
 																}
-																if (this.selectedMenu == 7)
+																if (selectedMenu == 7)
 																{
 																	Main.PlaySound(12, -1, -1, 1);
 																	Main.loadPlayer[num6].hair = Main.rand.Next(51);
-																	Main.loadPlayer[num6].eyeColor = this.randColor();
+																	Main.loadPlayer[num6].eyeColor = randColor();
 																	while ((int)(Main.loadPlayer[num6].eyeColor.R + Main.loadPlayer[num6].eyeColor.G + Main.loadPlayer[num6].eyeColor.B) > 300)
 																	{
-																		Main.loadPlayer[num6].eyeColor = this.randColor();
+																		Main.loadPlayer[num6].eyeColor = randColor();
 																	}
-																	Main.loadPlayer[num6].hairColor = this.randColor();
-																	Main.loadPlayer[num6].pantsColor = this.randColor();
-																	Main.loadPlayer[num6].shirtColor = this.randColor();
-																	Main.loadPlayer[num6].shoeColor = this.randColor();
-																	Main.loadPlayer[num6].skinColor = this.randColor();
+																	Main.loadPlayer[num6].hairColor = randColor();
+																	Main.loadPlayer[num6].pantsColor = randColor();
+																	Main.loadPlayer[num6].shirtColor = randColor();
+																	Main.loadPlayer[num6].shoeColor = randColor();
+																	Main.loadPlayer[num6].skinColor = randColor();
 																	float num10 = (float)Main.rand.Next(60, 120) * 0.01f;
 																	if (num10 > 1f)
 																	{
@@ -22454,7 +22460,7 @@ namespace Terraria
 																	Main.loadPlayer[num6].skinColor.R = (byte)((float)Main.rand.Next(240, 255) * num10);
 																	Main.loadPlayer[num6].skinColor.G = (byte)((float)Main.rand.Next(110, 140) * num10);
 																	Main.loadPlayer[num6].skinColor.B = (byte)((float)Main.rand.Next(75, 110) * num10);
-																	Main.loadPlayer[num6].underShirtColor = this.randColor();
+																	Main.loadPlayer[num6].underShirtColor = randColor();
 																	int num11 = Main.loadPlayer[num6].hair + 1;
 																	if (num11 == 5 || num11 == 6 || num11 == 7 || num11 == 10 || num11 == 12 || num11 == 19 || num11 == 22 || num11 == 23 || num11 == 26 || num11 == 27 || num11 == 30 || num11 == 33)
 																	{
@@ -22469,14 +22475,14 @@ namespace Terraria
 																array9[6] = Lang.menu[28];
 																array9[8] = Lang.menu[5];
 																num4 = 9;
-																if (this.selectedMenu == 8)
+																if (selectedMenu == 8)
 																{
 																	Main.PlaySound(11, -1, -1, 1);
 																	Main.menuMode = 1;
 																}
 																else
 																{
-																	if (this.selectedMenu == 6)
+																	if (selectedMenu == 6)
 																	{
 																		Main.PlaySound(10, -1, -1, 1);
 																		Main.loadPlayer[Main.numLoadPlayers].name = "";
@@ -22489,19 +22495,19 @@ namespace Terraria
 															{
 																if (Main.menuMode == 222)
 																{
-																	if (this.focusMenu == 3)
+																	if (focusMenu == 3)
 																	{
 																		array9[0] = Lang.menu[29];
 																	}
 																	else
 																	{
-																		if (this.focusMenu == 2)
+																		if (focusMenu == 2)
 																		{
 																			array9[0] = Lang.menu[30];
 																		}
 																		else
 																		{
-																			if (this.focusMenu == 1)
+																			if (focusMenu == 1)
 																			{
 																				array9[0] = Lang.menu[31];
 																			}
@@ -22522,21 +22528,21 @@ namespace Terraria
 																	array9[3] = Lang.menu[24];
 																	array6[3] = 2;
 																	num4 = 4;
-																	if (this.selectedMenu == 1)
+																	if (selectedMenu == 1)
 																	{
 																		Main.loadPlayer[Main.numLoadPlayers].difficulty = 0;
 																		Main.menuMode = 2;
 																	}
 																	else
 																	{
-																		if (this.selectedMenu == 2)
+																		if (selectedMenu == 2)
 																		{
 																			Main.menuMode = 2;
 																			Main.loadPlayer[Main.numLoadPlayers].difficulty = 1;
 																		}
 																		else
 																		{
-																			if (this.selectedMenu == 3)
+																			if (selectedMenu == 3)
 																			{
 																				Main.loadPlayer[Main.numLoadPlayers].difficulty = 2;
 																				Main.menuMode = 2;
@@ -22548,27 +22554,27 @@ namespace Terraria
 																{
 																	if (Main.menuMode == 20)
 																	{
-																		if (this.selectedMenu == 0)
+																		if (selectedMenu == 0)
 																		{
 																			Main.menuMode = 21;
 																			Main.PlaySound(10, -1, -1, 1);
-																			this.selColor = Main.loadPlayer[Main.numLoadPlayers].shirtColor;
+																			selColor = Main.loadPlayer[Main.numLoadPlayers].shirtColor;
 																		}
-																		if (this.selectedMenu == 1)
+																		if (selectedMenu == 1)
 																		{
 																			Main.menuMode = 22;
 																			Main.PlaySound(10, -1, -1, 1);
-																			this.selColor = Main.loadPlayer[Main.numLoadPlayers].underShirtColor;
+																			selColor = Main.loadPlayer[Main.numLoadPlayers].underShirtColor;
 																		}
-																		if (this.selectedMenu == 2)
+																		if (selectedMenu == 2)
 																		{
 																			Main.menuMode = 23;
 																			Main.PlaySound(10, -1, -1, 1);
-																			this.selColor = Main.loadPlayer[Main.numLoadPlayers].pantsColor;
+																			selColor = Main.loadPlayer[Main.numLoadPlayers].pantsColor;
 																		}
-																		if (this.selectedMenu == 3)
+																		if (selectedMenu == 3)
 																		{
-																			this.selColor = Main.loadPlayer[Main.numLoadPlayers].shoeColor;
+																			selColor = Main.loadPlayer[Main.numLoadPlayers].shoeColor;
 																			Main.menuMode = 24;
 																			Main.PlaySound(10, -1, -1, 1);
 																		}
@@ -22584,7 +22590,7 @@ namespace Terraria
 																		num6 = Main.numLoadPlayers;
 																		num7 = Main.screenWidth / 2 - 16;
 																		num8 = 210;
-																		if (this.selectedMenu == 5)
+																		if (selectedMenu == 5)
 																		{
 																			Main.PlaySound(11, -1, -1, 1);
 																			Main.menuMode = 2;
@@ -22601,7 +22607,7 @@ namespace Terraria
 																			num9 = 390;
 																			num = 260;
 																			num3 = 60;
-																			Main.loadPlayer[num6].hairColor = this.selColor;
+																			Main.loadPlayer[num6].hairColor = selColor;
 																			num4 = 3;
 																			array9[0] = Lang.menu[37] + " " + (Main.loadPlayer[num6].hair + 1);
 																			array9[1] = Lang.menu[38];
@@ -22609,7 +22615,7 @@ namespace Terraria
 																			array4[2] = 150;
 																			array4[1] = 10;
 																			array9[2] = Lang.menu[5];
-																			if (this.selectedMenu == 0)
+																			if (selectedMenu == 0)
 																			{
 																				Main.PlaySound(12, -1, -1, 1);
 																				Main.loadPlayer[num6].hair++;
@@ -22620,7 +22626,7 @@ namespace Terraria
 																			}
 																			else
 																			{
-																				if (this.selectedMenu2 == 0)
+																				if (selectedMenu2 == 0)
 																				{
 																					Main.PlaySound(12, -1, -1, 1);
 																					Main.loadPlayer[num6].hair--;
@@ -22630,7 +22636,7 @@ namespace Terraria
 																					}
 																				}
 																			}
-																			if (this.selectedMenu == 2)
+																			if (selectedMenu == 2)
 																			{
 																				Main.menuMode = 2;
 																				Main.PlaySound(11, -1, -1, 1);
@@ -22647,7 +22653,7 @@ namespace Terraria
 																				num9 = 370;
 																				num = 240;
 																				num3 = 60;
-																				Main.loadPlayer[num6].eyeColor = this.selColor;
+																				Main.loadPlayer[num6].eyeColor = selColor;
 																				num4 = 3;
 																				array9[0] = "";
 																				array9[1] = Lang.menu[39];
@@ -22655,7 +22661,7 @@ namespace Terraria
 																				array4[2] = 170;
 																				array4[1] = 10;
 																				array9[2] = Lang.menu[5];
-																				if (this.selectedMenu == 2)
+																				if (selectedMenu == 2)
 																				{
 																					Main.menuMode = 2;
 																					Main.PlaySound(11, -1, -1, 1);
@@ -22672,7 +22678,7 @@ namespace Terraria
 																					num9 = 370;
 																					num = 240;
 																					num3 = 60;
-																					Main.loadPlayer[num6].skinColor = this.selColor;
+																					Main.loadPlayer[num6].skinColor = selColor;
 																					num4 = 3;
 																					array9[0] = "";
 																					array9[1] = Lang.menu[40];
@@ -22680,7 +22686,7 @@ namespace Terraria
 																					array4[2] = 170;
 																					array4[1] = 10;
 																					array9[2] = Lang.menu[5];
-																					if (this.selectedMenu == 2)
+																					if (selectedMenu == 2)
 																					{
 																						Main.menuMode = 2;
 																						Main.PlaySound(11, -1, -1, 1);
@@ -22697,7 +22703,7 @@ namespace Terraria
 																						num9 = 370;
 																						num = 240;
 																						num3 = 60;
-																						Main.loadPlayer[num6].shirtColor = this.selColor;
+																						Main.loadPlayer[num6].shirtColor = selColor;
 																						num4 = 3;
 																						array9[0] = "";
 																						array9[1] = Lang.menu[41];
@@ -22705,7 +22711,7 @@ namespace Terraria
 																						array4[2] = 170;
 																						array4[1] = 10;
 																						array9[2] = Lang.menu[5];
-																						if (this.selectedMenu == 2)
+																						if (selectedMenu == 2)
 																						{
 																							Main.menuMode = 20;
 																							Main.PlaySound(11, -1, -1, 1);
@@ -22722,7 +22728,7 @@ namespace Terraria
 																							num9 = 370;
 																							num = 240;
 																							num3 = 60;
-																							Main.loadPlayer[num6].underShirtColor = this.selColor;
+																							Main.loadPlayer[num6].underShirtColor = selColor;
 																							num4 = 3;
 																							array9[0] = "";
 																							array9[1] = Lang.menu[42];
@@ -22730,7 +22736,7 @@ namespace Terraria
 																							array4[2] = 170;
 																							array4[1] = 10;
 																							array9[2] = Lang.menu[5];
-																							if (this.selectedMenu == 2)
+																							if (selectedMenu == 2)
 																							{
 																								Main.menuMode = 20;
 																								Main.PlaySound(11, -1, -1, 1);
@@ -22747,7 +22753,7 @@ namespace Terraria
 																								num9 = 370;
 																								num = 240;
 																								num3 = 60;
-																								Main.loadPlayer[num6].pantsColor = this.selColor;
+																								Main.loadPlayer[num6].pantsColor = selColor;
 																								num4 = 3;
 																								array9[0] = "";
 																								array9[1] = Lang.menu[43];
@@ -22755,7 +22761,7 @@ namespace Terraria
 																								array4[2] = 170;
 																								array4[1] = 10;
 																								array9[2] = Lang.menu[5];
-																								if (this.selectedMenu == 2)
+																								if (selectedMenu == 2)
 																								{
 																									Main.menuMode = 20;
 																									Main.PlaySound(11, -1, -1, 1);
@@ -22772,7 +22778,7 @@ namespace Terraria
 																									num9 = 370;
 																									num = 240;
 																									num3 = 60;
-																									Main.loadPlayer[num6].shoeColor = this.selColor;
+																									Main.loadPlayer[num6].shoeColor = selColor;
 																									num4 = 3;
 																									array9[0] = "";
 																									array9[1] = Lang.menu[44];
@@ -22780,7 +22786,7 @@ namespace Terraria
 																									array4[2] = 170;
 																									array4[1] = 10;
 																									array9[2] = Lang.menu[5];
-																									if (this.selectedMenu == 2)
+																									if (selectedMenu == 2)
 																									{
 																										Main.menuMode = 20;
 																										Main.PlaySound(11, -1, -1, 1);
@@ -22816,21 +22822,21 @@ namespace Terraria
 																												}
 																											}
 																										}
-																										this.textBlinkerCount++;
-																										if (this.textBlinkerCount >= 20)
+																										textBlinkerCount++;
+																										if (textBlinkerCount >= 20)
 																										{
-																											if (this.textBlinkerState == 0)
+																											if (textBlinkerState == 0)
 																											{
-																												this.textBlinkerState = 1;
+																												textBlinkerState = 1;
 																											}
 																											else
 																											{
-																												this.textBlinkerState = 0;
+																												textBlinkerState = 0;
 																											}
-																											this.textBlinkerCount = 0;
+																											textBlinkerCount = 0;
 																										}
 																										array9[1] = Main.loadPlayer[Main.numLoadPlayers].name;
-																										if (this.textBlinkerState == 1)
+																										if (textBlinkerState == 1)
 																										{
 																											string[] array10;
 																											(array10 = array9)[1] = array10[1] + "|";
@@ -22848,12 +22854,12 @@ namespace Terraria
 																										array9[2] = Lang.menu[4];
 																										array9[3] = Lang.menu[5];
 																										num4 = 4;
-																										if (this.selectedMenu == 3)
+																										if (selectedMenu == 3)
 																										{
 																											Main.PlaySound(11, -1, -1, 1);
 																											Main.menuMode = 2;
 																										}
-																										if (this.selectedMenu == 2 || (!array2[2] && Main.inputTextEnter))
+																										if (selectedMenu == 2 || (!array2[2] && Main.inputTextEnter))
 																										{
 																											Main.loadPlayer[Main.numLoadPlayers].name.Trim();
 																											Main.loadPlayerPath[Main.numLoadPlayers] = Main.getPlayerPathName(Main.loadPlayer[Main.numLoadPlayers].name);
@@ -22892,7 +22898,7 @@ namespace Terraria
 																											array12[7] = true;
 																											if (Main.numLoadPlayers > 7 + Main.menuSkip)
 																											{
-																												this.menuWide[6] = true;
+																												menuWide[6] = true;
 																												array6[6] = 0;
 																												array12[6] = true;
 																												array9[6] = "▼";
@@ -22902,7 +22908,7 @@ namespace Terraria
 																											}
 																											if (Main.menuSkip > 0)
 																											{
-																												this.menuWide[0] = true;
+																												menuWide[0] = true;
 																												array6[0] = 0;
 																												array12[0] = true;
 																												array9[0] = "▲";
@@ -22910,14 +22916,14 @@ namespace Terraria
 																												array4[0] += 8;
 																												array3[0] = true;
 																											}
-																											if (this.focusMenu >= 0 && this.focusMenu < Main.numLoadPlayers && !array12[this.focusMenu])
+																											if (focusMenu >= 0 && focusMenu < Main.numLoadPlayers && !array12[focusMenu])
 																											{
-																												num6 = this.focusMenu + Main.menuSkip;
+																												num6 = focusMenu + Main.menuSkip;
 																												Vector2 vector2 = Main.fontDeathText.MeasureString(array9[num6 - Main.menuSkip]);
 																												num7 = (int)((double)(Main.screenWidth / 2) + (double)vector2.X * 0.5 + 10.0);
-																												num8 = num + num3 * this.focusMenu + 4;
+																												num8 = num + num3 * focusMenu + 4;
 																											}
-																											if (this.selectedMenu == 0 && Main.menuSkip > 0)
+																											if (selectedMenu == 0 && Main.menuSkip > 0)
 																											{
 																												Main.PlaySound(12, -1, -1, 1);
 																												Main.menuSkip -= 5;
@@ -22928,7 +22934,7 @@ namespace Terraria
 																											}
 																											else
 																											{
-																												if (this.selectedMenu == 6 && Main.menuSkip < Main.numLoadPlayers - 7)
+																												if (selectedMenu == 6 && Main.menuSkip < Main.numLoadPlayers - 7)
 																												{
 																													Main.PlaySound(12, -1, -1, 1);
 																													Main.menuSkip += 5;
@@ -22939,16 +22945,16 @@ namespace Terraria
 																												}
 																												else
 																												{
-																													if (this.selectedMenu == 7)
+																													if (selectedMenu == 7)
 																													{
 																														Main.PlaySound(11, -1, -1, 1);
 																														Main.menuMode = 1;
 																													}
 																													else
 																													{
-																														if (this.selectedMenu >= 0)
+																														if (selectedMenu >= 0)
 																														{
-																															this.selectedPlayer = this.selectedMenu + Main.menuSkip;
+																															selectedPlayer = selectedMenu + Main.menuSkip;
 																															Main.PlaySound(10, -1, -1, 1);
 																															Main.menuMode = 5;
 																														}
@@ -22960,20 +22966,20 @@ namespace Terraria
 																										{
 																											if (Main.menuMode == 5)
 																											{
-																												array9[0] = Lang.menu[46] + " " + Main.loadPlayer[this.selectedPlayer].name + "?";
+																												array9[0] = Lang.menu[46] + " " + Main.loadPlayer[selectedPlayer].name + "?";
 																												array[0] = true;
 																												array9[1] = Lang.menu[104];
 																												array9[2] = Lang.menu[105];
 																												num4 = 3;
-																												if (this.selectedMenu == 1)
+																												if (selectedMenu == 1)
 																												{
-																													Main.ErasePlayer(this.selectedPlayer);
+																													Main.ErasePlayer(selectedPlayer);
 																													Main.PlaySound(10, -1, -1, 1);
 																													Main.menuMode = 1;
 																												}
 																												else
 																												{
-																													if (this.selectedMenu == 2)
+																													if (selectedMenu == 2)
 																													{
 																														Main.PlaySound(11, -1, -1, 1);
 																														Main.menuMode = 1;
@@ -23023,7 +23029,7 @@ namespace Terraria
 																													}
 																													if (Main.numLoadWorlds > 7 + Main.menuSkip)
 																													{
-																														this.menuWide[6] = true;
+																														menuWide[6] = true;
 																														array9[6] = "more";
 																														array9[6] = "▼";
 																														array7[6] = 0.6f;
@@ -23034,9 +23040,9 @@ namespace Terraria
 																														array9[0] = "▲";
 																														array7[0] = 0.6f;
 																														array4[0] += 8;
-																														this.menuWide[0] = true;
+																														menuWide[0] = true;
 																													}
-																													if (this.selectedMenu == 0 && Main.menuSkip > 0)
+																													if (selectedMenu == 0 && Main.menuSkip > 0)
 																													{
 																														Main.PlaySound(12, -1, -1, 1);
 																														Main.menuSkip -= 5;
@@ -23047,7 +23053,7 @@ namespace Terraria
 																													}
 																													else
 																													{
-																														if (this.selectedMenu == 6 && Main.menuSkip < Main.numLoadWorlds - 7)
+																														if (selectedMenu == 6 && Main.menuSkip < Main.numLoadWorlds - 7)
 																														{
 																															Main.PlaySound(12, -1, -1, 1);
 																															Main.menuSkip += 5;
@@ -23058,7 +23064,7 @@ namespace Terraria
 																														}
 																														else
 																														{
-																															if (this.selectedMenu == 9)
+																															if (selectedMenu == 9)
 																															{
 																																if (Main.menuMultiplayer)
 																																{
@@ -23072,7 +23078,7 @@ namespace Terraria
 																															}
 																															else
 																															{
-																																if (this.selectedMenu == 7)
+																																if (selectedMenu == 7)
 																																{
 																																	Main.PlaySound(10, -1, -1, 1);
 																																	Main.menuMode = 16;
@@ -23080,26 +23086,26 @@ namespace Terraria
 																																}
 																																else
 																																{
-																																	if (this.selectedMenu == 8)
+																																	if (selectedMenu == 8)
 																																	{
 																																		Main.PlaySound(10, -1, -1, 1);
 																																		Main.menuMode = 8;
 																																	}
 																																	else
 																																	{
-																																		if (this.selectedMenu >= 0)
+																																		if (selectedMenu >= 0)
 																																		{
 																																			if (Main.menuMultiplayer)
 																																			{
 																																				Main.PlaySound(10, -1, -1, 1);
-																																				Main.worldPathName = Main.loadWorldPath[this.selectedMenu + Main.menuSkip];
+																																				Main.worldPathName = Main.loadWorldPath[selectedMenu + Main.menuSkip];
 																																				Main.menuMode = 30;
 																																				Main.GetInputText("");
 																																			}
 																																			else
 																																			{
 																																				Main.PlaySound(10, -1, -1, 1);
-																																				Main.worldPathName = Main.loadWorldPath[this.selectedMenu + Main.menuSkip];
+																																				Main.worldPathName = Main.loadWorldPath[selectedMenu + Main.menuSkip];
 																																				WorldGen.playWorld();
 																																				Main.menuMode = 10;
 																																			}
@@ -23140,21 +23146,21 @@ namespace Terraria
 																																}
 																															}
 																														}
-																														this.textBlinkerCount++;
-																														if (this.textBlinkerCount >= 20)
+																														textBlinkerCount++;
+																														if (textBlinkerCount >= 20)
 																														{
-																															if (this.textBlinkerState == 0)
+																															if (textBlinkerState == 0)
 																															{
-																																this.textBlinkerState = 1;
+																																textBlinkerState = 1;
 																															}
 																															else
 																															{
-																																this.textBlinkerState = 0;
+																																textBlinkerState = 0;
 																															}
-																															this.textBlinkerCount = 0;
+																															textBlinkerCount = 0;
 																														}
 																														array9[1] = Main.newWorldName;
-																														if (this.textBlinkerState == 1)
+																														if (textBlinkerState == 1)
 																														{
 																															string[] array10;
 																															(array10 = array9)[1] = array10[1] + "|";
@@ -23172,12 +23178,12 @@ namespace Terraria
 																														array9[2] = Lang.menu[4];
 																														array9[3] = Lang.menu[5];
 																														num4 = 4;
-																														if (this.selectedMenu == 3)
+																														if (selectedMenu == 3)
 																														{
 																															Main.PlaySound(11, -1, -1, 1);
 																															Main.menuMode = 16;
 																														}
-																														if (this.selectedMenu == 2 || (!array2[2] && Main.inputTextEnter))
+																														if (selectedMenu == 2 || (!array2[2] && Main.inputTextEnter))
 																														{
 																															Main.menuMode = 10;
 																															Main.worldName = Main.newWorldName;
@@ -23215,16 +23221,16 @@ namespace Terraria
 																																array9[6] = "▼";
 																																array7[6] = 0.6f;
 																																array4[6] += 8;
-																																this.menuWide[6] = true;
+																																menuWide[6] = true;
 																															}
 																															if (Main.menuSkip > 0)
 																															{
 																																array9[0] = "▲";
 																																array7[0] = 0.6f;
 																																array4[0] += 8;
-																																this.menuWide[0] = true;
+																																menuWide[0] = true;
 																															}
-																															if (this.selectedMenu == 0 && Main.menuSkip > 0)
+																															if (selectedMenu == 0 && Main.menuSkip > 0)
 																															{
 																																Main.PlaySound(12, -1, -1, 1);
 																																Main.menuSkip -= 5;
@@ -23235,7 +23241,7 @@ namespace Terraria
 																															}
 																															else
 																															{
-																																if (this.selectedMenu == 6 && Main.menuSkip < Main.numLoadWorlds - 7)
+																																if (selectedMenu == 6 && Main.menuSkip < Main.numLoadWorlds - 7)
 																																{
 																																	Main.PlaySound(12, -1, -1, 1);
 																																	Main.menuSkip += 5;
@@ -23246,16 +23252,16 @@ namespace Terraria
 																																}
 																																else
 																																{
-																																	if (this.selectedMenu == 7)
+																																	if (selectedMenu == 7)
 																																	{
 																																		Main.PlaySound(11, -1, -1, 1);
 																																		Main.menuMode = 6;
 																																	}
 																																	else
 																																	{
-																																		if (this.selectedMenu >= 0)
+																																		if (selectedMenu >= 0)
 																																		{
-																																			this.selectedWorld = this.selectedMenu + Main.menuSkip;
+																																			selectedWorld = selectedMenu + Main.menuSkip;
 																																			Main.PlaySound(10, -1, -1, 1);
 																																			Main.menuMode = 9;
 																																		}
@@ -23267,20 +23273,20 @@ namespace Terraria
 																														{
 																															if (Main.menuMode == 9)
 																															{
-																																array9[0] = Lang.menu[46] + " " + Main.loadWorld[this.selectedWorld] + "?";
+																																array9[0] = Lang.menu[46] + " " + Main.loadWorld[selectedWorld] + "?";
 																																array[0] = true;
 																																array9[1] = Lang.menu[104];
 																																array9[2] = Lang.menu[105];
 																																num4 = 3;
-																																if (this.selectedMenu == 1)
+																																if (selectedMenu == 1)
 																																{
-																																	Main.EraseWorld(this.selectedWorld);
+																																	Main.EraseWorld(selectedWorld);
 																																	Main.PlaySound(10, -1, -1, 1);
 																																	Main.menuMode = 6;
 																																}
 																																else
 																																{
-																																	if (this.selectedMenu == 2)
+																																	if (selectedMenu == 2)
 																																	{
 																																		Main.PlaySound(11, -1, -1, 1);
 																																		Main.menuMode = 6;
@@ -23299,7 +23305,7 @@ namespace Terraria
 																																	}
 																																	array4[7] = 10;
 																																	num4 = 8;
-																																	if (this.graphics.IsFullScreen)
+																																	if (graphics.IsFullScreen)
 																																	{
 																																		array9[0] = Lang.menu[49];
 																																	}
@@ -23307,7 +23313,7 @@ namespace Terraria
 																																	{
 																																		array9[0] = Lang.menu[50];
 																																	}
-																																	this.bgScroll = (int)Math.Round((double)((1f - Main.caveParrallax) * 500f));
+																																	bgScroll = (int)Math.Round((double)((1f - Main.caveParrallax) * 500f));
 																																	array9[1] = Lang.menu[51];
 																																	array9[2] = Lang.menu[52];
 																																	if (Main.fixedTiming)
@@ -23373,7 +23379,7 @@ namespace Terraria
 																																	{
 																																		array9[6] = Lang.menu[101];
 																																	}
-																																	if (this.selectedMenu == 6)
+																																	if (selectedMenu == 6)
 																																	{
 																																		Main.PlaySound(12, -1, -1, 1);
 																																		if (Main.owBack)
@@ -23386,13 +23392,13 @@ namespace Terraria
 																																		}
 																																	}
 																																	array9[7] = Lang.menu[5];
-																																	if (this.selectedMenu == 7)
+																																	if (selectedMenu == 7)
 																																	{
 																																		Main.PlaySound(11, -1, -1, 1);
-																																		this.SaveSettings();
+																																		SaveSettings();
 																																		Main.menuMode = 11;
 																																	}
-																																	if (this.selectedMenu == 5)
+																																	if (selectedMenu == 5)
 																																	{
 																																		Main.PlaySound(12, -1, -1, 1);
 																																		Main.qaStyle++;
@@ -23401,7 +23407,7 @@ namespace Terraria
 																																			Main.qaStyle = 0;
 																																		}
 																																	}
-																																	if (this.selectedMenu == 4)
+																																	if (selectedMenu == 4)
 																																	{
 																																		Main.PlaySound(12, -1, -1, 1);
 																																		Lighting.lightMode++;
@@ -23410,7 +23416,7 @@ namespace Terraria
 																																			Lighting.lightMode = 0;
 																																		}
 																																	}
-																																	if (this.selectedMenu == 3)
+																																	if (selectedMenu == 3)
 																																	{
 																																		Main.PlaySound(12, -1, -1, 1);
 																																		if (Main.fixedTiming)
@@ -23422,19 +23428,19 @@ namespace Terraria
 																																			Main.fixedTiming = true;
 																																		}
 																																	}
-																																	if (this.selectedMenu == 2)
+																																	if (selectedMenu == 2)
 																																	{
 																																		Main.PlaySound(11, -1, -1, 1);
 																																		Main.menuMode = 28;
 																																	}
-																																	if (this.selectedMenu == 1)
+																																	if (selectedMenu == 1)
 																																	{
 																																		Main.PlaySound(10, -1, -1, 1);
 																																		Main.menuMode = 111;
 																																	}
-																																	if (this.selectedMenu == 0)
+																																	if (selectedMenu == 0)
 																																	{
-																																		this.graphics.ToggleFullScreen();
+																																		graphics.ToggleFullScreen();
 																																	}
 																																}
 																																else
@@ -23488,18 +23494,18 @@ namespace Terraria
 																																		}
 																																		array9[10] = Lang.menu[5];
 																																		array9[9] = Lang.menu[103];
-																																		if (this.selectedMenu == 9)
+																																		if (selectedMenu == 9)
 																																		{
 																																			Main.PlaySound(10, -1, -1, 1);
 																																			Main.menuMode = 1213;
 																																		}
-																																		if (this.selectedMenu == 10)
+																																		if (selectedMenu == 10)
 																																		{
 																																			Main.PlaySound(11, -1, -1, 1);
-																																			this.SaveSettings();
+																																			SaveSettings();
 																																			Main.menuMode = 0;
 																																		}
-																																		if (this.selectedMenu == 8)
+																																		if (selectedMenu == 8)
 																																		{
 																																			Main.PlaySound(12, -1, -1, 1);
 																																			if (Main.mapEnabled)
@@ -23511,7 +23517,7 @@ namespace Terraria
 																																				Main.mapEnabled = true;
 																																			}
 																																		}
-																																		if (this.selectedMenu == 7)
+																																		if (selectedMenu == 7)
 																																		{
 																																			Main.PlaySound(12, -1, -1, 1);
 																																			if (Main.showItemText)
@@ -23523,7 +23529,7 @@ namespace Terraria
 																																				Main.showItemText = true;
 																																			}
 																																		}
-																																		if (this.selectedMenu == 6)
+																																		if (selectedMenu == 6)
 																																		{
 																																			Main.PlaySound(12, -1, -1, 1);
 																																			if (Main.autoPause)
@@ -23535,7 +23541,7 @@ namespace Terraria
 																																				Main.autoPause = true;
 																																			}
 																																		}
-																																		if (this.selectedMenu == 5)
+																																		if (selectedMenu == 5)
 																																		{
 																																			Main.PlaySound(12, -1, -1, 1);
 																																			if (Main.autoSave)
@@ -23547,28 +23553,28 @@ namespace Terraria
 																																				Main.autoSave = true;
 																																			}
 																																		}
-																																		if (this.selectedMenu == 4)
+																																		if (selectedMenu == 4)
 																																		{
 																																			Main.PlaySound(11, -1, -1, 1);
 																																			Main.menuMode = 272727;
 																																		}
-																																		if (this.selectedMenu == 3)
+																																		if (selectedMenu == 3)
 																																		{
 																																			Main.PlaySound(11, -1, -1, 1);
 																																			Main.menuMode = 27;
 																																		}
-																																		if (this.selectedMenu == 2)
+																																		if (selectedMenu == 2)
 																																		{
 																																			Main.PlaySound(11, -1, -1, 1);
 																																			Main.menuMode = 26;
 																																		}
-																																		if (this.selectedMenu == 1)
+																																		if (selectedMenu == 1)
 																																		{
 																																			Main.PlaySound(10, -1, -1, 1);
-																																			this.selColor = Main.mouseColor;
+																																			selColor = Main.mouseColor;
 																																			Main.menuMode = 25;
 																																		}
-																																		if (this.selectedMenu == 0)
+																																		if (selectedMenu == 0)
 																																		{
 																																			Main.PlaySound(10, -1, -1, 1);
 																																			Main.menuMode = 1111;
@@ -23582,36 +23588,36 @@ namespace Terraria
 																																			num3 = 60;
 																																			num4 = 3;
 																																			array9[0] = Lang.menu[73];
-																																			array9[1] = this.graphics.PreferredBackBufferWidth + "x" + this.graphics.PreferredBackBufferHeight;
+																																			array9[1] = graphics.PreferredBackBufferWidth + "x" + graphics.PreferredBackBufferHeight;
 																																			array[0] = true;
 																																			array4[2] = 170;
 																																			array4[1] = 10;
 																																			array9[2] = Lang.menu[5];
-																																			if (this.selectedMenu == 1)
+																																			if (selectedMenu == 1)
 																																			{
 																																				Main.PlaySound(12, -1, -1, 1);
 																																				int num22 = 0;
-																																				for (int num23 = 0; num23 < this.numDisplayModes; num23++)
+																																				for (int num23 = 0; num23 < numDisplayModes; num23++)
 																																				{
-																																					if (this.displayWidth[num23] == this.graphics.PreferredBackBufferWidth && this.displayHeight[num23] == this.graphics.PreferredBackBufferHeight)
+																																					if (displayWidth[num23] == graphics.PreferredBackBufferWidth && displayHeight[num23] == graphics.PreferredBackBufferHeight)
 																																					{
 																																						num22 = num23;
 																																						break;
 																																					}
 																																				}
 																																				num22++;
-																																				if (num22 >= this.numDisplayModes)
+																																				if (num22 >= numDisplayModes)
 																																				{
 																																					num22 = 0;
 																																				}
-																																				this.graphics.PreferredBackBufferWidth = this.displayWidth[num22];
-																																				this.graphics.PreferredBackBufferHeight = this.displayHeight[num22];
+																																				graphics.PreferredBackBufferWidth = displayWidth[num22];
+																																				graphics.PreferredBackBufferHeight = displayHeight[num22];
 																																			}
-																																			if (this.selectedMenu == 2)
+																																			if (selectedMenu == 2)
 																																			{
-																																				if (this.graphics.IsFullScreen)
+																																				if (graphics.IsFullScreen)
 																																				{
-																																					this.graphics.ApplyChanges();
+																																					graphics.ApplyChanges();
 																																				}
 																																				Main.menuMode = 1111;
 																																				Main.PlaySound(11, -1, -1, 1);
@@ -23625,7 +23631,7 @@ namespace Terraria
 																																				num9 = 370;
 																																				num = 240;
 																																				num3 = 60;
-																																				Main.mouseColor = this.selColor;
+																																				Main.mouseColor = selColor;
 																																				num4 = 3;
 																																				array9[0] = "";
 																																				array9[1] = Lang.menu[64];
@@ -23633,7 +23639,7 @@ namespace Terraria
 																																				array4[2] = 170;
 																																				array4[1] = 10;
 																																				array9[2] = Lang.menu[5];
-																																				if (this.selectedMenu == 2)
+																																				if (selectedMenu == 2)
 																																				{
 																																					Main.menuMode = 11;
 																																					Main.PlaySound(11, -1, -1, 1);
@@ -23653,7 +23659,7 @@ namespace Terraria
 																																					array4[2] = 170;
 																																					array4[1] = 10;
 																																					array9[2] = Lang.menu[5];
-																																					if (this.selectedMenu == 2)
+																																					if (selectedMenu == 2)
 																																					{
 																																						Main.menuMode = 11;
 																																						Main.PlaySound(11, -1, -1, 1);
@@ -23663,7 +23669,7 @@ namespace Terraria
 																																				{
 																																					if (Main.menuMode == 28)
 																																					{
-																																						Main.caveParrallax = 1f - (float)this.bgScroll / 500f;
+																																						Main.caveParrallax = 1f - (float)bgScroll / 500f;
 																																						flag3 = true;
 																																						num = 240;
 																																						num3 = 60;
@@ -23674,7 +23680,7 @@ namespace Terraria
 																																						array4[2] = 170;
 																																						array4[1] = 10;
 																																						array9[2] = Lang.menu[5];
-																																						if (this.selectedMenu == 2)
+																																						if (selectedMenu == 2)
 																																						{
 																																							Main.menuMode = 1111;
 																																							Main.PlaySound(11, -1, -1, 1);
@@ -23694,9 +23700,9 @@ namespace Terraria
 																																							array13[3] = Main.cMapZoomOut;
 																																							array13[4] = Main.cMapAlphaUp;
 																																							array13[5] = Main.cMapAlphaDown;
-																																							if (this.setKey >= 0)
+																																							if (setKey >= 0)
 																																							{
-																																								array13[this.setKey] = "_";
+																																								array13[setKey] = "_";
 																																							}
 																																							array9[0] = Lang.menu[106] + array13[0];
 																																							array9[1] = Lang.menu[107] + array13[1];
@@ -23716,14 +23722,14 @@ namespace Terraria
 																																							array9[6] = Lang.menu[86];
 																																							array4[7] = 16;
 																																							array9[7] = Lang.menu[5];
-																																							if (this.selectedMenu == 7)
+																																							if (selectedMenu == 7)
 																																							{
 																																								Main.menuMode = 11;
 																																								Main.PlaySound(11, -1, -1, 1);
 																																							}
 																																							else
 																																							{
-																																								if (this.selectedMenu == 6)
+																																								if (selectedMenu == 6)
 																																								{
 																																									Main.cMapStyle = "Tab";
 																																									Main.cMapFull = "M";
@@ -23731,18 +23737,18 @@ namespace Terraria
 																																									Main.cMapZoomOut = "Subtract";
 																																									Main.cMapAlphaUp = "PageUp";
 																																									Main.cMapAlphaDown = "PageDown";
-																																									this.setKey = -1;
+																																									setKey = -1;
 																																									Main.PlaySound(11, -1, -1, 1);
 																																								}
 																																								else
 																																								{
-																																									if (this.selectedMenu >= 0)
+																																									if (selectedMenu >= 0)
 																																									{
-																																										this.setKey = this.selectedMenu;
+																																										setKey = selectedMenu;
 																																									}
 																																								}
 																																							}
-																																							if (this.setKey >= 0)
+																																							if (setKey >= 0)
 																																							{
 																																								Keys[] pressedKeys = Main.keyState.GetPressedKeys();
 																																								if (pressedKeys.Length > 0)
@@ -23750,31 +23756,31 @@ namespace Terraria
 																																									string text2 = string.Concat(pressedKeys[0]);
 																																									if (text2 != "None")
 																																									{
-																																										if (this.setKey == 0)
+																																										if (setKey == 0)
 																																										{
 																																											Main.cMapStyle = text2;
 																																										}
-																																										if (this.setKey == 1)
+																																										if (setKey == 1)
 																																										{
 																																											Main.cMapFull = text2;
 																																										}
-																																										if (this.setKey == 2)
+																																										if (setKey == 2)
 																																										{
 																																											Main.cMapZoomIn = text2;
 																																										}
-																																										if (this.setKey == 3)
+																																										if (setKey == 3)
 																																										{
 																																											Main.cMapZoomOut = text2;
 																																										}
-																																										if (this.setKey == 4)
+																																										if (setKey == 4)
 																																										{
 																																											Main.cMapAlphaUp = text2;
 																																										}
-																																										if (this.setKey == 5)
+																																										if (setKey == 5)
 																																										{
 																																											Main.cMapAlphaDown = text2;
 																																										}
-																																										this.setKey = -1;
+																																										setKey = -1;
 																																									}
 																																								}
 																																							}
@@ -23801,9 +23807,9 @@ namespace Terraria
 																																									Main.cHook,
 																																									Main.cTorch
 																																								};
-																																								if (this.setKey >= 0)
+																																								if (setKey >= 0)
 																																								{
-																																									array14[this.setKey] = "_";
+																																									array14[setKey] = "_";
 																																								}
 																																								array9[0] = Lang.menu[74] + array14[0];
 																																								array9[1] = Lang.menu[75] + array14[1];
@@ -23829,14 +23835,14 @@ namespace Terraria
 																																								array9[12] = Lang.menu[86];
 																																								array4[13] = 16;
 																																								array9[13] = Lang.menu[5];
-																																								if (this.selectedMenu == 13)
+																																								if (selectedMenu == 13)
 																																								{
 																																									Main.menuMode = 11;
 																																									Main.PlaySound(11, -1, -1, 1);
 																																								}
 																																								else
 																																								{
-																																									if (this.selectedMenu == 12)
+																																									if (selectedMenu == 12)
 																																									{
 																																										Main.cUp = "W";
 																																										Main.cDown = "S";
@@ -23850,18 +23856,18 @@ namespace Terraria
 																																										Main.cBuff = "B";
 																																										Main.cHook = "E";
 																																										Main.cTorch = "LeftShift";
-																																										this.setKey = -1;
+																																										setKey = -1;
 																																										Main.PlaySound(11, -1, -1, 1);
 																																									}
 																																									else
 																																									{
-																																										if (this.selectedMenu >= 0)
+																																										if (selectedMenu >= 0)
 																																										{
-																																											this.setKey = this.selectedMenu;
+																																											setKey = selectedMenu;
 																																										}
 																																									}
 																																								}
-																																								if (this.setKey >= 0)
+																																								if (setKey >= 0)
 																																								{
 																																									Keys[] pressedKeys2 = Main.keyState.GetPressedKeys();
 																																									if (pressedKeys2.Length > 0)
@@ -23869,55 +23875,55 @@ namespace Terraria
 																																										string text3 = string.Concat(pressedKeys2[0]);
 																																										if (text3 != "None")
 																																										{
-																																											if (this.setKey == 0)
+																																											if (setKey == 0)
 																																											{
 																																												Main.cUp = text3;
 																																											}
-																																											if (this.setKey == 1)
+																																											if (setKey == 1)
 																																											{
 																																												Main.cDown = text3;
 																																											}
-																																											if (this.setKey == 2)
+																																											if (setKey == 2)
 																																											{
 																																												Main.cLeft = text3;
 																																											}
-																																											if (this.setKey == 3)
+																																											if (setKey == 3)
 																																											{
 																																												Main.cRight = text3;
 																																											}
-																																											if (this.setKey == 4)
+																																											if (setKey == 4)
 																																											{
 																																												Main.cJump = text3;
 																																											}
-																																											if (this.setKey == 5)
+																																											if (setKey == 5)
 																																											{
 																																												Main.cThrowItem = text3;
 																																											}
-																																											if (this.setKey == 6)
+																																											if (setKey == 6)
 																																											{
 																																												Main.cInv = text3;
 																																											}
-																																											if (this.setKey == 7)
+																																											if (setKey == 7)
 																																											{
 																																												Main.cHeal = text3;
 																																											}
-																																											if (this.setKey == 8)
+																																											if (setKey == 8)
 																																											{
 																																												Main.cMana = text3;
 																																											}
-																																											if (this.setKey == 9)
+																																											if (setKey == 9)
 																																											{
 																																												Main.cBuff = text3;
 																																											}
-																																											if (this.setKey == 10)
+																																											if (setKey == 10)
 																																											{
 																																												Main.cHook = text3;
 																																											}
-																																											if (this.setKey == 11)
+																																											if (setKey == 11)
 																																											{
 																																												Main.cTorch = text3;
 																																											}
-																																											this.setKey = -1;
+																																											setKey = -1;
 																																										}
 																																									}
 																																								}
@@ -23930,7 +23936,7 @@ namespace Terraria
 																																									array9[0] = Lang.menu[87];
 																																									array9[1] = Lang.menu[88];
 																																									array9[2] = Lang.menu[5];
-																																									if (this.selectedMenu == 0)
+																																									if (selectedMenu == 0)
 																																									{
 																																										Main.LoadPlayers();
 																																										Main.menuMultiplayer = true;
@@ -23939,7 +23945,7 @@ namespace Terraria
 																																									}
 																																									else
 																																									{
-																																										if (this.selectedMenu == 1)
+																																										if (selectedMenu == 1)
 																																										{
 																																											Main.LoadPlayers();
 																																											Main.PlaySound(10, -1, -1, 1);
@@ -23948,7 +23954,7 @@ namespace Terraria
 																																											Main.menuServer = true;
 																																										}
 																																									}
-																																									if (this.selectedMenu == 2)
+																																									if (selectedMenu == 2)
 																																									{
 																																										Main.PlaySound(11, -1, -1, 1);
 																																										Main.menuMode = 0;
@@ -23981,21 +23987,21 @@ namespace Terraria
 																																												}
 																																											}
 																																										}
-																																										this.textBlinkerCount++;
-																																										if (this.textBlinkerCount >= 20)
+																																										textBlinkerCount++;
+																																										if (textBlinkerCount >= 20)
 																																										{
-																																											if (this.textBlinkerState == 0)
+																																											if (textBlinkerState == 0)
 																																											{
-																																												this.textBlinkerState = 1;
+																																												textBlinkerState = 1;
 																																											}
 																																											else
 																																											{
-																																												this.textBlinkerState = 0;
+																																												textBlinkerState = 0;
 																																											}
-																																											this.textBlinkerCount = 0;
+																																											textBlinkerCount = 0;
 																																										}
 																																										array9[1] = Main.getIP;
-																																										if (this.textBlinkerState == 1)
+																																										if (textBlinkerState == 1)
 																																										{
 																																											string[] array10;
 																																											(array10 = array9)[1] = array10[1] + "|";
@@ -24039,10 +24045,10 @@ namespace Terraria
 																																											array7[num27] = 0.6f;
 																																											array4[num27] = 40;
 																																										}
-																																										if (this.selectedMenu >= 2 && this.selectedMenu < 9)
+																																										if (selectedMenu >= 2 && selectedMenu < 9)
 																																										{
 																																											Main.autoPass = false;
-																																											int num29 = this.selectedMenu - 2;
+																																											int num29 = selectedMenu - 2;
 																																											Netplay.serverPort = Main.recentPort[num29];
 																																											Main.getIP = Main.recentIP[num29];
 																																											if (Netplay.SetIP(Main.getIP))
@@ -24059,12 +24065,12 @@ namespace Terraria
 																																												}
 																																											}
 																																										}
-																																										if (this.selectedMenu == 10)
+																																										if (selectedMenu == 10)
 																																										{
 																																											Main.PlaySound(11, -1, -1, 1);
 																																											Main.menuMode = 1;
 																																										}
-																																										if (this.selectedMenu == 9 || (!array2[2] && Main.inputTextEnter))
+																																										if (selectedMenu == 9 || (!array2[2] && Main.inputTextEnter))
 																																										{
 																																											Main.PlaySound(12, -1, -1, 1);
 																																											Main.menuMode = 131;
@@ -24103,21 +24109,21 @@ namespace Terraria
 																																													array2[2] = false;
 																																												}
 																																											}
-																																											this.textBlinkerCount++;
-																																											if (this.textBlinkerCount >= 20)
+																																											textBlinkerCount++;
+																																											if (textBlinkerCount >= 20)
 																																											{
-																																												if (this.textBlinkerState == 0)
+																																												if (textBlinkerState == 0)
 																																												{
-																																													this.textBlinkerState = 1;
+																																													textBlinkerState = 1;
 																																												}
 																																												else
 																																												{
-																																													this.textBlinkerState = 0;
+																																													textBlinkerState = 0;
 																																												}
-																																												this.textBlinkerCount = 0;
+																																												textBlinkerCount = 0;
 																																											}
 																																											array9[1] = Main.getPort;
-																																											if (this.textBlinkerState == 1)
+																																											if (textBlinkerState == 1)
 																																											{
 																																												string[] array10;
 																																												(array10 = array9)[1] = array10[1] + "|";
@@ -24135,12 +24141,12 @@ namespace Terraria
 																																											array9[2] = Lang.menu[4];
 																																											array9[3] = Lang.menu[5];
 																																											num4 = 4;
-																																											if (this.selectedMenu == 3)
+																																											if (selectedMenu == 3)
 																																											{
 																																												Main.PlaySound(11, -1, -1, 1);
 																																												Main.menuMode = 1;
 																																											}
-																																											if (this.selectedMenu == 2 || (!array2[2] && Main.inputTextEnter))
+																																											if (selectedMenu == 2 || (!array2[2] && Main.inputTextEnter))
 																																											{
 																																												Netplay.serverPort = num30;
 																																												Main.autoPass = false;
@@ -24176,23 +24182,23 @@ namespace Terraria
 																																												array9[3] = Lang.menu[94];
 																																												array9[4] = Lang.menu[5];
 																																												num4 = 5;
-																																												if (this.selectedMenu == 4)
+																																												if (selectedMenu == 4)
 																																												{
 																																													Main.menuMode = 6;
 																																													Main.PlaySound(11, -1, -1, 1);
 																																												}
 																																												else
 																																												{
-																																													if (this.selectedMenu > 0)
+																																													if (selectedMenu > 0)
 																																													{
-																																														if (this.selectedMenu == 1)
+																																														if (selectedMenu == 1)
 																																														{
 																																															Main.maxTilesX = 4200;
 																																															Main.maxTilesY = 1200;
 																																														}
 																																														else
 																																														{
-																																															if (this.selectedMenu == 2)
+																																															if (selectedMenu == 2)
 																																															{
 																																																Main.maxTilesX = 6400;
 																																																Main.maxTilesY = 1800;
@@ -24253,66 +24259,66 @@ namespace Terraria
 			IL_443A:
 			if (Main.menuMode != num5)
 			{
-				this.blockMouse = true;
+				blockMouse = true;
 				Main.menuSkip = 0;
 				num4 = 0;
 				for (int num31 = 0; num31 < Main.maxMenuItems; num31++)
 				{
-					this.menuItemScale[num31] = 0.8f;
+					menuItemScale[num31] = 0.8f;
 				}
 			}
 			if (!Main.mouseLeft)
 			{
-				this.blockMouse = true;
+				blockMouse = true;
 			}
-			int num32 = this.focusMenu;
-			this.selectedMenu = -1;
-			this.selectedMenu2 = -1;
-			this.focusMenu = -1;
+			int num32 = focusMenu;
+			selectedMenu = -1;
+			selectedMenu2 = -1;
+			focusMenu = -1;
 			for (int num33 = 0; num33 < num4; num33++)
 			{
 				if (array9[num33] != null)
 				{
 					if (!flag)
 					{
-						this.grabColorSlider = 0;
-						this.hBar = -1f;
-						this.sBar = -1f;
-						this.lBar = -1f;
+						grabColorSlider = 0;
+						hBar = -1f;
+						sBar = -1f;
+						lBar = -1f;
 					}
 					if (flag)
 					{
 						if (!Main.mouseLeft)
 						{
-							this.grabColorSlider = 0;
-							this.blockMouse = false;
+							grabColorSlider = 0;
+							blockMouse = false;
 						}
 						int num34 = num9;
-						int num35 = Main.screenWidth / 2 - this.hueTexture.Width / 2;
+						int num35 = Main.screenWidth / 2 - hueTexture.Width / 2;
 						int num36 = 167;
-						Vector3 vector3 = Main.rgbToHsl(this.selColor);
+						Vector3 vector3 = Main.rgbToHsl(selColor);
 						float num37 = vector3.X;
 						float num38 = vector3.Y;
 						float num39 = vector3.Z;
-						if (this.hBar == -1f || this.sBar == -1f || this.lBar == -1f)
+						if (hBar == -1f || sBar == -1f || lBar == -1f)
 						{
-							this.hBar = num37;
-							this.sBar = num38;
-							this.lBar = num39;
+							hBar = num37;
+							sBar = num38;
+							lBar = num39;
 						}
 						else
 						{
-							num37 = this.hBar;
-							num38 = this.sBar;
-							num39 = this.lBar;
+							num37 = hBar;
+							num38 = sBar;
+							num39 = lBar;
 						}
-						this.spriteBatch.Draw(this.hueTexture, new Vector2((float)num35, (float)num34), Color.White);
-						this.spriteBatch.Draw(this.colorSliderTexture, new Vector2((float)num35 + (float)(this.hueTexture.Width - 2) * this.hBar - (float)(this.colorSliderTexture.Width / 2), (float)(num34 - this.colorSliderTexture.Height / 2 + this.hueTexture.Height / 2)), Color.White);
-						if (((Main.mouseX > num35 - 4 && Main.mouseX < num35 + this.hueTexture.Width + 4 && Main.mouseY > num34 - 4 && Main.mouseY < num34 + this.hueTexture.Height + 4) || this.grabColorSlider == 1) && Main.mouseLeft && !this.blockMouse)
+						spriteBatch.Draw(hueTexture, new Vector2((float)num35, (float)num34), Color.White);
+						spriteBatch.Draw(colorSliderTexture, new Vector2((float)num35 + (float)(hueTexture.Width - 2) * hBar - (float)(colorSliderTexture.Width / 2), (float)(num34 - colorSliderTexture.Height / 2 + hueTexture.Height / 2)), Color.White);
+						if (((Main.mouseX > num35 - 4 && Main.mouseX < num35 + hueTexture.Width + 4 && Main.mouseY > num34 - 4 && Main.mouseY < num34 + hueTexture.Height + 4) || grabColorSlider == 1) && Main.mouseLeft && !blockMouse)
 						{
-							this.grabColorSlider = 1;
+							grabColorSlider = 1;
 							num37 = (float)(Main.mouseX - num35);
-							num37 /= (float)this.hueTexture.Width;
+							num37 /= (float)hueTexture.Width;
 							if (num37 < 0f)
 							{
 								num37 = 0f;
@@ -24321,22 +24327,22 @@ namespace Terraria
 							{
 								num37 = 1f;
 							}
-							this.hBar = num37;
+							hBar = num37;
 						}
 						num34 += 26;
-						this.spriteBatch.Draw(this.colorBarTexture, new Vector2((float)num35, (float)num34), Color.White);
+						spriteBatch.Draw(colorBarTexture, new Vector2((float)num35, (float)num34), Color.White);
 						for (int num40 = 0; num40 <= num36; num40++)
 						{
 							float saturation = (float)num40 / (float)num36;
 							Color color4 = Main.hslToRgb(num37, saturation, num39);
-							this.spriteBatch.Draw(this.colorBlipTexture, new Vector2((float)(num35 + num40 + 5), (float)(num34 + 4)), color4);
+							spriteBatch.Draw(colorBlipTexture, new Vector2((float)(num35 + num40 + 5), (float)(num34 + 4)), color4);
 						}
-						this.spriteBatch.Draw(this.colorSliderTexture, new Vector2((float)num35 + (float)(this.hueTexture.Width - 2) * this.sBar - (float)(this.colorSliderTexture.Width / 2), (float)(num34 - this.colorSliderTexture.Height / 2 + this.hueTexture.Height / 2)), Color.White);
-						if (((Main.mouseX > num35 - 4 && Main.mouseX < num35 + this.hueTexture.Width + 4 && Main.mouseY > num34 - 4 && Main.mouseY < num34 + this.hueTexture.Height + 4) || this.grabColorSlider == 2) && Main.mouseLeft && !this.blockMouse)
+						spriteBatch.Draw(colorSliderTexture, new Vector2((float)num35 + (float)(hueTexture.Width - 2) * sBar - (float)(colorSliderTexture.Width / 2), (float)(num34 - colorSliderTexture.Height / 2 + hueTexture.Height / 2)), Color.White);
+						if (((Main.mouseX > num35 - 4 && Main.mouseX < num35 + hueTexture.Width + 4 && Main.mouseY > num34 - 4 && Main.mouseY < num34 + hueTexture.Height + 4) || grabColorSlider == 2) && Main.mouseLeft && !blockMouse)
 						{
-							this.grabColorSlider = 2;
+							grabColorSlider = 2;
 							num38 = (float)(Main.mouseX - num35);
-							num38 /= (float)this.hueTexture.Width;
+							num38 /= (float)hueTexture.Width;
 							if (num38 < 0f)
 							{
 								num38 = 0f;
@@ -24345,23 +24351,23 @@ namespace Terraria
 							{
 								num38 = 1f;
 							}
-							this.sBar = num38;
+							sBar = num38;
 						}
 						num34 += 26;
-						this.spriteBatch.Draw(this.colorBarTexture, new Vector2((float)num35, (float)num34), Color.White);
+						spriteBatch.Draw(colorBarTexture, new Vector2((float)num35, (float)num34), Color.White);
 						float num41 = 0.15f;
 						for (int num42 = 0; num42 <= num36; num42++)
 						{
 							float luminosity = (float)num42 / (float)num36;
 							Color color5 = Main.hslToRgb(num37, num38, luminosity);
-							this.spriteBatch.Draw(this.colorBlipTexture, new Vector2((float)(num35 + num42 + 5), (float)(num34 + 4)), color5);
+							spriteBatch.Draw(colorBlipTexture, new Vector2((float)(num35 + num42 + 5), (float)(num34 + 4)), color5);
 						}
-						this.spriteBatch.Draw(this.colorSliderTexture, new Vector2((float)num35 + (float)(this.hueTexture.Width - 2) * ((this.lBar - num41) / (1f - num41)) - (float)(this.colorSliderTexture.Width / 2), (float)(num34 - this.colorSliderTexture.Height / 2 + this.hueTexture.Height / 2)), Color.White);
-						if (((Main.mouseX > num35 - 4 && Main.mouseX < num35 + this.hueTexture.Width + 4 && Main.mouseY > num34 - 4 && Main.mouseY < num34 + this.hueTexture.Height + 4) || this.grabColorSlider == 3) && Main.mouseLeft && !this.blockMouse)
+						spriteBatch.Draw(colorSliderTexture, new Vector2((float)num35 + (float)(hueTexture.Width - 2) * ((lBar - num41) / (1f - num41)) - (float)(colorSliderTexture.Width / 2), (float)(num34 - colorSliderTexture.Height / 2 + hueTexture.Height / 2)), Color.White);
+						if (((Main.mouseX > num35 - 4 && Main.mouseX < num35 + hueTexture.Width + 4 && Main.mouseY > num34 - 4 && Main.mouseY < num34 + hueTexture.Height + 4) || grabColorSlider == 3) && Main.mouseLeft && !blockMouse)
 						{
-							this.grabColorSlider = 3;
+							grabColorSlider = 3;
 							num39 = (float)(Main.mouseX - num35);
-							num39 /= (float)this.hueTexture.Width;
+							num39 /= (float)hueTexture.Width;
 							if (num39 < 0f)
 							{
 								num39 = 0f;
@@ -24371,9 +24377,9 @@ namespace Terraria
 								num39 = 1f;
 							}
 							num39 = num39 * (1f - num41) + num41;
-							this.lBar = num39;
+							lBar = num39;
 						}
-						this.selColor = Main.hslToRgb(this.hBar, this.sBar, this.lBar);
+						selColor = Main.hslToRgb(hBar, sBar, lBar);
 					}
 					else
 					{
@@ -24400,18 +24406,18 @@ namespace Terraria
 								}
 								if (num43 == 3)
 								{
-									text6 = string.Concat(this.selColor.R);
+									text6 = string.Concat(selColor.R);
 									num45 += 90;
 								}
 								if (num43 == 4)
 								{
-									text6 = string.Concat(this.selColor.G);
+									text6 = string.Concat(selColor.G);
 									num45 += 90;
 									num44 += 30;
 								}
 								if (num43 == 5)
 								{
-									text6 = string.Concat(this.selColor.B);
+									text6 = string.Concat(selColor.B);
 									num45 += 90;
 									num44 += 60;
 								}
@@ -24450,7 +24456,7 @@ namespace Terraria
 									{
 										num50 = 2;
 									}
-									this.spriteBatch.DrawString(Main.fontDeathText, text6, new Vector2((float)(num45 + num49), (float)(num44 + num50)), color6, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontDeathText, text6, new Vector2((float)(num45 + num49), (float)(num44 + num50)), color6, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
 								}
 							}
 							bool flag6 = false;
@@ -24479,52 +24485,52 @@ namespace Terraria
 									int num55 = 142;
 									if (Main.mouseX > num54 && (float)Main.mouseX < (float)num54 + vector4.X && Main.mouseY > num53 + 13 && (float)Main.mouseY < (float)(num53 + 13) + vector4.Y)
 									{
-										if (this.focusColor != (num51 + 1) * (num52 + 10))
+										if (focusColor != (num51 + 1) * (num52 + 10))
 										{
 											Main.PlaySound(12, -1, -1, 1);
 										}
-										this.focusColor = (num51 + 1) * (num52 + 10);
+										focusColor = (num51 + 1) * (num52 + 10);
 										flag6 = true;
 										num55 = 255;
 										if (Main.mouseLeft)
 										{
-											if (this.colorDelay <= 1)
+											if (colorDelay <= 1)
 											{
-												if (this.colorDelay == 0)
+												if (colorDelay == 0)
 												{
-													this.colorDelay = 40;
+													colorDelay = 40;
 												}
 												else
 												{
-													this.colorDelay = 3;
+													colorDelay = 3;
 												}
 												int num56 = num51;
 												if (num51 == 0)
 												{
 													num56 = -1;
-													if (this.selColor.R + this.selColor.G + this.selColor.B <= 150)
+													if (selColor.R + selColor.G + selColor.B <= 150)
 													{
 														num56 = 0;
 													}
 												}
-												if (num52 == 0 && (int)this.selColor.R + num56 >= 0 && (int)this.selColor.R + num56 <= 255)
+												if (num52 == 0 && (int)selColor.R + num56 >= 0 && (int)selColor.R + num56 <= 255)
 												{
-													this.selColor.R = (byte)((int)this.selColor.R + num56);
+													selColor.R = (byte)((int)selColor.R + num56);
 												}
-												if (num52 == 1 && (int)this.selColor.G + num56 >= 0 && (int)this.selColor.G + num56 <= 255)
+												if (num52 == 1 && (int)selColor.G + num56 >= 0 && (int)selColor.G + num56 <= 255)
 												{
-													this.selColor.G = (byte)((int)this.selColor.G + num56);
+													selColor.G = (byte)((int)selColor.G + num56);
 												}
-												if (num52 == 2 && (int)this.selColor.B + num56 >= 0 && (int)this.selColor.B + num56 <= 255)
+												if (num52 == 2 && (int)selColor.B + num56 >= 0 && (int)selColor.B + num56 <= 255)
 												{
-													this.selColor.B = (byte)((int)this.selColor.B + num56);
+													selColor.B = (byte)((int)selColor.B + num56);
 												}
 											}
-											this.colorDelay--;
+											colorDelay--;
 										}
 										else
 										{
-											this.colorDelay = 0;
+											colorDelay = 0;
 										}
 									}
 									for (int num57 = 0; num57 < 5; num57++)
@@ -24561,14 +24567,14 @@ namespace Terraria
 										{
 											num60 = 2;
 										}
-										this.spriteBatch.DrawString(Main.fontDeathText, text6, new Vector2((float)(num54 + num59), (float)(num53 + num60)), color7, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
+										spriteBatch.DrawString(Main.fontDeathText, text6, new Vector2((float)(num54 + num59), (float)(num53 + num60)), color7, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
 									}
 								}
 							}
 							if (!flag6)
 							{
-								this.focusColor = 0;
-								this.colorDelay = 0;
+								focusColor = 0;
+								colorDelay = 0;
 							}
 						}
 					}
@@ -24582,7 +24588,7 @@ namespace Terraria
 							int num64 = 370 + Main.screenWidth / 2 - 400;
 							if (num62 == 0)
 							{
-								text7 = Lang.menu[52] + ": " + this.bgScroll;
+								text7 = Lang.menu[52] + ": " + bgScroll;
 							}
 							for (int num65 = 0; num65 < 5; num65++)
 							{
@@ -24619,7 +24625,7 @@ namespace Terraria
 								{
 									num69 = 2;
 								}
-								this.spriteBatch.DrawString(Main.fontDeathText, text7, new Vector2((float)(num64 + num68), (float)(num63 + num69)), color8, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontDeathText, text7, new Vector2((float)(num64 + num68), (float)(num63 + num69)), color8, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
 							}
 						}
 						bool flag7 = false;
@@ -24648,44 +24654,44 @@ namespace Terraria
 								int num74 = 142;
 								if (Main.mouseX > num73 && (float)Main.mouseX < (float)num73 + vector5.X && Main.mouseY > num72 + 13 && (float)Main.mouseY < (float)(num72 + 13) + vector5.Y)
 								{
-									if (this.focusColor != (num70 + 1) * (num71 + 10))
+									if (focusColor != (num70 + 1) * (num71 + 10))
 									{
 										Main.PlaySound(12, -1, -1, 1);
 									}
-									this.focusColor = (num70 + 1) * (num71 + 10);
+									focusColor = (num70 + 1) * (num71 + 10);
 									flag7 = true;
 									num74 = 255;
 									if (Main.mouseLeft)
 									{
-										if (this.colorDelay <= 1)
+										if (colorDelay <= 1)
 										{
-											if (this.colorDelay == 0)
+											if (colorDelay == 0)
 											{
-												this.colorDelay = 40;
+												colorDelay = 40;
 											}
 											else
 											{
-												this.colorDelay = 3;
+												colorDelay = 3;
 											}
 											int num75 = (num70 != null) ? num70 : -1;
 											if (num71 == 0)
 											{
-												this.bgScroll += num75;
-												if (this.bgScroll > 100)
+												bgScroll += num75;
+												if (bgScroll > 100)
 												{
-													this.bgScroll = 100;
+													bgScroll = 100;
 												}
-												if (this.bgScroll < 0)
+												if (bgScroll < 0)
 												{
-													this.bgScroll = 0;
+													bgScroll = 0;
 												}
 											}
 										}
-										this.colorDelay--;
+										colorDelay--;
 									}
 									else
 									{
-										this.colorDelay = 0;
+										colorDelay = 0;
 									}
 								}
 								for (int num76 = 0; num76 < 5; num76++)
@@ -24722,14 +24728,14 @@ namespace Terraria
 									{
 										num79 = 2;
 									}
-									this.spriteBatch.DrawString(Main.fontDeathText, text7, new Vector2((float)(num73 + num78), (float)(num72 + num79)), color9, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontDeathText, text7, new Vector2((float)(num73 + num78), (float)(num72 + num79)), color9, 0f, default(Vector2), scale2, SpriteEffects.None, 0f);
 								}
 							}
 						}
 						if (!flag7)
 						{
-							this.focusColor = 0;
-							this.colorDelay = 0;
+							focusColor = 0;
+							colorDelay = 0;
 						}
 					}
 					if (flag2)
@@ -24795,7 +24801,7 @@ namespace Terraria
 								{
 									num88 = 2;
 								}
-								this.spriteBatch.DrawString(Main.fontDeathText, text8, new Vector2((float)(num83 + num87), (float)(num82 + num88)), color10, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontDeathText, text8, new Vector2((float)(num83 + num87), (float)(num82 + num88)), color10, 0f, default(Vector2), 0.5f, SpriteEffects.None, 0f);
 							}
 						}
 						bool flag8 = false;
@@ -24824,24 +24830,24 @@ namespace Terraria
 								int num93 = 142;
 								if (Main.mouseX > num92 && (float)Main.mouseX < (float)num92 + vector6.X && Main.mouseY > num91 + 13 && (float)Main.mouseY < (float)(num91 + 13) + vector6.Y)
 								{
-									if (this.focusColor != (num89 + 1) * (num90 + 10))
+									if (focusColor != (num89 + 1) * (num90 + 10))
 									{
 										Main.PlaySound(12, -1, -1, 1);
 									}
-									this.focusColor = (num89 + 1) * (num90 + 10);
+									focusColor = (num89 + 1) * (num90 + 10);
 									flag8 = true;
 									num93 = 255;
 									if (Main.mouseLeft)
 									{
-										if (this.colorDelay <= 1)
+										if (colorDelay <= 1)
 										{
-											if (this.colorDelay == 0)
+											if (colorDelay == 0)
 											{
-												this.colorDelay = 40;
+												colorDelay = 40;
 											}
 											else
 											{
-												this.colorDelay = 3;
+												colorDelay = 3;
 											}
 											int num94 = (num89 != null) ? num89 : -1;
 											if (num90 == 0)
@@ -24869,11 +24875,11 @@ namespace Terraria
 												}
 											}
 										}
-										this.colorDelay--;
+										colorDelay--;
 									}
 									else
 									{
-										this.colorDelay = 0;
+										colorDelay = 0;
 									}
 								}
 								for (int num95 = 0; num95 < 5; num95++)
@@ -24910,14 +24916,14 @@ namespace Terraria
 									{
 										num98 = 2;
 									}
-									this.spriteBatch.DrawString(Main.fontDeathText, text8, new Vector2((float)(num92 + num97), (float)(num91 + num98)), color11, 0f, default(Vector2), scale3, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontDeathText, text8, new Vector2((float)(num92 + num97), (float)(num91 + num98)), color11, 0f, default(Vector2), scale3, SpriteEffects.None, 0f);
 								}
 							}
 						}
 						if (!flag8)
 						{
-							this.focusColor = 0;
-							this.colorDelay = 0;
+							focusColor = 0;
+							colorDelay = 0;
 						}
 					}
 					for (int num99 = 0; num99 < 5; num99++)
@@ -24941,7 +24947,7 @@ namespace Terraria
 							color12.G = (byte)((255 + color12.G) / 2);
 							color12.B = (byte)((255 + color12.B) / 2);
 						}
-						int num100 = (int)(255f * (this.menuItemScale[num33] * 2f - 1f));
+						int num100 = (int)(255f * (menuItemScale[num33] * 2f - 1f));
 						if (array[num33])
 						{
 							num100 = 255;
@@ -24997,7 +25003,7 @@ namespace Terraria
 						Vector2 origin = Main.fontDeathText.MeasureString(array9[num33]);
 						origin.X *= 0.5f;
 						origin.Y *= 0.5f;
-						float num106 = this.menuItemScale[num33];
+						float num106 = menuItemScale[num33];
 						if (Main.menuMode == 15 && num33 == 0)
 						{
 							num106 *= 0.35f;
@@ -25012,41 +25018,41 @@ namespace Terraria
 						num106 *= array7[num33];
 						if (!array8[num33])
 						{
-							this.spriteBatch.DrawString(Main.fontDeathText, array9[num33], new Vector2((float)(num2 + num104 + array5[num33]), (float)(num + num3 * num33 + num105) + origin.Y * array7[num33] + (float)array4[num33]), color12, 0f, origin, num106, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontDeathText, array9[num33], new Vector2((float)(num2 + num104 + array5[num33]), (float)(num + num3 * num33 + num105) + origin.Y * array7[num33] + (float)array4[num33]), color12, 0f, origin, num106, SpriteEffects.None, 0f);
 						}
 						else
 						{
-							this.spriteBatch.DrawString(Main.fontDeathText, array9[num33], new Vector2((float)(num2 + num104 + array5[num33]), (float)(num + num3 * num33 + num105) + origin.Y * array7[num33] + (float)array4[num33]), color12, 0f, new Vector2(0f, origin.Y), num106, SpriteEffects.None, 0f);
+							spriteBatch.DrawString(Main.fontDeathText, array9[num33], new Vector2((float)(num2 + num104 + array5[num33]), (float)(num + num3 * num33 + num105) + origin.Y * array7[num33] + (float)array4[num33]), color12, 0f, new Vector2(0f, origin.Y), num106, SpriteEffects.None, 0f);
 						}
 					}
 					if (!array8[num33])
 					{
 						int num107 = 0;
-						if (this.menuWide[num33])
+						if (menuWide[num33])
 						{
 							num107 = 14;
 						}
-						this.menuWide[num33] = false;
+						menuWide[num33] = false;
 						if ((float)Main.mouseX > (float)num2 - (float)(array9[num33].Length * 10) * array7[num33] + (float)array5[num33] - (float)num107 && (float)Main.mouseX < (float)num2 + (float)(array9[num33].Length * 10) * array7[num33] + (float)array5[num33] + (float)num107 && Main.mouseY > num + num3 * num33 + array4[num33] && (float)Main.mouseY < (float)(num + num3 * num33 + array4[num33]) + 50f * array7[num33] && Main.hasFocus)
 						{
-							this.focusMenu = num33;
+							focusMenu = num33;
 							if (array[num33] || array2[num33])
 							{
-								this.focusMenu = -1;
+								focusMenu = -1;
 							}
 							else
 							{
-								if (num32 != this.focusMenu)
+								if (num32 != focusMenu)
 								{
 									Main.PlaySound(12, -1, -1, 1);
 								}
 								if (Main.mouseLeftRelease && Main.mouseLeft)
 								{
-									this.selectedMenu = num33;
+									selectedMenu = num33;
 								}
 								if (Main.mouseRightRelease && Main.mouseRight)
 								{
-									this.selectedMenu2 = num33;
+									selectedMenu2 = num33;
 								}
 							}
 						}
@@ -25055,24 +25061,24 @@ namespace Terraria
 					{
 						if (Main.mouseX > num2 + array5[num33] && (float)Main.mouseX < (float)num2 + (float)(array9[num33].Length * 20) * array7[num33] + (float)array5[num33] && Main.mouseY > num + num3 * num33 + array4[num33] && (float)Main.mouseY < (float)(num + num3 * num33 + array4[num33]) + 50f * array7[num33] && Main.hasFocus)
 						{
-							this.focusMenu = num33;
+							focusMenu = num33;
 							if (array[num33] || array2[num33])
 							{
-								this.focusMenu = -1;
+								focusMenu = -1;
 							}
 							else
 							{
-								if (num32 != this.focusMenu)
+								if (num32 != focusMenu)
 								{
 									Main.PlaySound(12, -1, -1, 1);
 								}
 								if (Main.mouseLeftRelease && Main.mouseLeft)
 								{
-									this.selectedMenu = num33;
+									selectedMenu = num33;
 								}
 								if (Main.mouseRightRelease && Main.mouseRight)
 								{
-									this.selectedMenu2 = num33;
+									selectedMenu2 = num33;
 								}
 							}
 						}
@@ -25081,35 +25087,35 @@ namespace Terraria
 			}
 			for (int num108 = 0; num108 < Main.maxMenuItems; num108++)
 			{
-				if (num108 == this.focusMenu)
+				if (num108 == focusMenu)
 				{
-					if (this.menuItemScale[num108] < 1f)
+					if (menuItemScale[num108] < 1f)
 					{
-						this.menuItemScale[num108] += 0.02f;
+						menuItemScale[num108] += 0.02f;
 					}
-					if (this.menuItemScale[num108] > 1f)
+					if (menuItemScale[num108] > 1f)
 					{
-						this.menuItemScale[num108] = 1f;
+						menuItemScale[num108] = 1f;
 					}
 				}
 				else
 				{
-					if ((double)this.menuItemScale[num108] > 0.8)
+					if ((double)menuItemScale[num108] > 0.8)
 					{
-						this.menuItemScale[num108] -= 0.02f;
+						menuItemScale[num108] -= 0.02f;
 					}
 				}
 			}
 			if (num6 >= 0 && num6 <= Main.numLoadPlayers)
 			{
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 				Main.loadPlayer[num6].PlayerFrame();
 				Main.loadPlayer[num6].position.X = (float)num7 + Main.screenPosition.X;
 				Main.loadPlayer[num6].position.Y = (float)num8 + Main.screenPosition.Y;
-				this.DrawPlayer(Main.loadPlayer[num6]);
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+				DrawPlayer(Main.loadPlayer[num6]);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 			}
 			for (int num109 = 0; num109 < 5; num109++)
 			{
@@ -25144,7 +25150,7 @@ namespace Terraria
 				Vector2 origin2 = Main.fontMouseText.MeasureString(text9);
 				origin2.X *= 0.5f;
 				origin2.Y *= 0.5f;
-				this.spriteBatch.DrawString(Main.fontMouseText, text9, new Vector2((float)Main.screenWidth - origin2.X + (float)num110 - 10f, (float)Main.screenHeight - origin2.Y + (float)num111 - 2f), color13, 0f, origin2, 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, text9, new Vector2((float)Main.screenWidth - origin2.X + (float)num110 - 10f, (float)Main.screenHeight - origin2.Y + (float)num111 - 2f), color13, 0f, origin2, 1f, SpriteEffects.None, 0f);
 			}
 			for (int num112 = 0; num112 < 5; num112++)
 			{
@@ -25178,10 +25184,10 @@ namespace Terraria
 				Vector2 origin3 = Main.fontMouseText.MeasureString(Main.versionNumber);
 				origin3.X *= 0.5f;
 				origin3.Y *= 0.5f;
-				this.spriteBatch.DrawString(Main.fontMouseText, Main.versionNumber, new Vector2(origin3.X + (float)num113 + 10f, (float)Main.screenHeight - origin3.Y + (float)num114 - 2f), color14, 0f, origin3, 1f, SpriteEffects.None, 0f);
+				spriteBatch.DrawString(Main.fontMouseText, Main.versionNumber, new Vector2(origin3.X + (float)num113 + 10f, (float)Main.screenHeight - origin3.Y + (float)num114 - 2f), color14, 0f, origin3, 1f, SpriteEffects.None, 0f);
 			}
-			this.spriteBatch.Draw(Main.cursorTexture, new Vector2((float)(Main.mouseX + 1), (float)(Main.mouseY + 1)), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), new Color((int)((float)Main.cursorColor.R * 0.2f), (int)((float)Main.cursorColor.G * 0.2f), (int)((float)Main.cursorColor.B * 0.2f), (int)((float)Main.cursorColor.A * 0.5f)), 0f, default(Vector2), Main.cursorScale * 1.1f, SpriteEffects.None, 0f);
-			this.spriteBatch.Draw(Main.cursorTexture, new Vector2((float)Main.mouseX, (float)Main.mouseY), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), Main.cursorColor, 0f, default(Vector2), Main.cursorScale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.cursorTexture, new Vector2((float)(Main.mouseX + 1), (float)(Main.mouseY + 1)), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), new Color((int)((float)Main.cursorColor.R * 0.2f), (int)((float)Main.cursorColor.G * 0.2f), (int)((float)Main.cursorColor.B * 0.2f), (int)((float)Main.cursorColor.A * 0.5f)), 0f, default(Vector2), Main.cursorScale * 1.1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(Main.cursorTexture, new Vector2((float)Main.mouseX, (float)Main.mouseY), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), Main.cursorColor, 0f, default(Vector2), Main.cursorScale, SpriteEffects.None, 0f);
 			if (Main.fadeCounter > 0)
 			{
 				Color white = Color.White;
@@ -25189,9 +25195,9 @@ namespace Terraria
 				float num115 = (float)Main.fadeCounter / 75f * 255f;
 				byte b2 = (byte)num115;
 				white = new Color((int)b2, (int)b2, (int)b2, (int)b2);
-				this.spriteBatch.Draw(Main.fadeTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), white);
+				spriteBatch.Draw(Main.fadeTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), white);
 			}
-			this.spriteBatch.End();
+			spriteBatch.End();
 			if (Main.mouseLeft)
 			{
 				Main.mouseLeftRelease = false;
@@ -25230,28 +25236,28 @@ namespace Terraria
 		}
 		protected void DrawSplash(GameTime gameTime)
 		{
-			base.GraphicsDevice.Clear(Color.Black);
-			base.Draw(gameTime);
-			this.spriteBatch.Begin();
-			this.splashCounter++;
+			GraphicsDevice.Clear(Color.Black);
+			Draw(gameTime);
+			spriteBatch.Begin();
+			splashCounter++;
 			Color white = Color.White;
 			byte b = 0;
-			if (this.splashCounter <= 75)
+			if (splashCounter <= 75)
 			{
-				float num = (float)this.splashCounter / 75f * 255f;
+				float num = (float)splashCounter / 75f * 255f;
 				b = (byte)num;
 			}
 			else
 			{
-				if (this.splashCounter <= 125)
+				if (splashCounter <= 125)
 				{
 					b = 255;
 				}
 				else
 				{
-					if (this.splashCounter <= 200)
+					if (splashCounter <= 200)
 					{
-						int num2 = 125 - this.splashCounter;
+						int num2 = 125 - splashCounter;
 						float num3 = (float)num2 / 75f * 255f;
 						b = (byte)num3;
 					}
@@ -25263,8 +25269,8 @@ namespace Terraria
 				}
 			}
 			white = new Color((int)b, (int)b, (int)b, (int)b);
-			this.spriteBatch.Draw(Main.loTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), white);
-			this.spriteBatch.End();
+			spriteBatch.Draw(Main.loTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), white);
+			spriteBatch.End();
 		}
 		protected void DrawBackground()
 		{
@@ -25616,12 +25622,12 @@ namespace Terraria
 				{
 					array3[5] = 127;
 				}
-				this.LoadBackground(array3[0]);
-				this.LoadBackground(array3[1]);
-				this.LoadBackground(array3[2]);
-				this.LoadBackground(array3[3]);
-				this.LoadBackground(array3[4]);
-				this.LoadBackground(array3[5]);
+				LoadBackground(array3[0]);
+				LoadBackground(array3[1]);
+				LoadBackground(array3[2]);
+				LoadBackground(array3[3]);
+				LoadBackground(array3[4]);
+				LoadBackground(array3[5]);
 				if (i == 0)
 				{
 					for (int j = 0; j < 6; j++)
@@ -25638,15 +25644,15 @@ namespace Terraria
 				}
 			}
 			Lighting.defBrightness = 1.2f * (1f - num11) + 1f * num11;
-			this.bgParrallax = (double)Main.caveParrallax;
-			this.bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * this.bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
-			this.bgLoops = Main.screenWidth / num3 + 2;
-			this.bgTop = (int)((float)((int)Main.worldSurface * 16 - 16) - Main.screenPosition.Y + 16f);
-			for (int l = 0; l < this.bgLoops; l++)
+			bgParrallax = (double)Main.caveParrallax;
+			bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
+			bgLoops = Main.screenWidth / num3 + 2;
+			bgTop = (int)((float)((int)Main.worldSurface * 16 - 16) - Main.screenPosition.Y + 16f);
+			for (int l = 0; l < bgLoops; l++)
 			{
 				for (int m = 0; m < num3 / 16; m++)
 				{
-					float num15 = (float)this.bgStart + Main.screenPosition.X;
+					float num15 = (float)bgStart + Main.screenPosition.X;
 					num15 = -(float)Math.IEEERemainder((double)num15, 16.0);
 					num15 = (float)Math.Round((double)num15);
 					int num16 = (int)num15;
@@ -25654,13 +25660,13 @@ namespace Terraria
 					{
 						num16 = 8;
 					}
-					float num17 = (float)(this.bgStart + num3 * l + m * 16 + 8);
-					float num18 = (float)this.bgTop;
+					float num17 = (float)(bgStart + num3 * l + m * 16 + 8);
+					float num18 = (float)bgTop;
 					Color color = Lighting.GetColor((int)((num17 + Main.screenPosition.X) / 16f), (int)((Main.screenPosition.Y + num18) / 16f));
 					color.R = (byte)((float)color.R * num5);
 					color.G = (byte)((float)color.G * num6);
 					color.B = (byte)((float)color.B * num7);
-					this.spriteBatch.Draw(Main.backgroundTexture[array[0]], new Vector2((float)(this.bgStart + num3 * l + 16 * m + num16), (float)this.bgTop) + value, new Rectangle?(new Rectangle(16 * m + num16 + 16, 0, 16, 16)), color);
+					spriteBatch.Draw(Main.backgroundTexture[array[0]], new Vector2((float)(bgStart + num3 * l + 16 * m + num16), (float)bgTop) + value, new Rectangle?(new Rectangle(16 * m + num16 + 16, 0, 16, 16)), color);
 					if (Main.ugBackTransition > 0f)
 					{
 						Color color2 = color;
@@ -25668,7 +25674,7 @@ namespace Terraria
 						color2.G = (byte)((float)color2.G * Main.ugBackTransition);
 						color2.B = (byte)((float)color2.B * Main.ugBackTransition);
 						color2.A = (byte)((float)color2.A * Main.ugBackTransition);
-						this.spriteBatch.Draw(Main.backgroundTexture[array2[0]], new Vector2((float)(this.bgStart + num3 * l + 16 * m + num16), (float)this.bgTop) + value, new Rectangle?(new Rectangle(16 * m + num16 + 16, 0, 16, 16)), color2);
+						spriteBatch.Draw(Main.backgroundTexture[array2[0]], new Vector2((float)(bgStart + num3 * l + 16 * m + num16), (float)bgTop) + value, new Rectangle?(new Rectangle(16 * m + num16 + 16, 0, 16, 16)), color2);
 					}
 				}
 			}
@@ -25677,28 +25683,28 @@ namespace Terraria
 			num19 = Main.worldSurface + num20 - 5.0;
 			bool flag = false;
 			bool flag2 = false;
-			this.bgTop = (int)((float)((int)Main.worldSurface * 16) - Main.screenPosition.Y + 16f);
+			bgTop = (int)((float)((int)Main.worldSurface * 16) - Main.screenPosition.Y + 16f);
 			if (Main.worldSurface * 16.0 <= (double)(Main.screenPosition.Y + (float)Main.screenHeight + (float)Main.offScreenRange))
 			{
-				this.bgParrallax = (double)Main.caveParrallax;
-				this.bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * this.bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
-				this.bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
+				bgParrallax = (double)Main.caveParrallax;
+				bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
+				bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
 				if (Main.worldSurface * 16.0 < (double)(Main.screenPosition.Y - 16f))
 				{
-					this.bgStartY = (int)(Math.IEEERemainder((double)this.bgTop, (double)Main.backgroundHeight[2]) - (double)Main.backgroundHeight[2]);
-					this.bgLoopsY = (Main.screenHeight - this.bgStartY + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
+					bgStartY = (int)(Math.IEEERemainder((double)bgTop, (double)Main.backgroundHeight[2]) - (double)Main.backgroundHeight[2]);
+					bgLoopsY = (Main.screenHeight - bgStartY + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
 				}
 				else
 				{
-					this.bgStartY = this.bgTop;
-					this.bgLoopsY = (Main.screenHeight - this.bgTop + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
+					bgStartY = bgTop;
+					bgLoopsY = (Main.screenHeight - bgTop + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
 				}
 				if (Main.rockLayer * 16.0 < (double)(Main.screenPosition.Y + 600f))
 				{
-					this.bgLoopsY = (int)(Main.rockLayer * 16.0 - (double)Main.screenPosition.Y + 600.0 - (double)this.bgStartY) / Main.backgroundHeight[2];
+					bgLoopsY = (int)(Main.rockLayer * 16.0 - (double)Main.screenPosition.Y + 600.0 - (double)bgStartY) / Main.backgroundHeight[2];
 					flag2 = true;
 				}
-				float num21 = (float)this.bgStart + Main.screenPosition.X;
+				float num21 = (float)bgStart + Main.screenPosition.X;
 				num21 = -(float)Math.IEEERemainder((double)num21, 16.0);
 				num21 = (float)Math.Round((double)num21);
 				int num22 = (int)num21;
@@ -25706,16 +25712,16 @@ namespace Terraria
 				{
 					num22 = 8;
 				}
-				for (int n = 0; n < this.bgLoops; n++)
+				for (int n = 0; n < bgLoops; n++)
 				{
-					for (int num23 = 0; num23 < this.bgLoopsY; num23++)
+					for (int num23 = 0; num23 < bgLoopsY; num23++)
 					{
 						for (int num24 = 0; num24 < num3 / 16; num24++)
 						{
 							for (int num25 = 0; num25 < 6; num25++)
 							{
-								float num26 = (float)(this.bgStartY + num23 * 96 + num25 * 16 + 8);
-								float num27 = (float)(this.bgStart + num3 * n + num24 * 16 + 8);
+								float num26 = (float)(bgStartY + num23 * 96 + num25 * 16 + 8);
+								float num27 = (float)(bgStart + num3 * n + num24 * 16 + 8);
 								int num28 = (int)((num27 + Main.screenPosition.X) / 16f);
 								int num29 = (int)((num26 + Main.screenPosition.Y) / 16f);
 								Color color3 = Lighting.GetColor(num28, num29);
@@ -25822,7 +25828,7 @@ namespace Terraria
 												color4.R = (byte)((float)color4.R * num5);
 												color4.G = (byte)((float)color4.G * num6);
 												color4.B = (byte)((float)color4.B * num7);
-												this.spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num31 + num22), (float)(this.bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25 + num32)) + value, new Rectangle?(new Rectangle(16 * num24 + num31 + num22 + 16, 16 * num25 + num32, width, height)), color4);
+												spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num31 + num22), (float)(bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25 + num32)) + value, new Rectangle?(new Rectangle(16 * num24 + num31 + num22 + 16, 16 * num25 + num32, width, height)), color4);
 												if (Main.ugBackTransition > 0f)
 												{
 													Color color6 = color4;
@@ -25830,7 +25836,7 @@ namespace Terraria
 													color6.G = (byte)((float)color6.G * Main.ugBackTransition);
 													color6.B = (byte)((float)color6.B * Main.ugBackTransition);
 													color6.A = (byte)((float)color6.A * Main.ugBackTransition);
-													this.spriteBatch.Draw(Main.backgroundTexture[array2[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num31 + num22), (float)(this.bgStartY + Main.backgroundHeight[array2[1]] * num23 + 16 * num25 + num32)) + value, new Rectangle?(new Rectangle(16 * num24 + num31 + num22 + 16, 16 * num25 + num32, width, height)), color6);
+													spriteBatch.Draw(Main.backgroundTexture[array2[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num31 + num22), (float)(bgStartY + Main.backgroundHeight[array2[1]] * num23 + 16 * num25 + num32)) + value, new Rectangle?(new Rectangle(16 * num24 + num31 + num22 + 16, 16 * num25 + num32, width, height)), color6);
 												}
 											}
 											goto IL_181F;
@@ -25840,7 +25846,7 @@ namespace Terraria
 											color3.R = (byte)((float)color3.R * num5);
 											color3.G = (byte)((float)color3.G * num6);
 											color3.B = (byte)((float)color3.B * num7);
-											this.spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num22), (float)(this.bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color3);
+											spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num22), (float)(bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color3);
 											goto IL_181F;
 										}
 									}
@@ -25906,7 +25912,7 @@ namespace Terraria
 											color7.R = (byte)((float)color7.R * num5);
 											color7.G = (byte)((float)color7.G * num6);
 											color7.B = (byte)((float)color7.B * num7);
-											this.spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num34 + num22), (float)(this.bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25 + num35)) + value, new Rectangle?(new Rectangle(16 * num24 + num34 + num22 + 16, 16 * num25 + num35, 8, 8)), color7);
+											spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num34 + num22), (float)(bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25 + num35)) + value, new Rectangle?(new Rectangle(16 * num24 + num34 + num22 + 16, 16 * num25 + num35, 8, 8)), color7);
 											if (Main.ugBackTransition > 0f)
 											{
 												Color color9 = color7;
@@ -25914,7 +25920,7 @@ namespace Terraria
 												color9.G = (byte)((float)color9.G * Main.ugBackTransition);
 												color9.B = (byte)((float)color9.B * Main.ugBackTransition);
 												color9.A = (byte)((float)color9.A * Main.ugBackTransition);
-												this.spriteBatch.Draw(Main.backgroundTexture[array2[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num34 + num22), (float)(this.bgStartY + Main.backgroundHeight[array2[1]] * num23 + 16 * num25 + num35)) + value, new Rectangle?(new Rectangle(16 * num24 + num34 + num22 + 16, 16 * num25 + num35, 8, 8)), color9);
+												spriteBatch.Draw(Main.backgroundTexture[array2[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num34 + num22), (float)(bgStartY + Main.backgroundHeight[array2[1]] * num23 + 16 * num25 + num35)) + value, new Rectangle?(new Rectangle(16 * num24 + num34 + num22 + 16, 16 * num25 + num35, 8, 8)), color9);
 											}
 										}
 									}
@@ -25923,7 +25929,7 @@ namespace Terraria
 										color3.R = (byte)((float)color3.R * num5);
 										color3.G = (byte)((float)color3.G * num6);
 										color3.B = (byte)((float)color3.B * num7);
-										this.spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num22), (float)(this.bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color3);
+										spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num22), (float)(bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color3);
 										if (Main.ugBackTransition > 0f)
 										{
 											Color color10 = color3;
@@ -25931,7 +25937,7 @@ namespace Terraria
 											color10.G = (byte)((float)color10.G * Main.ugBackTransition);
 											color10.B = (byte)((float)color10.B * Main.ugBackTransition);
 											color10.A = (byte)((float)color10.A * Main.ugBackTransition);
-											this.spriteBatch.Draw(Main.backgroundTexture[array2[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num22), (float)(this.bgStartY + Main.backgroundHeight[array2[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color10);
+											spriteBatch.Draw(Main.backgroundTexture[array2[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num22), (float)(bgStartY + Main.backgroundHeight[array2[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color10);
 										}
 									}
 								}
@@ -25940,7 +25946,7 @@ namespace Terraria
 									color3.R = (byte)((float)color3.R * num5);
 									color3.G = (byte)((float)color3.G * num6);
 									color3.B = (byte)((float)color3.B * num7);
-									this.spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(this.bgStart + num3 * n + 16 * num24 + num22), (float)(this.bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color3);
+									spriteBatch.Draw(Main.backgroundTexture[array[1]], new Vector2((float)(bgStart + num3 * n + 16 * num24 + num22), (float)(bgStartY + Main.backgroundHeight[array[1]] * num23 + 16 * num25)) + value, new Rectangle?(new Rectangle(16 * num24 + num22 + 16, 16 * num25, 16, 16)), color3);
 								}
 								IL_181F:;
 							}
@@ -25949,23 +25955,23 @@ namespace Terraria
 				}
 				if (flag2)
 				{
-					this.bgParrallax = (double)Main.caveParrallax;
-					this.bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * this.bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
-					this.bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
-					this.bgTop = this.bgStartY + this.bgLoopsY * Main.backgroundHeight[2];
-					if (this.bgTop > -32)
+					bgParrallax = (double)Main.caveParrallax;
+					bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
+					bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
+					bgTop = bgStartY + bgLoopsY * Main.backgroundHeight[2];
+					if (bgTop > -32)
 					{
-						for (int num36 = 0; num36 < this.bgLoops; num36++)
+						for (int num36 = 0; num36 < bgLoops; num36++)
 						{
 							for (int num37 = 0; num37 < num3 / 16; num37++)
 							{
-								float num38 = (float)(this.bgStart + num3 * num36 + num37 * 16 + 8);
-								float num39 = (float)this.bgTop;
+								float num38 = (float)(bgStart + num3 * num36 + num37 * 16 + 8);
+								float num39 = (float)bgTop;
 								Color color11 = Lighting.GetColor((int)((num38 + Main.screenPosition.X) / 16f), (int)((Main.screenPosition.Y + num39) / 16f));
 								color11.R = (byte)((float)color11.R * num5);
 								color11.G = (byte)((float)color11.G * num6);
 								color11.B = (byte)((float)color11.B * num7);
-								this.spriteBatch.Draw(Main.backgroundTexture[array[2]], new Vector2((float)(this.bgStart + num3 * num36 + 16 * num37 + num22), (float)this.bgTop) + value, new Rectangle?(new Rectangle(16 * num37 + num22 + 16, 0, 16, 16)), color11);
+								spriteBatch.Draw(Main.backgroundTexture[array[2]], new Vector2((float)(bgStart + num3 * num36 + 16 * num37 + num22), (float)bgTop) + value, new Rectangle?(new Rectangle(16 * num37 + num22 + 16, 0, 16, 16)), color11);
 								if (Main.ugBackTransition > 0f)
 								{
 									Color color12 = color11;
@@ -25973,35 +25979,35 @@ namespace Terraria
 									color12.G = (byte)((float)color12.G * Main.ugBackTransition);
 									color12.B = (byte)((float)color12.B * Main.ugBackTransition);
 									color12.A = (byte)((float)color12.A * Main.ugBackTransition);
-									this.spriteBatch.Draw(Main.backgroundTexture[array2[2]], new Vector2((float)(this.bgStart + num3 * num36 + 16 * num37 + num22), (float)this.bgTop) + value, new Rectangle?(new Rectangle(16 * num37 + num22 + 16, 0, 16, 16)), color12);
+									spriteBatch.Draw(Main.backgroundTexture[array2[2]], new Vector2((float)(bgStart + num3 * num36 + 16 * num37 + num22), (float)bgTop) + value, new Rectangle?(new Rectangle(16 * num37 + num22 + 16, 0, 16, 16)), color12);
 								}
 							}
 						}
 					}
 				}
 			}
-			this.bgTop = (int)((float)((int)Main.rockLayer * 16) - Main.screenPosition.Y + 16f + 600f - 8f);
+			bgTop = (int)((float)((int)Main.rockLayer * 16) - Main.screenPosition.Y + 16f + 600f - 8f);
 			if (Main.rockLayer * 16.0 <= (double)(Main.screenPosition.Y + 600f))
 			{
-				this.bgParrallax = (double)Main.caveParrallax;
-				this.bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * this.bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
-				this.bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
+				bgParrallax = (double)Main.caveParrallax;
+				bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
+				bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
 				if (Main.rockLayer * 16.0 + (double)Main.screenHeight < (double)(Main.screenPosition.Y - 16f))
 				{
-					this.bgStartY = (int)(Math.IEEERemainder((double)this.bgTop, (double)Main.backgroundHeight[3]) - (double)Main.backgroundHeight[3]);
-					this.bgLoopsY = (Main.screenHeight - this.bgStartY + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
+					bgStartY = (int)(Math.IEEERemainder((double)bgTop, (double)Main.backgroundHeight[3]) - (double)Main.backgroundHeight[3]);
+					bgLoopsY = (Main.screenHeight - bgStartY + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
 				}
 				else
 				{
-					this.bgStartY = this.bgTop;
-					this.bgLoopsY = (Main.screenHeight - this.bgTop + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
+					bgStartY = bgTop;
+					bgLoopsY = (Main.screenHeight - bgTop + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
 				}
 				if (num19 * 16.0 < (double)(Main.screenPosition.Y + 600f))
 				{
-					this.bgLoopsY = (int)(num19 * 16.0 - (double)Main.screenPosition.Y + 600.0 - (double)this.bgStartY) / Main.backgroundHeight[2];
+					bgLoopsY = (int)(num19 * 16.0 - (double)Main.screenPosition.Y + 600.0 - (double)bgStartY) / Main.backgroundHeight[2];
 					flag = true;
 				}
-				float num40 = (float)this.bgStart + Main.screenPosition.X;
+				float num40 = (float)bgStart + Main.screenPosition.X;
 				num40 = -(float)Math.IEEERemainder((double)num40, 16.0);
 				num40 = (float)Math.Round((double)num40);
 				int num41 = (int)num40;
@@ -26009,16 +26015,16 @@ namespace Terraria
 				{
 					num41 = 8;
 				}
-				for (int num42 = 0; num42 < this.bgLoops; num42++)
+				for (int num42 = 0; num42 < bgLoops; num42++)
 				{
-					for (int num43 = 0; num43 < this.bgLoopsY; num43++)
+					for (int num43 = 0; num43 < bgLoopsY; num43++)
 					{
 						for (int num44 = 0; num44 < num3 / 16; num44++)
 						{
 							for (int num45 = 0; num45 < 6; num45++)
 							{
-								float num46 = (float)(this.bgStartY + num43 * 96 + num45 * 16 + 8);
-								float num47 = (float)(this.bgStart + num3 * num42 + num44 * 16 + 8);
+								float num46 = (float)(bgStartY + num43 * 96 + num45 * 16 + 8);
+								float num47 = (float)(bgStart + num3 * num42 + num44 * 16 + 8);
 								int num48 = (int)((num47 + Main.screenPosition.X) / 16f);
 								int num49 = (int)((num46 + Main.screenPosition.Y) / 16f);
 								Color color13 = Lighting.GetColor(num48, num49);
@@ -26144,7 +26150,7 @@ namespace Terraria
 												color14.R = (byte)((float)color14.R * num5);
 												color14.G = (byte)((float)color14.G * num6);
 												color14.B = (byte)((float)color14.B * num7);
-												this.spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num51 + num41), (float)(this.bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45 + num52)) + value, new Rectangle?(new Rectangle(16 * num44 + num51 + num41 + 16, 16 * num45 + num52, width2, height2)), color14);
+												spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num51 + num41), (float)(bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45 + num52)) + value, new Rectangle?(new Rectangle(16 * num44 + num51 + num41 + 16, 16 * num45 + num52, width2, height2)), color14);
 												if (Main.ugBackTransition > 0f)
 												{
 													Color color16 = color14;
@@ -26152,7 +26158,7 @@ namespace Terraria
 													color16.G = (byte)((float)color16.G * Main.ugBackTransition);
 													color16.B = (byte)((float)color16.B * Main.ugBackTransition);
 													color16.A = (byte)((float)color16.A * Main.ugBackTransition);
-													this.spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num51 + num41), (float)(this.bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45 + num52)) + value, new Rectangle?(new Rectangle(16 * num44 + num51 + num41 + 16, 16 * num45 + num52, width2, height2)), color16);
+													spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num51 + num41), (float)(bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45 + num52)) + value, new Rectangle?(new Rectangle(16 * num44 + num51 + num41 + 16, 16 * num45 + num52, width2, height2)), color16);
 												}
 											}
 										}
@@ -26220,7 +26226,7 @@ namespace Terraria
 													color17.R = (byte)((float)color17.R * num5);
 													color17.G = (byte)((float)color17.G * num6);
 													color17.B = (byte)((float)color17.B * num7);
-													this.spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num54 + num41), (float)(this.bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45 + num55)) + value, new Rectangle?(new Rectangle(16 * num44 + num54 + num41 + 16, 16 * num45 + num55, 8, 8)), color17);
+													spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num54 + num41), (float)(bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45 + num55)) + value, new Rectangle?(new Rectangle(16 * num44 + num54 + num41 + 16, 16 * num45 + num55, 8, 8)), color17);
 													if (Main.ugBackTransition > 0f)
 													{
 														Color color19 = color17;
@@ -26228,7 +26234,7 @@ namespace Terraria
 														color19.G = (byte)((float)color19.G * Main.ugBackTransition);
 														color19.B = (byte)((float)color19.B * Main.ugBackTransition);
 														color19.A = (byte)((float)color19.A * Main.ugBackTransition);
-														this.spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num54 + num41), (float)(this.bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45 + num55)) + value, new Rectangle?(new Rectangle(16 * num44 + num54 + num41 + 16, 16 * num45 + num55, 8, 8)), color19);
+														spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num54 + num41), (float)(bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45 + num55)) + value, new Rectangle?(new Rectangle(16 * num44 + num54 + num41 + 16, 16 * num45 + num55, 8, 8)), color19);
 													}
 												}
 											}
@@ -26237,7 +26243,7 @@ namespace Terraria
 												color13.R = (byte)((float)color13.R * num5);
 												color13.G = (byte)((float)color13.G * num6);
 												color13.B = (byte)((float)color13.B * num7);
-												this.spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num41), (float)(this.bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color13);
+												spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num41), (float)(bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color13);
 												if (Main.ugBackTransition > 0f)
 												{
 													Color color20 = color13;
@@ -26245,7 +26251,7 @@ namespace Terraria
 													color20.G = (byte)((float)color20.G * Main.ugBackTransition);
 													color20.B = (byte)((float)color20.B * Main.ugBackTransition);
 													color20.A = (byte)((float)color20.A * Main.ugBackTransition);
-													this.spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num41), (float)(this.bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color20);
+													spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num41), (float)(bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color20);
 												}
 											}
 										}
@@ -26255,7 +26261,7 @@ namespace Terraria
 										color13.R = (byte)((float)color13.R * num5);
 										color13.G = (byte)((float)color13.G * num6);
 										color13.B = (byte)((float)color13.B * num7);
-										this.spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num41), (float)(this.bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color13);
+										spriteBatch.Draw(Main.backgroundTexture[array[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num41), (float)(bgStartY + Main.backgroundHeight[array[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color13);
 										if (Main.ugBackTransition > 0f)
 										{
 											Color color21 = color13;
@@ -26263,7 +26269,7 @@ namespace Terraria
 											color21.G = (byte)((float)color21.G * Main.ugBackTransition);
 											color21.B = (byte)((float)color21.B * Main.ugBackTransition);
 											color21.A = (byte)((float)color21.A * Main.ugBackTransition);
-											this.spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(this.bgStart + num3 * num42 + 16 * num44 + num41), (float)(this.bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color21);
+											spriteBatch.Draw(Main.backgroundTexture[array2[3]], new Vector2((float)(bgStart + num3 * num42 + 16 * num44 + num41), (float)(bgStartY + Main.backgroundHeight[array2[3]] * num43 + 16 * num45)) + value, new Rectangle?(new Rectangle(16 * num44 + num41 + 16, 16 * num45, 16, 16)), color21);
 										}
 									}
 								}
@@ -26274,21 +26280,21 @@ namespace Terraria
 				num3 = 128;
 				if (flag)
 				{
-					this.bgParrallax = (double)Main.caveParrallax;
-					this.bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * this.bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
-					this.bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
-					this.bgTop = this.bgStartY + this.bgLoopsY * Main.backgroundHeight[2];
-					for (int num56 = 0; num56 < this.bgLoops; num56++)
+					bgParrallax = (double)Main.caveParrallax;
+					bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
+					bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
+					bgTop = bgStartY + bgLoopsY * Main.backgroundHeight[2];
+					for (int num56 = 0; num56 < bgLoops; num56++)
 					{
 						for (int num57 = 0; num57 < num3 / 16; num57++)
 						{
-							float num58 = (float)(this.bgStart + num3 * num56 + num57 * 16 + 8);
-							float num59 = (float)this.bgTop;
+							float num58 = (float)(bgStart + num3 * num56 + num57 * 16 + 8);
+							float num59 = (float)bgTop;
 							Color color22 = Lighting.GetColor((int)((num58 + Main.screenPosition.X) / 16f), (int)((Main.screenPosition.Y + num59) / 16f));
 							color22.R = (byte)((float)color22.R * num5);
 							color22.G = (byte)((float)color22.G * num6);
 							color22.B = (byte)((float)color22.B * num7);
-							this.spriteBatch.Draw(Main.backgroundTexture[array[4]], new Vector2((float)(this.bgStart + num3 * num56 + 16 * num57 + num41), (float)this.bgTop) + value, new Rectangle?(new Rectangle(16 * num57 + num41 + 16, Main.magmaBGFrame * 16, 16, 16)), color22);
+							spriteBatch.Draw(Main.backgroundTexture[array[4]], new Vector2((float)(bgStart + num3 * num56 + 16 * num57 + num41), (float)bgTop) + value, new Rectangle?(new Rectangle(16 * num57 + num41 + 16, Main.magmaBGFrame * 16, 16, 16)), color22);
 							if (Main.ugBackTransition > 0f)
 							{
 								Color color23 = color22;
@@ -26296,30 +26302,30 @@ namespace Terraria
 								color23.G = (byte)((float)color23.G * Main.ugBackTransition);
 								color23.B = (byte)((float)color23.B * Main.ugBackTransition);
 								color23.A = (byte)((float)color23.A * Main.ugBackTransition);
-								this.spriteBatch.Draw(Main.backgroundTexture[array2[4]], new Vector2((float)(this.bgStart + num3 * num56 + 16 * num57 + num41), (float)this.bgTop) + value, new Rectangle?(new Rectangle(16 * num57 + num41 + 16, Main.magmaBGFrame * 16, 16, 16)), color23);
+								spriteBatch.Draw(Main.backgroundTexture[array2[4]], new Vector2((float)(bgStart + num3 * num56 + 16 * num57 + num41), (float)bgTop) + value, new Rectangle?(new Rectangle(16 * num57 + num41 + 16, Main.magmaBGFrame * 16, 16, 16)), color23);
 							}
 						}
 					}
 				}
 			}
-			this.bgTop = (int)((float)((int)num19 * 16) - Main.screenPosition.Y + 16f + 600f) - 8;
+			bgTop = (int)((float)((int)num19 * 16) - Main.screenPosition.Y + 16f + 600f) - 8;
 			if (num19 * 16.0 <= (double)(Main.screenPosition.Y + 600f))
 			{
-				this.bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * this.bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
-				this.bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
+				bgStart = (int)(-Math.IEEERemainder((double)num3 + (double)Main.screenPosition.X * bgParrallax, (double)num3) - (double)(num3 / 2)) - (int)value.X;
+				bgLoops = (Main.screenWidth + (int)value.X * 2) / num3 + 2;
 				if (num19 * 16.0 + (double)Main.screenHeight < (double)(Main.screenPosition.Y - 16f))
 				{
-					this.bgStartY = (int)(Math.IEEERemainder((double)this.bgTop, (double)Main.backgroundHeight[2]) - (double)Main.backgroundHeight[2]);
-					this.bgLoopsY = (Main.screenHeight - this.bgStartY + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
+					bgStartY = (int)(Math.IEEERemainder((double)bgTop, (double)Main.backgroundHeight[2]) - (double)Main.backgroundHeight[2]);
+					bgLoopsY = (Main.screenHeight - bgStartY + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
 				}
 				else
 				{
-					this.bgStartY = this.bgTop;
-					this.bgLoopsY = (Main.screenHeight - this.bgTop + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
+					bgStartY = bgTop;
+					bgLoopsY = (Main.screenHeight - bgTop + (int)value.Y * 2) / Main.backgroundHeight[2] + 1;
 				}
 				num = (int)((double)num * 1.5);
 				num2 = (int)((double)num2 * 1.5);
-				float num60 = (float)this.bgStart + Main.screenPosition.X;
+				float num60 = (float)bgStart + Main.screenPosition.X;
 				num60 = -(float)Math.IEEERemainder((double)num60, 16.0);
 				num60 = (float)Math.Round((double)num60);
 				int num61 = (int)num60;
@@ -26327,16 +26333,16 @@ namespace Terraria
 				{
 					num61 = 8;
 				}
-				for (int num62 = 0; num62 < this.bgLoops; num62++)
+				for (int num62 = 0; num62 < bgLoops; num62++)
 				{
-					for (int num63 = 0; num63 < this.bgLoopsY; num63++)
+					for (int num63 = 0; num63 < bgLoopsY; num63++)
 					{
 						for (int num64 = 0; num64 < num3 / 16; num64++)
 						{
 							for (int num65 = 0; num65 < 6; num65++)
 							{
-								float num66 = (float)(this.bgStartY + num63 * 96 + num65 * 16 + 8);
-								float num67 = (float)(this.bgStart + num3 * num62 + num64 * 16 + 8);
+								float num66 = (float)(bgStartY + num63 * 96 + num65 * 16 + 8);
+								float num67 = (float)(bgStart + num3 * num62 + num64 * 16 + 8);
 								int num68 = (int)((num67 + Main.screenPosition.X) / 16f);
 								int num69 = (int)((num66 + Main.screenPosition.Y) / 16f);
 								Color color24 = Lighting.GetColor(num68, num69);
@@ -26462,7 +26468,7 @@ namespace Terraria
 												color25.R = (byte)((float)color25.R * num5);
 												color25.G = (byte)((float)color25.G * num6);
 												color25.B = (byte)((float)color25.B * num7);
-												this.spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(this.bgStart + num3 * num62 + 16 * num64 + num71 + num61), (float)(this.bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65 + num72)) + value, new Rectangle?(new Rectangle(16 * num64 + num71 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame + num72, width3, height3)), color25, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+												spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(bgStart + num3 * num62 + 16 * num64 + num71 + num61), (float)(bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65 + num72)) + value, new Rectangle?(new Rectangle(16 * num64 + num71 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame + num72, width3, height3)), color25, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 											}
 										}
 										else
@@ -26529,7 +26535,7 @@ namespace Terraria
 													color27.R = (byte)((float)color27.R * num5);
 													color27.G = (byte)((float)color27.G * num6);
 													color27.B = (byte)((float)color27.B * num7);
-													this.spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(this.bgStart + num3 * num62 + 16 * num64 + num74 + num61), (float)(this.bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65 + num75)) + value, new Rectangle?(new Rectangle(16 * num64 + num74 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame + num75, 8, 8)), color27, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+													spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(bgStart + num3 * num62 + 16 * num64 + num74 + num61), (float)(bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65 + num75)) + value, new Rectangle?(new Rectangle(16 * num64 + num74 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame + num75, 8, 8)), color27, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 												}
 											}
 											else
@@ -26537,7 +26543,7 @@ namespace Terraria
 												color24.R = (byte)((float)color24.R * num5);
 												color24.G = (byte)((float)color24.G * num6);
 												color24.B = (byte)((float)color24.B * num7);
-												this.spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(this.bgStart + num3 * num62 + 16 * num64 + num61), (float)(this.bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65)) + value, new Rectangle?(new Rectangle(16 * num64 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame, 16, 16)), color24, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+												spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(bgStart + num3 * num62 + 16 * num64 + num61), (float)(bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65)) + value, new Rectangle?(new Rectangle(16 * num64 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame, 16, 16)), color24, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 											}
 										}
 									}
@@ -26546,7 +26552,7 @@ namespace Terraria
 										color24.R = (byte)((float)color24.R * num5);
 										color24.G = (byte)((float)color24.G * num6);
 										color24.B = (byte)((float)color24.B * num7);
-										this.spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(this.bgStart + num3 * num62 + 16 * num64 + num61), (float)(this.bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65)) + value, new Rectangle?(new Rectangle(16 * num64 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame, 16, 16)), color24, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[array[5]], new Vector2((float)(bgStart + num3 * num62 + 16 * num64 + num61), (float)(bgStartY + Main.backgroundHeight[2] * num63 + 16 * num65)) + value, new Rectangle?(new Rectangle(16 * num64 + num61 + 16, 16 * num65 + Main.backgroundHeight[2] * Main.magmaBGFrame, 16, 16)), color24, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -26563,26 +26569,26 @@ namespace Terraria
 			{
 				return;
 			}
-			base.GraphicsDevice.SetRenderTarget(this.backWaterTarget);
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
+			GraphicsDevice.SetRenderTarget(backWaterTarget);
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
 			try
 			{
-				this.drawWaters(true);
+				drawWaters(true);
 			}
 			catch
 			{
 			}
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
-			base.GraphicsDevice.SetRenderTarget(this.backgroundTarget);
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
+			GraphicsDevice.SetRenderTarget(backgroundTarget);
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
 			if (Main.ignoreErrors)
 			{
 				try
 				{
-					this.DrawBackground();
+					DrawBackground();
 					goto IL_A3;
 				}
 				catch
@@ -26590,10 +26596,10 @@ namespace Terraria
 					goto IL_A3;
 				}
 			}
-			this.DrawBackground();
+			DrawBackground();
 			IL_A3:
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
 		}
 		protected void DrawToMap()
 		{
@@ -26607,7 +26613,7 @@ namespace Terraria
 			{
 				for (int j = 0; j <= num2; j++)
 				{
-					if (!this.checkMap(i, j))
+					if (!checkMap(i, j))
 					{
 						return;
 					}
@@ -26621,9 +26627,9 @@ namespace Terraria
 				{
 					for (int l = 0; l <= num4; l++)
 					{
-						base.GraphicsDevice.SetRenderTarget(this.mapTarget[k, l]);
-						base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-						base.GraphicsDevice.SetRenderTarget(null);
+						GraphicsDevice.SetRenderTarget(mapTarget[k, l]);
+						GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+						GraphicsDevice.SetRenderTarget(null);
 					}
 				}
 				Main.clearMap = false;
@@ -26681,12 +26687,12 @@ namespace Terraria
 									num6 = num15;
 									if (flag)
 									{
-										this.spriteBatch.End();
-										base.GraphicsDevice.SetRenderTarget(null);
+										spriteBatch.End();
+										GraphicsDevice.SetRenderTarget(null);
 									}
 									flag = true;
-									base.GraphicsDevice.SetRenderTarget(this.mapTarget[num14, num15]);
-									this.spriteBatch.Begin();
+									GraphicsDevice.SetRenderTarget(mapTarget[num14, num15]);
+									spriteBatch.Begin();
 								}
 								int num16 = n - num14 * Main.textureMax;
 								int num17 = num13 - num15 * Main.textureMax;
@@ -26711,7 +26717,7 @@ namespace Terraria
 										num20++;
 									}
 								}
-								this.spriteBatch.Draw(Main.magicPixel, new Vector2((float)num16, (float)num17), new Rectangle?(new Rectangle(0, 0, num19, num18)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.magicPixel, new Vector2((float)num16, (float)num17), new Rectangle?(new Rectangle(0, 0, num19, num18)), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							else
 							{
@@ -26736,24 +26742,24 @@ namespace Terraria
 						num6 = num25;
 						if (flag)
 						{
-							this.spriteBatch.End();
-							base.GraphicsDevice.SetRenderTarget(null);
+							spriteBatch.End();
+							GraphicsDevice.SetRenderTarget(null);
 						}
 						flag = true;
-						base.GraphicsDevice.SetRenderTarget(this.mapTarget[num24, num25]);
-						this.spriteBatch.Begin();
+						GraphicsDevice.SetRenderTarget(mapTarget[num24, num25]);
+						spriteBatch.Begin();
 					}
 					int num26 = num22 - num24 * Main.textureMax;
 					int num27 = num23 - num25 * Main.textureMax;
 					Color color2 = Main.map[num22, num23].getColor(num23);
-					this.spriteBatch.Draw(Main.magicPixel, new Vector2((float)num26, (float)num27), new Rectangle?(new Rectangle(0, 0, 1, 1)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.magicPixel, new Vector2((float)num26, (float)num27), new Rectangle?(new Rectangle(0, 0, 1, 1)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 			}
 			Map.numUpdateTile = 0;
 			if (flag)
 			{
-				this.spriteBatch.End();
-				base.GraphicsDevice.SetRenderTarget(null);
+				spriteBatch.End();
+				GraphicsDevice.SetRenderTarget(null);
 			}
 			Main.mapReady = true;
 			if (!Main.mapUnfinished)
@@ -26816,13 +26822,13 @@ namespace Terraria
 			bool flag = false;
 			if (!Main.mapFullscreen && num16 > 1f)
 			{
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 				flag = true;
 			}
 			if (Main.mapFullscreen)
 			{
-				if (Main.mouseLeft && base.IsActive)
+				if (Main.mouseLeft && IsActive)
 				{
 					if (Main.mouseLeftRelease)
 					{
@@ -26889,8 +26895,8 @@ namespace Terraria
 				num22 *= Main.mapFullscreenScale;
 				float num23 = num;
 				float num24 = num2;
-				float num25 = (float)this.mapTexture.Width;
-				float num26 = (float)this.mapTexture.Height;
+				float num25 = (float)mapTexture.Width;
+				float num26 = (float)mapTexture.Height;
 				if (Main.maxTilesX == 8400)
 				{
 					num22 *= 0.999f;
@@ -26952,18 +26958,18 @@ namespace Terraria
 						}
 					}
 				}
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullCounterClockwise);
 				flag = true;
 				if (Main.screenPosition.Y > (float)((Main.maxTilesY - 232) * 16))
 				{
-					this.spriteBatch.Draw(this.mapBG3Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
+					spriteBatch.Draw(mapBG3Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
 				}
 				else
 				{
 					if (Main.player[Main.myPlayer].zoneDungeon)
 					{
-						this.spriteBatch.Draw(this.mapBG5Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
+						spriteBatch.Draw(mapBG5Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
 					}
 					else
 					{
@@ -26971,11 +26977,11 @@ namespace Terraria
 						{
 							if (Main.player[Main.myPlayer].zoneSnow)
 							{
-								this.spriteBatch.Draw(this.mapBG4Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
+								spriteBatch.Draw(mapBG4Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
 							}
 							else
 							{
-								this.spriteBatch.Draw(this.mapBG2Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
+								spriteBatch.Draw(mapBG2Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Color.White);
 							}
 						}
 						else
@@ -26983,47 +26989,47 @@ namespace Terraria
 							int num27 = (int)((Main.screenPosition.X + (float)(Main.screenWidth / 2)) / 16f);
 							if (Main.player[Main.myPlayer].zoneEvil)
 							{
-								this.spriteBatch.Draw(this.mapBG6Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+								spriteBatch.Draw(mapBG6Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 							}
 							else
 							{
 								if (Main.player[Main.myPlayer].zoneBlood)
 								{
-									this.spriteBatch.Draw(this.mapBG7Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+									spriteBatch.Draw(mapBG7Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 								}
 								else
 								{
 									if (Main.player[Main.myPlayer].zoneHoly)
 									{
-										this.spriteBatch.Draw(this.mapBG8Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+										spriteBatch.Draw(mapBG8Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 									}
 									else
 									{
 										if ((double)(Main.screenPosition.Y / 16f) < Main.worldSurface + 10.0 && (num27 < 380 || num27 > Main.maxTilesX - 380))
 										{
-											this.spriteBatch.Draw(this.mapBG11Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+											spriteBatch.Draw(mapBG11Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 										}
 										else
 										{
 											if (Main.player[Main.myPlayer].zoneSnow)
 											{
-												this.spriteBatch.Draw(this.mapBG12Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+												spriteBatch.Draw(mapBG12Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 											}
 											else
 											{
 												if (Main.player[Main.myPlayer].zoneJungle)
 												{
-													this.spriteBatch.Draw(this.mapBG9Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+													spriteBatch.Draw(mapBG9Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 												}
 												else
 												{
 													if (Main.sandTiles > 1000)
 													{
-														this.spriteBatch.Draw(this.mapBG10Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+														spriteBatch.Draw(mapBG10Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 													}
 													else
 													{
-														this.spriteBatch.Draw(this.mapBG1Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
+														spriteBatch.Draw(mapBG1Texture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), Main.bgColor);
 													}
 												}
 											}
@@ -27035,11 +27041,11 @@ namespace Terraria
 					}
 				}
 				Rectangle destinationRectangle = new Rectangle((int)num23, (int)num24, (int)num25, (int)num26);
-				this.spriteBatch.Draw(this.mapTexture, destinationRectangle, Color.White);
+				spriteBatch.Draw(mapTexture, destinationRectangle, Color.White);
 				if (num16 < 1f)
 				{
-					this.spriteBatch.End();
-					this.spriteBatch.Begin();
+					spriteBatch.End();
+					spriteBatch.Begin();
 					flag = false;
 				}
 			}
@@ -27086,7 +27092,7 @@ namespace Terraria
 					num30 *= num16;
 					float x = num3 - 6f;
 					float y = num4 - 6f;
-					this.spriteBatch.Draw(Main.miniMapFrame2Texture, new Vector2(x, y), new Rectangle?(new Rectangle(0, 0, Main.miniMapFrame2Texture.Width, Main.miniMapFrame2Texture.Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.Draw(Main.miniMapFrame2Texture, new Vector2(x, y), new Rectangle?(new Rectangle(0, 0, Main.miniMapFrame2Texture.Width, Main.miniMapFrame2Texture.Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 				}
 				else
 				{
@@ -27204,12 +27210,12 @@ namespace Terraria
 							num38 += num11;
 							if (num43 > num41)
 							{
-								if (this.mapTarget[i, j].IsContentLost)
+								if (mapTarget[i, j].IsContentLost)
 								{
 									Main.refreshMap = true;
 									Main.clearMap = true;
 								}
-								this.spriteBatch.Draw(this.mapTarget[i, j], new Vector2(num37, num38), new Rectangle?(new Rectangle((int)num41, (int)num42, (int)num43 - (int)num41, (int)num44 - (int)num42)), new Color((int)b, (int)b, (int)b, (int)b), 0f, default(Vector2), num16, SpriteEffects.None, 0f);
+								spriteBatch.Draw(mapTarget[i, j], new Vector2(num37, num38), new Rectangle?(new Rectangle((int)num41, (int)num42, (int)num43 - (int)num41, (int)num44 - (int)num42)), new Color((int)b, (int)b, (int)b, (int)b), 0f, default(Vector2), num16, SpriteEffects.None, 0f);
 							}
 							num36 = (float)((int)num43 - (int)num41) * num16;
 						}
@@ -27222,8 +27228,8 @@ namespace Terraria
 			}
 			if (flag)
 			{
-				this.spriteBatch.End();
-				this.spriteBatch.Begin();
+				spriteBatch.End();
+				spriteBatch.Begin();
 			}
 			if (!Main.mapFullscreen)
 			{
@@ -27254,12 +27260,12 @@ namespace Terraria
 									num50 += num2;
 									num49 -= 10f * num16;
 									num50 -= 10f * num16;
-									this.spriteBatch.Draw(Main.npcHeadTexture[num48], new Vector2(num49, num50), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num48].Width, Main.npcHeadTexture[num48].Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, new Vector2((float)(Main.npcHeadTexture[num48].Width / 2), (float)(Main.npcHeadTexture[num48].Height / 2)), num47, effects, 0f);
+									spriteBatch.Draw(Main.npcHeadTexture[num48], new Vector2(num49, num50), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num48].Width, Main.npcHeadTexture[num48].Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, new Vector2((float)(Main.npcHeadTexture[num48].Width / 2), (float)(Main.npcHeadTexture[num48].Height / 2)), num47, effects, 0f);
 								}
 							}
 						}
-						this.spriteBatch.End();
-						this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+						spriteBatch.End();
+						spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 						for (int l = 0; l < 255; l++)
 						{
 							if (Main.player[l].active && !Main.player[l].dead && l != Main.myPlayer && ((!Main.player[Main.myPlayer].hostile && !Main.player[l].hostile) || Main.player[Main.myPlayer].team == Main.player[l].team))
@@ -27273,11 +27279,11 @@ namespace Terraria
 								num52 -= 2f - num16 / 5f * 2f;
 								num51 -= 10f * num16;
 								num52 -= 10f * num16;
-								this.DrawPlayerHead(Main.player[l], num51, num52, (float)b / 255f, num47);
+								DrawPlayerHead(Main.player[l], num51, num52, (float)b / 255f, num47);
 							}
 						}
-						this.spriteBatch.End();
-						this.spriteBatch.Begin();
+						spriteBatch.End();
+						spriteBatch.Begin();
 					}
 				}
 				if (Main.mapStyle == 1)
@@ -27308,7 +27314,7 @@ namespace Terraria
 								num58 -= 2f * num16 / 5f;
 								if (num57 > (float)(Main.miniMapX + 12) && num57 < (float)(Main.miniMapX + Main.miniMapWidth - 16) && num58 > (float)(Main.miniMapY + 10) && num58 < (float)(Main.miniMapY + Main.miniMapHeight - 14))
 								{
-									this.spriteBatch.Draw(Main.npcHeadTexture[num56], new Vector2(num57 + num10, num58 + num11), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num56].Width, Main.npcHeadTexture[num56].Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, new Vector2((float)(Main.npcHeadTexture[num56].Width / 2), (float)(Main.npcHeadTexture[num56].Height / 2)), num55, effects2, 0f);
+									spriteBatch.Draw(Main.npcHeadTexture[num56], new Vector2(num57 + num10, num58 + num11), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num56].Width, Main.npcHeadTexture[num56].Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, new Vector2((float)(Main.npcHeadTexture[num56].Width / 2), (float)(Main.npcHeadTexture[num56].Height / 2)), num55, effects2, 0f);
 									float num59 = num57 - (float)(Main.npcHeadTexture[num56].Width / 2) * num55;
 									float num60 = num58 - (float)(Main.npcHeadTexture[num56].Height / 2) * num55;
 									float num61 = num59 + (float)Main.npcHeadTexture[num56].Width * num55;
@@ -27330,8 +27336,8 @@ namespace Terraria
 							}
 						}
 					}
-					this.spriteBatch.End();
-					this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+					spriteBatch.End();
+					spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 					for (int n = 0; n < 255; n++)
 					{
 						if (Main.player[n].active && !Main.player[n].dead && ((!Main.player[Main.myPlayer].hostile && !Main.player[n].hostile) || Main.player[Main.myPlayer].team == Main.player[n].team))
@@ -27354,7 +27360,7 @@ namespace Terraria
 							}
 							if (num63 > (float)(Main.miniMapX + 6) && num63 < (float)(Main.miniMapX + Main.miniMapWidth - 16) && num64 > (float)(Main.miniMapY + 6) && num64 < (float)(Main.miniMapY + Main.miniMapHeight - 14))
 							{
-								this.DrawPlayerHead(Main.player[n], num63, num64, (float)b / 255f, num55);
+								DrawPlayerHead(Main.player[n], num63, num64, (float)b / 255f, num55);
 								if (n != Main.myPlayer)
 								{
 									float num65 = num63 + 4f - 14f * num55;
@@ -27369,9 +27375,9 @@ namespace Terraria
 							}
 						}
 					}
-					this.spriteBatch.End();
-					this.spriteBatch.Begin();
-					this.spriteBatch.Draw(Main.miniMapFrameTexture, new Vector2(num53, num54), new Rectangle?(new Rectangle(0, 0, Main.miniMapFrameTexture.Width, Main.miniMapFrameTexture.Height)), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+					spriteBatch.End();
+					spriteBatch.Begin();
+					spriteBatch.Draw(Main.miniMapFrameTexture, new Vector2(num53, num54), new Rectangle?(new Rectangle(0, 0, Main.miniMapFrameTexture.Width, Main.miniMapFrameTexture.Height)), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					for (int num69 = 0; num69 < 3; num69++)
 					{
 						float num70 = num53 + 148f + (float)(num69 * 26);
@@ -27379,7 +27385,7 @@ namespace Terraria
 						if ((float)Main.mouseX > num70 && (float)Main.mouseX < num70 + 22f && (float)Main.mouseY > num71 && (float)Main.mouseY < num71 + 22f)
 						{
 							Main.player[Main.myPlayer].mouseInterface = true;
-							this.spriteBatch.Draw(Main.miniMapButtonTexture[num69], new Vector2(num70, num71), new Rectangle?(new Rectangle(0, 0, Main.miniMapButtonTexture[num69].Width, Main.miniMapButtonTexture[num69].Height)), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.miniMapButtonTexture[num69], new Vector2(num70, num71), new Rectangle?(new Rectangle(0, 0, Main.miniMapButtonTexture[num69].Width, Main.miniMapButtonTexture[num69].Height)), Color.White, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							if (Main.mouseLeft)
 							{
 								if (Main.mouseLeftRelease)
@@ -27581,7 +27587,7 @@ namespace Terraria
 							num78 += num2;
 							num77 -= 10f * num16;
 							num78 -= 10f * num16;
-							this.spriteBatch.Draw(Main.npcHeadTexture[num76], new Vector2(num77, num78), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num76].Width, Main.npcHeadTexture[num76].Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, new Vector2((float)(Main.npcHeadTexture[num76].Width / 2), (float)(Main.npcHeadTexture[num76].Height / 2)), num74, effects3, 0f);
+							spriteBatch.Draw(Main.npcHeadTexture[num76], new Vector2(num77, num78), new Rectangle?(new Rectangle(0, 0, Main.npcHeadTexture[num76].Width, Main.npcHeadTexture[num76].Height)), new Color((int)b, (int)b, (int)b, (int)b), 0f, new Vector2((float)(Main.npcHeadTexture[num76].Width / 2), (float)(Main.npcHeadTexture[num76].Height / 2)), num74, effects3, 0f);
 							float num79 = num77 - (float)(Main.npcHeadTexture[num76].Width / 2) * num74;
 							float num80 = num78 - (float)(Main.npcHeadTexture[num76].Height / 2) * num74;
 							float num81 = num79 + (float)Main.npcHeadTexture[num76].Width * num74;
@@ -27602,8 +27608,8 @@ namespace Terraria
 						}
 					}
 				}
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 				for (int num83 = 0; num83 < 255; num83++)
 				{
 					if (Main.player[num83].active && !Main.player[num83].dead)
@@ -27617,7 +27623,7 @@ namespace Terraria
 						num85 -= 2f - num16 / 5f * 2f;
 						num84 -= 10f * num16;
 						num85 -= 10f * num16;
-						this.DrawPlayerHead(Main.player[num83], num84, num85, (float)b / 255f, num74);
+						DrawPlayerHead(Main.player[num83], num84, num85, (float)b / 255f, num74);
 						float num86 = num84 + 4f - 14f * num74;
 						float num87 = num85 + 2f - 14f * num74;
 						float num88 = num86 + 28f * num74;
@@ -27628,8 +27634,8 @@ namespace Terraria
 						}
 					}
 				}
-				this.spriteBatch.End();
-				this.spriteBatch.Begin();
+				spriteBatch.End();
+				spriteBatch.Begin();
 				int num90 = 10;
 				int num91 = Main.screenHeight - 40;
 				int num92 = 0;
@@ -27645,13 +27651,13 @@ namespace Terraria
 						Main.mapFullscreen = false;
 					}
 				}
-				this.spriteBatch.Draw(this.mapIconTexture[num92], new Vector2((float)num90, (float)num91), new Rectangle?(new Rectangle(0, 0, this.mapIconTexture[num92].Width, this.mapIconTexture[num92].Height)), new Color(num93, num93, num93, num93), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-				this.spriteBatch.Draw(Main.cursorTexture, new Vector2((float)(Main.mouseX + 1), (float)(Main.mouseY + 1)), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), new Color((int)((float)Main.cursorColor.R * 0.2f), (int)((float)Main.cursorColor.G * 0.2f), (int)((float)Main.cursorColor.B * 0.2f), (int)((float)Main.cursorColor.A * 0.5f)), 0f, default(Vector2), Main.cursorScale * 1.1f, SpriteEffects.None, 0f);
-				this.spriteBatch.Draw(Main.cursorTexture, new Vector2((float)Main.mouseX, (float)Main.mouseY), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), Main.cursorColor, 0f, default(Vector2), Main.cursorScale, SpriteEffects.None, 0f);
+				spriteBatch.Draw(mapIconTexture[num92], new Vector2((float)num90, (float)num91), new Rectangle?(new Rectangle(0, 0, mapIconTexture[num92].Width, mapIconTexture[num92].Height)), new Color(num93, num93, num93, num93), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.cursorTexture, new Vector2((float)(Main.mouseX + 1), (float)(Main.mouseY + 1)), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), new Color((int)((float)Main.cursorColor.R * 0.2f), (int)((float)Main.cursorColor.G * 0.2f), (int)((float)Main.cursorColor.B * 0.2f), (int)((float)Main.cursorColor.A * 0.5f)), 0f, default(Vector2), Main.cursorScale * 1.1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(Main.cursorTexture, new Vector2((float)Main.mouseX, (float)Main.mouseY), new Rectangle?(new Rectangle(0, 0, Main.cursorTexture.Width, Main.cursorTexture.Height)), Main.cursorColor, 0f, default(Vector2), Main.cursorScale, SpriteEffects.None, 0f);
 			}
 			if (cursorText != "")
 			{
-				this.MouseText(cursorText, 0, 0);
+				MouseText(cursorText, 0, 0);
 			}
 		}
 		protected void RenderTiles()
@@ -27660,15 +27666,15 @@ namespace Terraria
 			{
 				return;
 			}
-			this.RenderBlack();
-			base.GraphicsDevice.SetRenderTarget(this.tileTarget);
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
+			RenderBlack();
+			GraphicsDevice.SetRenderTarget(tileTarget);
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
 			if (Main.ignoreErrors)
 			{
 				try
 				{
-					this.DrawTiles(true);
+					DrawTiles(true);
 					goto IL_58;
 				}
 				catch
@@ -27676,10 +27682,10 @@ namespace Terraria
 					goto IL_58;
 				}
 			}
-			this.DrawTiles(true);
+			DrawTiles(true);
 			IL_58:
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
 		}
 		protected void RenderTiles2()
 		{
@@ -27687,14 +27693,14 @@ namespace Terraria
 			{
 				return;
 			}
-			base.GraphicsDevice.SetRenderTarget(this.tile2Target);
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
+			GraphicsDevice.SetRenderTarget(tile2Target);
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
 			if (Main.ignoreErrors)
 			{
 				try
 				{
-					this.DrawTiles(false);
+					DrawTiles(false);
 					goto IL_52;
 				}
 				catch
@@ -27702,10 +27708,10 @@ namespace Terraria
 					goto IL_52;
 				}
 			}
-			this.DrawTiles(false);
+			DrawTiles(false);
 			IL_52:
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
 		}
 		protected void RenderWater()
 		{
@@ -27713,22 +27719,22 @@ namespace Terraria
 			{
 				return;
 			}
-			base.GraphicsDevice.SetRenderTarget(this.waterTarget);
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
+			GraphicsDevice.SetRenderTarget(waterTarget);
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
 			try
 			{
-				this.drawWaters(false);
+				drawWaters(false);
 				if (Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].mech)
 				{
-					this.DrawWires();
+					DrawWires();
 				}
 			}
 			catch
 			{
 			}
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
 		}
 		protected bool FullTile(int x, int y)
 		{
@@ -27848,7 +27854,7 @@ namespace Terraria
 							}
 							j--;
 							int width = (j - num9 + 1) * 16;
-							this.spriteBatch.Draw(Main.blackTileTexture, new Vector2((float)(num9 * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, width, 16)), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.blackTileTexture, new Vector2((float)(num9 * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, width, 16)), Color.Black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 						}
 					}
 				}
@@ -27861,16 +27867,16 @@ namespace Terraria
 			{
 				return;
 			}
-			base.GraphicsDevice.SetRenderTarget(this.blackTarget);
-			base.GraphicsDevice.DepthStencilState = new DepthStencilState
+			GraphicsDevice.SetRenderTarget(blackTarget);
+			GraphicsDevice.DepthStencilState = new DepthStencilState
 			{
 				DepthBufferEnable = true
 			};
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
-			this.DrawBlack();
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
+			DrawBlack();
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
 		}
 		protected void DrawWalls()
 		{
@@ -27927,7 +27933,7 @@ namespace Terraria
 						}
 						if (Lighting.Brightness(j, i) < num4 && (Main.tile[j, i].liquid < 250 || WorldGen.SolidTile(j, i) || (Main.tile[j, i].liquid > 250 && Lighting.Brightness(j, i) == 0f)) && (Lighting.Brightness(j, i) == 0f || Main.tile[j, i].wall < 88 || Main.tile[j, i].wall > 93))
 						{
-							this.spriteBatch.Draw(Main.blackTileTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, Lighting.GetBlackness(j, i));
+							spriteBatch.Draw(Main.blackTileTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, Lighting.GetBlackness(j, i));
 						}
 					}
 				}
@@ -27940,9 +27946,9 @@ namespace Terraria
 					{
 						Main.tile[l, k] = new Tile();
 					}
-					if (Main.tile[l, k].wall > 0 && Lighting.Brightness(l, k) > 0f && !this.FullTile(l, k))
+					if (Main.tile[l, k].wall > 0 && Lighting.Brightness(l, k) > 0f && !FullTile(l, k))
 					{
-						this.LoadWall((int)Main.tile[l, k].wall);
+						LoadWall((int)Main.tile[l, k].wall);
 						Color color = Lighting.GetColor(l, k);
 						if (Lighting.lightMode < 2 && !Main.wallLight[(int)Main.tile[l, k].wall] && (Main.tile[l, k].wall < 88 || Main.tile[l, k].wall > 93) && !WorldGen.SolidTile(l, k))
 						{
@@ -28020,11 +28026,11 @@ namespace Terraria
 									}
 									if (Main.canDrawColorWall(l, k))
 									{
-										this.spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num11), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num12)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num11, (int)(Main.tile[l, k].wallFrameY() * 2) + num12, width, height)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num11), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num12)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num11, (int)(Main.tile[l, k].wallFrameY() * 2) + num12, width, height)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 									else
 									{
-										this.spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num11), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num12)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num11, (int)(Main.tile[l, k].wallFrameY() * 2) + num12, width, height)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num11), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num12)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num11, (int)(Main.tile[l, k].wallFrameY() * 2) + num12, width, height)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -28097,11 +28103,11 @@ namespace Terraria
 										}
 										if (Main.canDrawColorWall(l, k))
 										{
-											this.spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num13), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num14)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num13, (int)(Main.tile[l, k].wallFrameY() * 2) + num14, 16, 16)), color4, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num13), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num14)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num13, (int)(Main.tile[l, k].wallFrameY() * 2) + num14, 16, 16)), color4, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										}
 										else
 										{
-											this.spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num13), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num14)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num13, (int)(Main.tile[l, k].wallFrameY() * 2) + num14, 16, 16)), color4, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8 + num13), (float)(k * 16 - (int)Main.screenPosition.Y - 8 + num14)) + value, new Rectangle?(new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2) + num13, (int)(Main.tile[l, k].wallFrameY() * 2) + num14, 16, 16)), color4, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										}
 									}
 								}
@@ -28115,18 +28121,18 @@ namespace Terraria
 										color6.B = (byte)Main.DiscoB;
 										color6.A = 255;
 										Rectangle value2 = new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2), (int)(Main.tile[l, k].wallFrameY() * 2), 32, 32);
-										this.spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), color6, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), color6, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 									else
 									{
 										Rectangle value2 = new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2), (int)(Main.tile[l, k].wallFrameY() * 2), 32, 32);
 										if (Main.canDrawColorWall(l, k))
 										{
-											this.spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										}
 										else
 										{
-											this.spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										}
 									}
 								}
@@ -28142,18 +28148,18 @@ namespace Terraria
 								color7.B = (byte)Main.DiscoB;
 								color7.A = 255;
 								Rectangle value2 = new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2), (int)(Main.tile[l, k].wallFrameY() * 2), 32, 32);
-								this.spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), color7, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), color7, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							else
 							{
 								Rectangle value2 = new Rectangle((int)(Main.tile[l, k].wallFrameX() * 2), (int)(Main.tile[l, k].wallFrameY() * 2), 32, 32);
 								if (Main.canDrawColorWall(l, k))
 								{
-									this.spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.wallAltTexture[(int)Main.tile[l, k].wall, (int)Main.tile[l, k].wallColor()], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 								}
 								else
 								{
-									this.spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.wallTexture[(int)Main.tile[l, k].wall], new Vector2((float)(l * 16 - (int)Main.screenPosition.X - 8), (float)(k * 16 - (int)Main.screenPosition.Y - 8)) + value, new Rectangle?(value2), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -28181,19 +28187,19 @@ namespace Terraria
 							}
 							if (flag)
 							{
-								this.spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X), (float)(k * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, 2, 16)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X), (float)(k * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, 2, 16)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							if (flag2)
 							{
-								this.spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X + 14), (float)(k * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(14, 0, 2, 16)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X + 14), (float)(k * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(14, 0, 2, 16)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							if (flag3)
 							{
-								this.spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X), (float)(k * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, 16, 2)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X), (float)(k * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, 16, 2)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 							if (flag4)
 							{
-								this.spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X), (float)(k * 16 - (int)Main.screenPosition.Y + 14)) + value, new Rectangle?(new Rectangle(0, 14, 16, 2)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.wallOutlineTexture, new Vector2((float)(l * 16 - (int)Main.screenPosition.X), (float)(k * 16 - (int)Main.screenPosition.Y + 14)) + value, new Rectangle?(new Rectangle(0, 14, 16, 2)), Lighting.GetColor(l, k), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -28207,18 +28213,18 @@ namespace Terraria
 			{
 				return;
 			}
-			base.GraphicsDevice.SetRenderTarget(this.wallTarget);
-			base.GraphicsDevice.DepthStencilState = new DepthStencilState
+			GraphicsDevice.SetRenderTarget(wallTarget);
+			GraphicsDevice.DepthStencilState = new DepthStencilState
 			{
 				DepthBufferEnable = true
 			};
-			base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-			this.spriteBatch.Begin();
+			GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+			spriteBatch.Begin();
 			if (Main.ignoreErrors)
 			{
 				try
 				{
-					this.DrawWalls();
+					DrawWalls();
 					goto IL_69;
 				}
 				catch
@@ -28226,10 +28232,10 @@ namespace Terraria
 					goto IL_69;
 				}
 			}
-			this.DrawWalls();
+			DrawWalls();
 			IL_69:
-			this.spriteBatch.End();
-			base.GraphicsDevice.SetRenderTarget(null);
+			spriteBatch.End();
+			GraphicsDevice.SetRenderTarget(null);
 		}
 		protected void ReleaseTargets()
 		{
@@ -28239,13 +28245,13 @@ namespace Terraria
 				{
 					Main.offScreenRange = 0;
 					Main.targetSet = false;
-					this.waterTarget.Dispose();
-					this.backWaterTarget.Dispose();
-					this.blackTarget.Dispose();
-					this.tileTarget.Dispose();
-					this.tile2Target.Dispose();
-					this.wallTarget.Dispose();
-					this.backgroundTarget.Dispose();
+					waterTarget.Dispose();
+					backWaterTarget.Dispose();
+					blackTarget.Dispose();
+					tileTarget.Dispose();
+					tile2Target.Dispose();
+					wallTarget.Dispose();
+					backgroundTarget.Dispose();
 				}
 			}
 			catch
@@ -28268,7 +28274,7 @@ namespace Terraria
 					{
 						height = 400;
 					}
-					this.mapTarget[i, j] = new RenderTarget2D(base.GraphicsDevice, width, height, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth16, 0, RenderTargetUsage.PreserveContents);
+					mapTarget[i, j] = new RenderTarget2D(GraphicsDevice, width, height, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth16, 0, RenderTargetUsage.PreserveContents);
 				}
 				catch
 				{
@@ -28280,7 +28286,7 @@ namespace Terraria
 							try
 							{
 								Main.initMap[k, l] = false;
-								this.mapTarget[k, l].Dispose();
+								mapTarget[k, l].Dispose();
 							}
 							catch
 							{
@@ -28306,7 +28312,7 @@ namespace Terraria
 					{
 						for (int j = 0; j < num2; j++)
 						{
-							this.mapTarget[i, j] = new RenderTarget2D(base.GraphicsDevice, Main.textureMax, Main.textureMax, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+							mapTarget[i, j] = new RenderTarget2D(GraphicsDevice, Main.textureMax, Main.textureMax, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 						}
 					}
 					Main.mapInit = true;
@@ -28320,9 +28326,9 @@ namespace Terraria
 						{
 							try
 							{
-								if (this.mapTarget[k, l] != null)
+								if (mapTarget[k, l] != null)
 								{
-									this.mapTarget[k, l].Dispose();
+									mapTarget[k, l].Dispose();
 								}
 							}
 							catch
@@ -28341,27 +28347,27 @@ namespace Terraria
 				{
 					Main.offScreenRange = 192;
 					Main.targetSet = true;
-					if (base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2 > 2048)
+					if (GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2 > 2048)
 					{
-						Main.offScreenRange = (2048 - base.GraphicsDevice.PresentationParameters.BackBufferWidth) / 2;
+						Main.offScreenRange = (2048 - GraphicsDevice.PresentationParameters.BackBufferWidth) / 2;
 					}
-					this.waterTarget = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-					this.backWaterTarget = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-					this.blackTarget = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-					this.tileTarget = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-					this.tile2Target = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-					this.wallTarget = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
-					this.backgroundTarget = new RenderTarget2D(base.GraphicsDevice, base.GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, base.GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					waterTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					backWaterTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					blackTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					tileTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					tile2Target = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					wallTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
+					backgroundTarget = new RenderTarget2D(GraphicsDevice, GraphicsDevice.PresentationParameters.BackBufferWidth + Main.offScreenRange * 2, GraphicsDevice.PresentationParameters.BackBufferHeight + Main.offScreenRange * 2, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24);
 				}
 			}
 			catch
 			{
 				Lighting.lightMode = 2;
 				Main.mapEnabled = false;
-				this.SaveSettings();
+				SaveSettings();
 				try
 				{
-					this.ReleaseTargets();
+					ReleaseTargets();
 				}
 				catch
 				{
@@ -28515,7 +28521,7 @@ namespace Terraria
 							}
 						}
 						Color color = Lighting.GetColor(j, i);
-						this.spriteBatch.Draw(Main.wireTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(value2), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.wireTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(value2), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 					if (Main.tile[j, i].wire2() && Lighting.Brightness(j, i) > 0f)
 					{
@@ -28642,7 +28648,7 @@ namespace Terraria
 						byte b = (byte)((float)color2.B * num6);
 						byte b2 = (byte)((float)color2.A * num6);
 						color2 = new Color((int)r, (int)g, (int)b, (int)b2);
-						this.spriteBatch.Draw(Main.wire2Texture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(value3), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.wire2Texture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(value3), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 					if (Main.tile[j, i].wire3() && Lighting.Brightness(j, i) > 0f)
 					{
@@ -28773,12 +28779,12 @@ namespace Terraria
 						byte b3 = (byte)((float)color3.B * num8);
 						byte b4 = (byte)((float)color3.A * num8);
 						color3 = new Color((int)r2, (int)g2, (int)b3, (int)b4);
-						this.spriteBatch.Draw(Main.wire3Texture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(value4), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.wire3Texture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(value4), color3, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 					if (Main.tile[j, i].actuator() && Lighting.Brightness(j, i) > 0f)
 					{
 						Color color4 = Lighting.GetColor(j, i);
-						this.spriteBatch.Draw(Main.actuatorTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, Main.actuatorTexture.Width, Main.actuatorTexture.Height)), color4, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.actuatorTexture, new Vector2((float)(j * 16 - (int)Main.screenPosition.X), (float)(i * 16 - (int)Main.screenPosition.Y)) + value, new Rectangle?(new Rectangle(0, 0, Main.actuatorTexture.Width, Main.actuatorTexture.Height)), color4, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 				}
 			}
@@ -28881,43 +28887,43 @@ namespace Terraria
 			Main.drewLava = false;
 			if (Main.liquidAlpha[0] > 0f)
 			{
-				this.DrawWaterfall(0, Main.liquidAlpha[0]);
+				DrawWaterfall(0, Main.liquidAlpha[0]);
 			}
 			if (Main.liquidAlpha[2] > 0f)
 			{
-				this.DrawWaterfall(3, Main.liquidAlpha[2]);
+				DrawWaterfall(3, Main.liquidAlpha[2]);
 			}
 			if (Main.liquidAlpha[3] > 0f)
 			{
-				this.DrawWaterfall(4, Main.liquidAlpha[3]);
+				DrawWaterfall(4, Main.liquidAlpha[3]);
 			}
 			if (Main.liquidAlpha[4] > 0f)
 			{
-				this.DrawWaterfall(5, Main.liquidAlpha[4]);
+				DrawWaterfall(5, Main.liquidAlpha[4]);
 			}
 			if (Main.liquidAlpha[5] > 0f)
 			{
-				this.DrawWaterfall(6, Main.liquidAlpha[5]);
+				DrawWaterfall(6, Main.liquidAlpha[5]);
 			}
 			if (Main.liquidAlpha[6] > 0f)
 			{
-				this.DrawWaterfall(7, Main.liquidAlpha[6]);
+				DrawWaterfall(7, Main.liquidAlpha[6]);
 			}
 			if (Main.liquidAlpha[7] > 0f)
 			{
-				this.DrawWaterfall(8, Main.liquidAlpha[7]);
+				DrawWaterfall(8, Main.liquidAlpha[7]);
 			}
 			if (Main.liquidAlpha[8] > 0f)
 			{
-				this.DrawWaterfall(9, Main.liquidAlpha[8]);
+				DrawWaterfall(9, Main.liquidAlpha[8]);
 			}
 			if (Main.liquidAlpha[9] > 0f)
 			{
-				this.DrawWaterfall(10, Main.liquidAlpha[9]);
+				DrawWaterfall(10, Main.liquidAlpha[9]);
 			}
 			if (Main.liquidAlpha[10] > 0f)
 			{
-				this.DrawWaterfall(13, Main.liquidAlpha[10]);
+				DrawWaterfall(13, Main.liquidAlpha[10]);
 			}
 		}
 		protected void drawWaters(bool bg = false)
@@ -29532,11 +29538,11 @@ namespace Terraria
 			{
 				if (bg)
 				{
-					this.DrawWater(bg, 0, 1f);
+					DrawWater(bg, 0, 1f);
 				}
 				else
 				{
-					this.DrawWater(bg, 0, Main.liquidAlpha[0]);
+					DrawWater(bg, 0, Main.liquidAlpha[0]);
 				}
 			}
 			if (Main.liquidAlpha[2] > 0f)
@@ -29545,16 +29551,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 2)
 					{
-						this.DrawWater(bg, 2, Main.liquidAlpha[2]);
+						DrawWater(bg, 2, Main.liquidAlpha[2]);
 					}
 					else
 					{
-						this.DrawWater(bg, 2, 1f);
+						DrawWater(bg, 2, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 2, Main.liquidAlpha[2]);
+					DrawWater(bg, 2, Main.liquidAlpha[2]);
 				}
 			}
 			if (Main.liquidAlpha[3] > 0f)
@@ -29563,16 +29569,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 3)
 					{
-						this.DrawWater(bg, 3, Main.liquidAlpha[3]);
+						DrawWater(bg, 3, Main.liquidAlpha[3]);
 					}
 					else
 					{
-						this.DrawWater(bg, 3, 1f);
+						DrawWater(bg, 3, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 3, Main.liquidAlpha[3]);
+					DrawWater(bg, 3, Main.liquidAlpha[3]);
 				}
 			}
 			if (Main.liquidAlpha[4] > 0f)
@@ -29581,16 +29587,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 4)
 					{
-						this.DrawWater(bg, 4, Main.liquidAlpha[4]);
+						DrawWater(bg, 4, Main.liquidAlpha[4]);
 					}
 					else
 					{
-						this.DrawWater(bg, 4, 1f);
+						DrawWater(bg, 4, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 4, Main.liquidAlpha[4]);
+					DrawWater(bg, 4, Main.liquidAlpha[4]);
 				}
 			}
 			if (Main.liquidAlpha[5] > 0f)
@@ -29599,16 +29605,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 5)
 					{
-						this.DrawWater(bg, 5, Main.liquidAlpha[5]);
+						DrawWater(bg, 5, Main.liquidAlpha[5]);
 					}
 					else
 					{
-						this.DrawWater(bg, 5, 1f);
+						DrawWater(bg, 5, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 5, Main.liquidAlpha[5]);
+					DrawWater(bg, 5, Main.liquidAlpha[5]);
 				}
 			}
 			if (Main.liquidAlpha[6] > 0f)
@@ -29617,16 +29623,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 6)
 					{
-						this.DrawWater(bg, 6, Main.liquidAlpha[6]);
+						DrawWater(bg, 6, Main.liquidAlpha[6]);
 					}
 					else
 					{
-						this.DrawWater(bg, 6, 1f);
+						DrawWater(bg, 6, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 6, Main.liquidAlpha[6]);
+					DrawWater(bg, 6, Main.liquidAlpha[6]);
 				}
 			}
 			if (Main.liquidAlpha[7] > 0f)
@@ -29635,16 +29641,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 7)
 					{
-						this.DrawWater(bg, 7, Main.liquidAlpha[7]);
+						DrawWater(bg, 7, Main.liquidAlpha[7]);
 					}
 					else
 					{
-						this.DrawWater(bg, 7, 1f);
+						DrawWater(bg, 7, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 7, Main.liquidAlpha[7]);
+					DrawWater(bg, 7, Main.liquidAlpha[7]);
 				}
 			}
 			if (Main.liquidAlpha[8] > 0f)
@@ -29653,16 +29659,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 8)
 					{
-						this.DrawWater(bg, 8, Main.liquidAlpha[8]);
+						DrawWater(bg, 8, Main.liquidAlpha[8]);
 					}
 					else
 					{
-						this.DrawWater(bg, 8, 1f);
+						DrawWater(bg, 8, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 8, Main.liquidAlpha[8]);
+					DrawWater(bg, 8, Main.liquidAlpha[8]);
 				}
 			}
 			if (Main.liquidAlpha[9] > 0f)
@@ -29671,16 +29677,16 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 9)
 					{
-						this.DrawWater(bg, 9, Main.liquidAlpha[9]);
+						DrawWater(bg, 9, Main.liquidAlpha[9]);
 					}
 					else
 					{
-						this.DrawWater(bg, 9, 1f);
+						DrawWater(bg, 9, 1f);
 					}
 				}
 				else
 				{
-					this.DrawWater(bg, 9, Main.liquidAlpha[9]);
+					DrawWater(bg, 9, Main.liquidAlpha[9]);
 				}
 			}
 			if (Main.liquidAlpha[10] > 0f)
@@ -29689,15 +29695,15 @@ namespace Terraria
 				{
 					if (Main.waterStyle < 10)
 					{
-						this.DrawWater(bg, 10, Main.liquidAlpha[10]);
+						DrawWater(bg, 10, Main.liquidAlpha[10]);
 						return;
 					}
-					this.DrawWater(bg, 10, 1f);
+					DrawWater(bg, 10, 1f);
 					return;
 				}
 				else
 				{
-					this.DrawWater(bg, 10, Main.liquidAlpha[10]);
+					DrawWater(bg, 10, Main.liquidAlpha[10]);
 				}
 			}
 		}
@@ -29790,7 +29796,7 @@ namespace Terraria
 								float num20 = (float)color.A * num15;
 								color = new Color((int)num17, (int)num18, (int)num19, (int)num20);
 								SpriteEffects effects = SpriteEffects.None;
-								this.spriteBatch.Draw(Main.waterfallTexture[12], new Vector2((float)(num5 * 16 + 8) + num, (float)(num6 * 16 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(x, 0, 16, 16)), color, 0f, new Vector2(8f, 8f), 1f, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.waterfallTexture[12], new Vector2((float)(num5 * 16 + 8) + num, (float)(num6 * 16 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(x, 0, 16, 16)), color, 0f, new Vector2(8f, 8f), 1f, SpriteEffects.None, 0f);
 								color = Lighting.GetColor(num5, num6);
 								num15 = 0.6f;
 								num15 *= Alpha;
@@ -29804,7 +29810,7 @@ namespace Terraria
 								num19 = (float)color.B * num15;
 								num20 = (float)color.A * num15;
 								color = new Color((int)num17, (int)num18, (int)num19, (int)num20);
-								this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 + 8) + num, (float)(num6 * 16 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16)), color, (float)Main.rand.Next(-100, 100) * 0.001f, new Vector2(8f, 8f), 1f, effects, 0f);
+								spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 + 8) + num, (float)(num6 * 16 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16)), color, (float)Main.rand.Next(-100, 100) * 0.001f, new Vector2(8f, 8f), 1f, effects, 0f);
 								num6++;
 								if (WorldGen.SolidTile(num5, num6) || Main.tile[num5, num6].liquid > 64)
 								{
@@ -30015,44 +30021,44 @@ namespace Terraria
 									num9 = num10;
 									if (num9 == 1)
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16 + 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16 + 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 									}
 									else
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16 + 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16 + 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 									}
 								}
 								if (num11 != 0 && num31 == 0 && num32 == 1)
 								{
 									if (num9 == 1)
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28 - 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28 - 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 									}
 									else
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28 - 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3 + 8)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28 - 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 								if (num3 == 8 && num8 == 1 && num11 == 0)
 								{
 									if (num10 == -1)
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 									else
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 8)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 									}
 								}
 								if (num29 != 0 && num7 == 0)
 								{
 									if (num30 == 1)
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 									}
 									else
 									{
-										this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 									}
 								}
 								if (num32 == 1 && num29 == 0 && num11 == 0)
@@ -30061,22 +30067,22 @@ namespace Terraria
 									{
 										if (num8 == 0)
 										{
-											this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										}
 										else
 										{
-											this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+											spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 										}
 									}
 									else
 									{
 										if (num8 == 0)
 										{
-											this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+											spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 0, 16, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 										}
 										else
 										{
-											this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+											spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 - 16), (float)(num6 * 16)) - Main.screenPosition, new Rectangle?(new Rectangle(num12, 24, 32, 16 - num28)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 										}
 									}
 								}
@@ -30098,12 +30104,12 @@ namespace Terraria
 													{
 														num44 = 4;
 													}
-													this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 + num42), (float)(num6 * 16 + num3 + num44)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12 + num43, 0, 2, 16 - num3)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+													spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 + num42), (float)(num6 * 16 + num3 + num44)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12 + num43, 0, 2, 16 - num3)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 												}
 											}
 											else
 											{
-												this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12, 0, 16, 16)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+												spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12, 0, 16, 16)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 											}
 										}
 									}
@@ -30125,12 +30131,12 @@ namespace Terraria
 														{
 															num47 = 4;
 														}
-														this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 + num45), (float)(num6 * 16 + num3 + num47)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12 + num46, 0, 2, 16 - num3)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
+														spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16 + num45), (float)(num6 * 16 + num3 + num47)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12 + num46, 0, 2, 16 - num3)), color2, 0f, default(Vector2), 1f, SpriteEffects.FlipHorizontally, 0f);
 													}
 												}
 												else
 												{
-													this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12, 0, 16, 16)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+													spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12, 0, 16, 16)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 												}
 											}
 										}
@@ -30140,7 +30146,7 @@ namespace Terraria
 											{
 												if (Main.tile[num5, num6].liquid <= 0 || Main.tile[num5, num6].halfBrick())
 												{
-													this.spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12, 0, 16, 16)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+													spriteBatch.Draw(Main.waterfallTexture[num4], new Vector2((float)(num5 * 16), (float)(num6 * 16 + num3)) - Main.screenPosition, new Rectangle?(new Rectangle(16 + num12, 0, 16, 16)), color2, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 												}
 												k = 1000;
 											}
@@ -30227,11 +30233,11 @@ namespace Terraria
 						{
 							if (Main.tile[i, j].active() && Main.tile[i, j].color() > 0)
 							{
-								this.tileColorCheck((int)Main.tile[i, j].type, (int)Main.tile[i, j].color());
+								tileColorCheck((int)Main.tile[i, j].type, (int)Main.tile[i, j].color());
 							}
 							if (Main.tile[i, j].wall > 0 && Main.tile[i, j].wallColor() > 0)
 							{
-								this.wallColorCheck((int)Main.tile[i, j].wall, (int)Main.tile[i, j].wallColor());
+								wallColorCheck((int)Main.tile[i, j].wall, (int)Main.tile[i, j].wallColor());
 							}
 						}
 					}
@@ -30243,7 +30249,7 @@ namespace Terraria
 				{
 					if (Main.checkTreeAlt[k, l])
 					{
-						this.treeColorCheck(k, l);
+						treeColorCheck(k, l);
 						Main.checkTreeAlt[k, l] = false;
 					}
 				}
@@ -30251,14 +30257,14 @@ namespace Terraria
 		}
 		protected void tileColorCheck(int t, int c)
 		{
-			this.LoadTiles(t);
+			LoadTiles(t);
 			if (c >= Main.numTileColors)
 			{
 				return;
 			}
 			if (!Main.tileAltTextureInit[t, c])
 			{
-				Main.tileAltTexture[t, c] = new RenderTarget2D(base.GraphicsDevice, Main.tileTexture[t].Width, Main.tileTexture[t].Height, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+				Main.tileAltTexture[t, c] = new RenderTarget2D(GraphicsDevice, Main.tileTexture[t].Width, Main.tileTexture[t].Height, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 				Main.tileAltTextureInit[t, c] = true;
 			}
 			if (Main.tileAltTexture[t, c].IsContentLost)
@@ -30267,9 +30273,9 @@ namespace Terraria
 			}
 			if (!Main.tileAltTextureDrawn[t, c])
 			{
-				base.GraphicsDevice.SetRenderTarget(Main.tileAltTexture[t, c]);
-				base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+				GraphicsDevice.SetRenderTarget(Main.tileAltTexture[t, c]);
+				GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 				if (c > 0 && c < 13 && (t == 0 || t == 2 || t == 5 || t == 23 || t == 59 || t == 60 || t == 70 || t == 109 || t == 199))
 				{
 					int index = c + 27;
@@ -30279,9 +30285,9 @@ namespace Terraria
 				{
 					Main.tileShader.CurrentTechnique.Passes[c].Apply();
 				}
-				this.spriteBatch.Draw(Main.tileTexture[t], new Rectangle(0, 0, Main.tileTexture[t].Width, Main.tileTexture[t].Height), Color.White);
-				this.spriteBatch.End();
-				base.GraphicsDevice.SetRenderTarget(null);
+				spriteBatch.Draw(Main.tileTexture[t], new Rectangle(0, 0, Main.tileTexture[t].Width, Main.tileTexture[t].Height), Color.White);
+				spriteBatch.End();
+				GraphicsDevice.SetRenderTarget(null);
 				Main.tileAltTextureDrawn[t, c] = true;
 			}
 		}
@@ -30289,8 +30295,8 @@ namespace Terraria
 		{
 			if (!Main.treeAltTextureInit[t, c])
 			{
-				Main.treeTopAltTexture[t, c] = new RenderTarget2D(base.GraphicsDevice, Main.treeTopTexture[t].Width, Main.treeTopTexture[t].Height, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
-				Main.treeBranchAltTexture[t, c] = new RenderTarget2D(base.GraphicsDevice, Main.treeBranchTexture[t].Width, Main.treeBranchTexture[t].Height, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+				Main.treeTopAltTexture[t, c] = new RenderTarget2D(GraphicsDevice, Main.treeTopTexture[t].Width, Main.treeTopTexture[t].Height, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+				Main.treeBranchAltTexture[t, c] = new RenderTarget2D(GraphicsDevice, Main.treeBranchTexture[t].Width, Main.treeBranchTexture[t].Height, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 				Main.treeAltTextureInit[t, c] = true;
 			}
 			if (Main.treeTopAltTexture[t, c].IsContentLost || Main.treeBranchAltTexture[t, c].IsContentLost)
@@ -30299,9 +30305,9 @@ namespace Terraria
 			}
 			if (!Main.treeAltTextureDrawn[t, c])
 			{
-				base.GraphicsDevice.SetRenderTarget(Main.treeTopAltTexture[t, c]);
-				base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+				GraphicsDevice.SetRenderTarget(Main.treeTopAltTexture[t, c]);
+				GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 				if (c > 0 && c < 13)
 				{
 					int index = c + 27;
@@ -30311,12 +30317,12 @@ namespace Terraria
 				{
 					Main.tileShader.CurrentTechnique.Passes[c].Apply();
 				}
-				this.spriteBatch.Draw(Main.treeTopTexture[t], new Rectangle(0, 0, Main.treeTopTexture[t].Width, Main.treeTopTexture[t].Height), Color.White);
-				this.spriteBatch.End();
-				base.GraphicsDevice.SetRenderTarget(null);
-				base.GraphicsDevice.SetRenderTarget(Main.treeBranchAltTexture[t, c]);
-				base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+				spriteBatch.Draw(Main.treeTopTexture[t], new Rectangle(0, 0, Main.treeTopTexture[t].Width, Main.treeTopTexture[t].Height), Color.White);
+				spriteBatch.End();
+				GraphicsDevice.SetRenderTarget(null);
+				GraphicsDevice.SetRenderTarget(Main.treeBranchAltTexture[t, c]);
+				GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 				if (c > 0 && c < 13)
 				{
 					int index2 = c + 27;
@@ -30326,18 +30332,18 @@ namespace Terraria
 				{
 					Main.tileShader.CurrentTechnique.Passes[c].Apply();
 				}
-				this.spriteBatch.Draw(Main.treeBranchTexture[t], new Rectangle(0, 0, Main.treeBranchTexture[t].Width, Main.treeBranchTexture[t].Height), Color.White);
-				this.spriteBatch.End();
-				base.GraphicsDevice.SetRenderTarget(null);
+				spriteBatch.Draw(Main.treeBranchTexture[t], new Rectangle(0, 0, Main.treeBranchTexture[t].Width, Main.treeBranchTexture[t].Height), Color.White);
+				spriteBatch.End();
+				GraphicsDevice.SetRenderTarget(null);
 				Main.treeAltTextureDrawn[t, c] = true;
 			}
 		}
 		protected void wallColorCheck(int t, int c)
 		{
-			this.LoadWall(t);
+			LoadWall(t);
 			if (!Main.wallAltTextureInit[t, c])
 			{
-				Main.wallAltTexture[t, c] = new RenderTarget2D(base.GraphicsDevice, Main.wallTexture[t].Width, Main.wallTexture[t].Height, false, base.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
+				Main.wallAltTexture[t, c] = new RenderTarget2D(GraphicsDevice, Main.wallTexture[t].Width, Main.wallTexture[t].Height, false, GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.Depth24, 0, RenderTargetUsage.PreserveContents);
 				Main.wallAltTextureInit[t, c] = true;
 			}
 			if (Main.wallAltTexture[t, c].IsContentLost)
@@ -30346,13 +30352,13 @@ namespace Terraria
 			}
 			if (!Main.wallAltTextureDrawn[t, c])
 			{
-				base.GraphicsDevice.SetRenderTarget(Main.wallAltTexture[t, c]);
-				base.GraphicsDevice.Clear(new Color(0, 0, 0, 0));
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+				GraphicsDevice.SetRenderTarget(Main.wallAltTexture[t, c]);
+				GraphicsDevice.Clear(new Color(0, 0, 0, 0));
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 				Main.tileShader.CurrentTechnique.Passes[c].Apply();
-				this.spriteBatch.Draw(Main.wallTexture[t], new Rectangle(0, 0, Main.wallTexture[t].Width, Main.wallTexture[t].Height), Color.White);
-				this.spriteBatch.End();
-				base.GraphicsDevice.SetRenderTarget(null);
+				spriteBatch.Draw(Main.wallTexture[t], new Rectangle(0, 0, Main.wallTexture[t].Width, Main.wallTexture[t].Height), Color.White);
+				spriteBatch.End();
+				GraphicsDevice.SetRenderTarget(null);
 				Main.wallAltTextureDrawn[t, c] = true;
 			}
 		}
@@ -30469,7 +30475,7 @@ namespace Terraria
 		{
 			if (i >= 0 && !Main.backgroundLoaded[i])
 			{
-				Main.backgroundTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.backgroundTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30485,7 +30491,7 @@ namespace Terraria
 		{
 			if (!Main.NPCLoaded[i] || Main.npcTexture[i] == null)
 			{
-				Main.npcTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.npcTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30499,7 +30505,7 @@ namespace Terraria
 		{
 			if (!Main.projectileLoaded[i])
 			{
-				Main.projectileTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.projectileTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30513,7 +30519,7 @@ namespace Terraria
 		{
 			if (!Main.goreLoaded[i])
 			{
-				Main.goreTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.goreTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30527,7 +30533,7 @@ namespace Terraria
 		{
 			if (!Main.wallLoaded[i])
 			{
-				Main.wallTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.wallTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30541,7 +30547,7 @@ namespace Terraria
 		{
 			if (!Main.tileSetsLoaded[i])
 			{
-				Main.tileTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.tileTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30557,7 +30563,7 @@ namespace Terraria
 			{
 				try
 				{
-					Main.itemFlameTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+					Main.itemFlameTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 					{
 						"Images",
 						Path.DirectorySeparatorChar,
@@ -30575,7 +30581,7 @@ namespace Terraria
 		{
 			if (!Main.wingsLoaded[i])
 			{
-				Main.wingsTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.wingsTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30589,14 +30595,14 @@ namespace Terraria
 		{
 			if (!Main.hairLoaded[i])
 			{
-				Main.playerHairTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.playerHairTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
 					"Player_Hair_",
 					i + 1
 				}));
-				Main.playerHairAltTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.playerHairAltTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30610,7 +30616,7 @@ namespace Terraria
 		{
 			if (!Main.armorHeadLoaded[i])
 			{
-				Main.armorHeadTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.armorHeadTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30624,21 +30630,21 @@ namespace Terraria
 		{
 			if (!Main.armorBodyLoaded[i])
 			{
-				Main.femaleBodyTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.femaleBodyTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
 					"Female_Body_",
 					i
 				}));
-				Main.armorBodyTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.armorBodyTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
 					"Armor_Body_",
 					i
 				}));
-				Main.armorArmTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.armorArmTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30652,7 +30658,7 @@ namespace Terraria
 		{
 			if (!Main.armorLegsLoaded[i])
 			{
-				Main.armorLegTexture[i] = base.Content.Load<Texture2D>(string.Concat(new object[]
+				Main.armorLegTexture[i] = Content.Load<Texture2D>(string.Concat(new object[]
 				{
 					"Images",
 					Path.DirectorySeparatorChar,
@@ -30684,14 +30690,14 @@ namespace Terraria
 							color.A = (byte)((float)color.A * Main.atmo);
 						}
 						float num3 = Main.cloud[i].position.Y * ((float)Main.screenHeight / 600f);
-						num3 = Main.cloud[i].position.Y + (float)((int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 750.0 + 830.0)) + (float)((int)this.scAdj);
-						this.spriteBatch.Draw(Main.cloudTexture[Main.cloud[i].type], new Vector2(Main.cloud[i].position.X + (float)Main.cloudTexture[Main.cloud[i].type].Width * 0.5f, num3 + (float)Main.cloudTexture[Main.cloud[i].type].Height * 0.5f), new Rectangle?(new Rectangle(0, 0, Main.cloudTexture[Main.cloud[i].type].Width, Main.cloudTexture[Main.cloud[i].type].Height)), color, Main.cloud[i].rotation, new Vector2((float)Main.cloudTexture[Main.cloud[i].type].Width * 0.5f, (float)Main.cloudTexture[Main.cloud[i].type].Height * 0.5f), Main.cloud[i].scale, Main.cloud[i].spriteDir, 0f);
+						num3 = Main.cloud[i].position.Y + (float)((int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 750.0 + 830.0)) + (float)((int)scAdj);
+						spriteBatch.Draw(Main.cloudTexture[Main.cloud[i].type], new Vector2(Main.cloud[i].position.X + (float)Main.cloudTexture[Main.cloud[i].type].Width * 0.5f, num3 + (float)Main.cloudTexture[Main.cloud[i].type].Height * 0.5f), new Rectangle?(new Rectangle(0, 0, Main.cloudTexture[Main.cloud[i].type].Width, Main.cloudTexture[Main.cloud[i].type].Height)), color, Main.cloud[i].rotation, new Vector2((float)Main.cloudTexture[Main.cloud[i].type].Width * 0.5f, (float)Main.cloudTexture[Main.cloud[i].type].Height * 0.5f), Main.cloud[i].scale, Main.cloud[i].spriteDir, 0f);
 					}
 				}
 			}
 			Main.atmo = 1f;
 			Main.bgScale *= 2f;
-			this.bgParrallax = 0.15;
+			bgParrallax = 0.15;
 			if (Main.atmo < 1f)
 			{
 				Main.backColor.R = (byte)((float)Main.backColor.R * Main.atmo);
@@ -30721,20 +30727,20 @@ namespace Terraria
 					}
 					if (Main.cloudBGAlpha > 0f)
 					{
-						this.LoadBackground(Main.cloudBG[0]);
-						this.LoadBackground(Main.cloudBG[1]);
+						LoadBackground(Main.cloudBG[0]);
+						LoadBackground(Main.cloudBG[1]);
 						Main.bgScale *= 2f;
-						this.bgParrallax = 0.15;
+						bgParrallax = 0.15;
 						float num4 = Main.cloudBGAlpha;
 						if (num4 > 1f)
 						{
 							num4 = 1f;
 						}
 						Main.bgScale = 1.65f;
-						this.bgParrallax = 0.090000003576278687;
-						if (base.IsActive)
+						bgParrallax = 0.090000003576278687;
+						if (IsActive)
 						{
-							Main.cloudBGX[0] += Main.windSpeed * (float)this.bgParrallax * 5f * (float)Main.dayRate;
+							Main.cloudBGX[0] += Main.windSpeed * (float)bgParrallax * 5f * (float)Main.dayRate;
 						}
 						if (Main.cloudBGX[0] > (float)Main.backgroundWidth[Main.cloudBG[0]] * Main.bgScale)
 						{
@@ -30745,22 +30751,22 @@ namespace Terraria
 							Main.cloudBGX[0] += (float)Main.backgroundWidth[Main.cloudBG[0]] * Main.bgScale;
 						}
 						Main.bgW = (int)((float)Main.backgroundWidth[Main.cloudBG[0]] * Main.bgScale);
-						this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 900.0 + 600.0) + (int)this.scAdj;
+						bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 900.0 + 600.0) + (int)scAdj;
 						if (Main.gameMenu)
 						{
-							this.bgTop = -150;
+							bgTop = -150;
 						}
-						this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2) - (double)Main.bgW);
-						this.bgStart += (int)Main.cloudBGX[0];
-						this.bgLoops = Main.screenWidth / Main.bgW + 2 + 2;
+						bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2) - (double)Main.bgW);
+						bgStart += (int)Main.cloudBGX[0];
+						bgLoops = Main.screenWidth / Main.bgW + 2 + 2;
 						Main.backColor = Main.trueBackColor;
 						Main.backColor.R = (byte)((float)Main.backColor.R * num4);
 						Main.backColor.G = (byte)((float)Main.backColor.G * num4);
 						Main.backColor.B = (byte)((float)Main.backColor.B * num4);
 						Main.backColor.A = (byte)((float)Main.backColor.A * num4);
-						for (int j = 0; j < this.bgLoops; j++)
+						for (int j = 0; j < bgLoops; j++)
 						{
-							this.spriteBatch.Draw(Main.backgroundTexture[Main.cloudBG[0]], new Vector2((float)(this.bgStart + Main.bgW * j), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.cloudBG[0]], Main.backgroundHeight[Main.cloudBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.backgroundTexture[Main.cloudBG[0]], new Vector2((float)(bgStart + Main.bgW * j), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.cloudBG[0]], Main.backgroundHeight[Main.cloudBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 						}
 						num4 = Main.cloudBGAlpha * 1.5f;
 						if (num4 > 1f)
@@ -30773,10 +30779,10 @@ namespace Terraria
 						Main.backColor.B = (byte)((float)Main.backColor.B * num4);
 						Main.backColor.A = (byte)((float)Main.backColor.A * num4);
 						Main.bgScale = 1.85f;
-						this.bgParrallax = 0.12;
-						if (base.IsActive)
+						bgParrallax = 0.12;
+						if (IsActive)
 						{
-							Main.cloudBGX[1] += Main.windSpeed * (float)this.bgParrallax * 5f * (float)Main.dayRate;
+							Main.cloudBGX[1] += Main.windSpeed * (float)bgParrallax * 5f * (float)Main.dayRate;
 						}
 						if (Main.cloudBGX[1] > (float)Main.backgroundWidth[Main.cloudBG[1]] * Main.bgScale)
 						{
@@ -30787,31 +30793,31 @@ namespace Terraria
 							Main.cloudBGX[1] += (float)Main.backgroundWidth[Main.cloudBG[1]] * Main.bgScale;
 						}
 						Main.bgW = (int)((float)Main.backgroundWidth[Main.cloudBG[1]] * Main.bgScale);
-						this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1100.0 + 750.0) + (int)this.scAdj;
+						bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1100.0 + 750.0) + (int)scAdj;
 						if (Main.gameMenu)
 						{
-							this.bgTop = -50;
+							bgTop = -50;
 						}
-						this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2) - (double)Main.bgW);
-						this.bgStart += (int)Main.cloudBGX[1];
-						this.bgLoops = Main.screenWidth / Main.bgW + 2 + 2;
-						for (int k = 0; k < this.bgLoops; k++)
+						bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2) - (double)Main.bgW);
+						bgStart += (int)Main.cloudBGX[1];
+						bgLoops = Main.screenWidth / Main.bgW + 2 + 2;
+						for (int k = 0; k < bgLoops; k++)
 						{
-							this.spriteBatch.Draw(Main.backgroundTexture[Main.cloudBG[1]], new Vector2((float)(this.bgStart + Main.bgW * k), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.cloudBG[1]], Main.backgroundHeight[Main.cloudBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.backgroundTexture[Main.cloudBG[1]], new Vector2((float)(bgStart + Main.bgW * k), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.cloudBG[1]], Main.backgroundHeight[Main.cloudBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 						}
 					}
-					this.LoadBackground(Main.treeMntBG[0]);
-					this.LoadBackground(Main.treeMntBG[1]);
+					LoadBackground(Main.treeMntBG[0]);
+					LoadBackground(Main.treeMntBG[1]);
 					Main.bgScale = 1f;
-					this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1300.0 + 1090.0) + (int)this.scAdj;
+					bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1300.0 + 1090.0) + (int)scAdj;
 					Main.bgScale *= 2f;
-					this.bgParrallax = 0.15;
+					bgParrallax = 0.15;
 					Main.bgW = (int)((float)Main.backgroundWidth[Main.treeMntBG[0]] * Main.bgScale);
-					this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-					this.bgLoops = Main.screenWidth / Main.bgW + 2;
+					bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+					bgLoops = Main.screenWidth / Main.bgW + 2;
 					if (Main.gameMenu)
 					{
-						this.bgTop = 100;
+						bgTop = 100;
 					}
 					if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 					{
@@ -30824,39 +30830,39 @@ namespace Terraria
 						{
 							if (Main.treeMntBG[0] == 93 || (Main.treeMntBG[0] >= 168 && Main.treeMntBG[0] <= 170))
 							{
-								this.bgTop -= 50;
+								bgTop -= 50;
 							}
 							if (Main.treeMntBG[0] == 171)
 							{
-								this.bgTop -= 100;
+								bgTop -= 100;
 							}
 							if (Main.treeMntBG[0] == 176)
 							{
-								this.bgTop += 250;
+								bgTop += 250;
 							}
 							if (Main.treeMntBG[0] == 179)
 							{
-								this.bgTop -= 100;
+								bgTop -= 100;
 							}
-							for (int l = 0; l < this.bgLoops; l++)
+							for (int l = 0; l < bgLoops; l++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[Main.treeMntBG[0]], new Vector2((float)(this.bgStart + Main.bgW * l), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeMntBG[0]], Main.backgroundHeight[Main.treeMntBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[Main.treeMntBG[0]], new Vector2((float)(bgStart + Main.bgW * l), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeMntBG[0]], Main.backgroundHeight[Main.treeMntBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 							if (Main.treeMntBG[0] == 93 || (Main.treeMntBG[0] >= 168 && Main.treeMntBG[0] <= 170))
 							{
-								this.bgTop += 50;
+								bgTop += 50;
 							}
 							if (Main.treeMntBG[0] == 171)
 							{
-								this.bgTop += 100;
+								bgTop += 100;
 							}
 							if (Main.treeMntBG[0] == 176)
 							{
-								this.bgTop -= 250;
+								bgTop -= 250;
 							}
 							if (Main.treeMntBG[0] == 179)
 							{
-								this.bgTop += 100;
+								bgTop += 100;
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -30866,10 +30872,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[1]);
 						if (Main.bgAlpha2[1] > 0f)
 						{
-							this.LoadBackground(23);
-							for (int m = 0; m < this.bgLoops; m++)
+							LoadBackground(23);
+							for (int m = 0; m < bgLoops; m++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[23], new Vector2((float)(this.bgStart + Main.bgW * m), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[23], Main.backgroundHeight[23])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[23], new Vector2((float)(bgStart + Main.bgW * m), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[23], Main.backgroundHeight[23])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -30879,10 +30885,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[2]);
 						if (Main.bgAlpha2[2] > 0f)
 						{
-							this.LoadBackground(24);
-							for (int n = 0; n < this.bgLoops; n++)
+							LoadBackground(24);
+							for (int n = 0; n < bgLoops; n++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[24], new Vector2((float)(this.bgStart + Main.bgW * n), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[24], Main.backgroundHeight[24])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[24], new Vector2((float)(bgStart + Main.bgW * n), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[24], Main.backgroundHeight[24])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -30892,10 +30898,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[4]);
 						if (Main.bgAlpha2[4] > 0f)
 						{
-							this.LoadBackground(Main.snowMntBG[0]);
-							for (int num5 = 0; num5 < this.bgLoops; num5++)
+							LoadBackground(Main.snowMntBG[0]);
+							for (int num5 = 0; num5 < bgLoops; num5++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[Main.snowMntBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num5), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowMntBG[0]], Main.backgroundHeight[Main.snowMntBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[Main.snowMntBG[0]], new Vector2((float)(bgStart + Main.bgW * num5), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowMntBG[0]], Main.backgroundHeight[Main.snowMntBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -30905,15 +30911,15 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[5]);
 						if (Main.bgAlpha2[5] > 0f)
 						{
-							this.LoadBackground(24);
-							for (int num6 = 0; num6 < this.bgLoops; num6++)
+							LoadBackground(24);
+							for (int num6 = 0; num6 < bgLoops; num6++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[24], new Vector2((float)(this.bgStart + Main.bgW * num6), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[24], Main.backgroundHeight[24])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[24], new Vector2((float)(bgStart + Main.bgW * num6), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[24], Main.backgroundHeight[24])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 					}
 				}
-				this.cTop = (float)(this.bgTop - 50);
+				cTop = (float)(bgTop - 50);
 				if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 				{
 					for (int num7 = 0; num7 < 200; num7++)
@@ -30940,23 +30946,23 @@ namespace Terraria
 							if (Main.gameMenu)
 							{
 							}
-							this.spriteBatch.Draw(Main.cloudTexture[Main.cloud[num7].type], new Vector2(Main.cloud[num7].position.X + (float)Main.cloudTexture[Main.cloud[num7].type].Width * 0.5f, num8 + (float)Main.cloudTexture[Main.cloud[num7].type].Height * 0.5f + this.cTop + 200f), new Rectangle?(new Rectangle(0, 0, Main.cloudTexture[Main.cloud[num7].type].Width, Main.cloudTexture[Main.cloud[num7].type].Height)), color2, Main.cloud[num7].rotation, new Vector2((float)Main.cloudTexture[Main.cloud[num7].type].Width * 0.5f, (float)Main.cloudTexture[Main.cloud[num7].type].Height * 0.5f), Main.cloud[num7].scale, Main.cloud[num7].spriteDir, 0f);
+							spriteBatch.Draw(Main.cloudTexture[Main.cloud[num7].type], new Vector2(Main.cloud[num7].position.X + (float)Main.cloudTexture[Main.cloud[num7].type].Width * 0.5f, num8 + (float)Main.cloudTexture[Main.cloud[num7].type].Height * 0.5f + cTop + 200f), new Rectangle?(new Rectangle(0, 0, Main.cloudTexture[Main.cloud[num7].type].Width, Main.cloudTexture[Main.cloud[num7].type].Height)), color2, Main.cloud[num7].rotation, new Vector2((float)Main.cloudTexture[Main.cloud[num7].type].Width * 0.5f, (float)Main.cloudTexture[Main.cloud[num7].type].Height * 0.5f), Main.cloud[num7].scale, Main.cloud[num7].spriteDir, 0f);
 						}
 					}
 				}
 				if (Main.holyTiles > 0 && Main.owBack)
 				{
-					this.bgParrallax = 0.17;
+					bgParrallax = 0.17;
 					Main.bgScale = 1.1f;
 					Main.bgScale *= 2f;
 					Main.bgW = (int)((double)(3500f * Main.bgScale) * 1.05);
-					this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-					this.bgLoops = Main.screenWidth / Main.bgW + 2;
-					this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1400.0 + 900.0) + (int)this.scAdj;
+					bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+					bgLoops = Main.screenWidth / Main.bgW + 2;
+					bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1400.0 + 900.0) + (int)scAdj;
 					if (Main.gameMenu)
 					{
-						this.bgTop = 230;
-						this.bgStart -= 500;
+						bgTop = 230;
+						bgStart -= 500;
 					}
 					Color color3 = Main.trueBackColor;
 					float num10 = (float)Main.holyTiles / 400f;
@@ -30970,32 +30976,32 @@ namespace Terraria
 					color3.A = (byte)((float)color3.A * num10 * 0.8f);
 					if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 					{
-						this.LoadBackground(18);
-						this.LoadBackground(19);
-						for (int num11 = 0; num11 < this.bgLoops; num11++)
+						LoadBackground(18);
+						LoadBackground(19);
+						for (int num11 = 0; num11 < bgLoops; num11++)
 						{
-							this.spriteBatch.Draw(Main.backgroundTexture[18], new Vector2((float)(this.bgStart + Main.bgW * num11), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[18], Main.backgroundHeight[18])), color3, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
-							this.spriteBatch.Draw(Main.backgroundTexture[19], new Vector2((float)(this.bgStart + Main.bgW * num11 + 1700), (float)(this.bgTop + 100)), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[19], Main.backgroundHeight[19])), color3, 0f, default(Vector2), Main.bgScale * 0.9f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.backgroundTexture[18], new Vector2((float)(bgStart + Main.bgW * num11), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[18], Main.backgroundHeight[18])), color3, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.backgroundTexture[19], new Vector2((float)(bgStart + Main.bgW * num11 + 1700), (float)(bgTop + 100)), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[19], Main.backgroundHeight[19])), color3, 0f, default(Vector2), Main.bgScale * 0.9f, SpriteEffects.None, 0f);
 						}
 					}
 				}
 				if (Main.treeMntBG[1] > -1)
 				{
-					this.LoadBackground(Main.treeMntBG[1]);
-					this.bgParrallax = 0.2;
+					LoadBackground(Main.treeMntBG[1]);
+					bgParrallax = 0.2;
 					Main.bgScale = 1.15f;
 					Main.bgScale *= 2f;
 					Main.bgW = (int)((float)Main.backgroundWidth[Main.treeMntBG[1]] * Main.bgScale);
-					this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-					this.bgLoops = Main.screenWidth / Main.bgW + 2;
-					this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1400.0 + 1260.0) + (int)this.scAdj;
+					bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+					bgLoops = Main.screenWidth / Main.bgW + 2;
+					bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1400.0 + 1260.0) + (int)scAdj;
 				}
 				if (Main.owBack)
 				{
 					if (Main.gameMenu)
 					{
-						this.bgTop = 230;
-						this.bgStart -= 500;
+						bgTop = 230;
+						bgStart -= 500;
 					}
 					if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 					{
@@ -31008,31 +31014,31 @@ namespace Terraria
 						{
 							if (Main.treeMntBG[1] == 172)
 							{
-								this.bgTop += 130;
+								bgTop += 130;
 							}
 							if (Main.treeMntBG[1] == 177)
 							{
-								this.bgTop += 200;
+								bgTop += 200;
 							}
 							if (Main.treeMntBG[1] >= 180 && Main.treeMntBG[1] <= 183)
 							{
-								this.bgTop -= 350;
+								bgTop -= 350;
 							}
-							for (int num12 = 0; num12 < this.bgLoops; num12++)
+							for (int num12 = 0; num12 < bgLoops; num12++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[Main.treeMntBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num12), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeMntBG[1]], Main.backgroundHeight[Main.treeMntBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[Main.treeMntBG[1]], new Vector2((float)(bgStart + Main.bgW * num12), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeMntBG[1]], Main.backgroundHeight[Main.treeMntBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 							if (Main.treeMntBG[1] == 172)
 							{
-								this.bgTop -= 130;
+								bgTop -= 130;
 							}
 							if (Main.treeMntBG[1] == 177)
 							{
-								this.bgTop -= 200;
+								bgTop -= 200;
 							}
 							if (Main.treeMntBG[1] >= 180 && Main.treeMntBG[1] <= 183)
 							{
-								this.bgTop += 350;
+								bgTop += 350;
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -31042,10 +31048,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[1]);
 						if (Main.bgAlpha2[1] > 0f)
 						{
-							this.LoadBackground(22);
-							for (int num13 = 0; num13 < this.bgLoops; num13++)
+							LoadBackground(22);
+							for (int num13 = 0; num13 < bgLoops; num13++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[22], new Vector2((float)(this.bgStart + Main.bgW * num13), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[22], Main.backgroundHeight[22])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[22], new Vector2((float)(bgStart + Main.bgW * num13), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[22], Main.backgroundHeight[22])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -31055,10 +31061,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[2]);
 						if (Main.bgAlpha2[2] > 0f)
 						{
-							this.LoadBackground(25);
-							for (int num14 = 0; num14 < this.bgLoops; num14++)
+							LoadBackground(25);
+							for (int num14 = 0; num14 < bgLoops; num14++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[25], new Vector2((float)(this.bgStart + Main.bgW * num14), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[25], Main.backgroundHeight[25])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[25], new Vector2((float)(bgStart + Main.bgW * num14), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[25], Main.backgroundHeight[25])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -31068,10 +31074,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[3]);
 						if (Main.bgAlpha2[3] > 0f)
 						{
-							this.LoadBackground(Main.oceanBG);
-							for (int num15 = 0; num15 < this.bgLoops; num15++)
+							LoadBackground(Main.oceanBG);
+							for (int num15 = 0; num15 < bgLoops; num15++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[Main.oceanBG], new Vector2((float)(this.bgStart + Main.bgW * num15), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.oceanBG], Main.backgroundHeight[Main.oceanBG])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[Main.oceanBG], new Vector2((float)(bgStart + Main.bgW * num15), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.oceanBG], Main.backgroundHeight[Main.oceanBG])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -31081,10 +31087,10 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[4]);
 						if (Main.bgAlpha2[4] > 0f)
 						{
-							this.LoadBackground(Main.snowMntBG[1]);
-							for (int num16 = 0; num16 < this.bgLoops; num16++)
+							LoadBackground(Main.snowMntBG[1]);
+							for (int num16 = 0; num16 < bgLoops; num16++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[Main.snowMntBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num16), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowMntBG[1]], Main.backgroundHeight[Main.snowMntBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[Main.snowMntBG[1]], new Vector2((float)(bgStart + Main.bgW * num16), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowMntBG[1]], Main.backgroundHeight[Main.snowMntBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 						Main.backColor = Main.trueBackColor;
@@ -31094,15 +31100,15 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha2[5]);
 						if (Main.bgAlpha2[5] > 0f)
 						{
-							this.LoadBackground(42);
-							for (int num17 = 0; num17 < this.bgLoops; num17++)
+							LoadBackground(42);
+							for (int num17 = 0; num17 < bgLoops; num17++)
 							{
-								this.spriteBatch.Draw(Main.backgroundTexture[42], new Vector2((float)(this.bgStart + Main.bgW * num17), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[42], Main.backgroundHeight[42])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.backgroundTexture[42], new Vector2((float)(bgStart + Main.bgW * num17), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[42], Main.backgroundHeight[42])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 							}
 						}
 					}
 				}
-				this.cTop = (float)this.bgTop * 1.01f - 150f;
+				cTop = (float)bgTop * 1.01f - 150f;
 				if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 				{
 					for (int num18 = 0; num18 < 200; num18++)
@@ -31129,7 +31135,7 @@ namespace Terraria
 							if (Main.gameMenu)
 							{
 							}
-							this.spriteBatch.Draw(Main.cloudTexture[Main.cloud[num18].type], new Vector2(Main.cloud[num18].position.X + (float)Main.cloudTexture[Main.cloud[num18].type].Width * 0.5f, num19 + (float)Main.cloudTexture[Main.cloud[num18].type].Height * 0.5f + this.cTop), new Rectangle?(new Rectangle(0, 0, Main.cloudTexture[Main.cloud[num18].type].Width, Main.cloudTexture[Main.cloud[num18].type].Height)), color4, Main.cloud[num18].rotation, new Vector2((float)Main.cloudTexture[Main.cloud[num18].type].Width * 0.5f, (float)Main.cloudTexture[Main.cloud[num18].type].Height * 0.5f), Main.cloud[num18].scale, Main.cloud[num18].spriteDir, 0f);
+							spriteBatch.Draw(Main.cloudTexture[Main.cloud[num18].type], new Vector2(Main.cloud[num18].position.X + (float)Main.cloudTexture[Main.cloud[num18].type].Width * 0.5f, num19 + (float)Main.cloudTexture[Main.cloud[num18].type].Height * 0.5f + cTop), new Rectangle?(new Rectangle(0, 0, Main.cloudTexture[Main.cloud[num18].type].Width, Main.cloudTexture[Main.cloud[num18].type].Height)), color4, Main.cloud[num18].rotation, new Vector2((float)Main.cloudTexture[Main.cloud[num18].type].Width * 0.5f, (float)Main.cloudTexture[Main.cloud[num18].type].Height * 0.5f), Main.cloud[num18].scale, Main.cloud[num18].spriteDir, 0f);
 						}
 					}
 				}
@@ -31163,159 +31169,159 @@ namespace Terraria
 						Main.backColor.A = (byte)((float)Main.backColor.A * Main.bgAlpha[num21]);
 						if (Main.bgAlpha[num21] > 0f && num21 == 3)
 						{
-							this.LoadBackground(Main.jungleBG[0]);
+							LoadBackground(Main.jungleBG[0]);
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.jungleBG[0]] * Main.bgScale);
-							this.bgParrallax = 0.4;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1660.0) + (int)this.scAdj;
+							bgParrallax = 0.4;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1660.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
 							if (Main.jungleBG[0] == 59)
 							{
-								this.bgTop -= 200;
+								bgTop -= 200;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num22 = 0; num22 < this.bgLoops; num22++)
+								for (int num22 = 0; num22 < bgLoops; num22++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.jungleBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num22), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.jungleBG[0]], Main.backgroundHeight[Main.jungleBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.jungleBG[0]], new Vector2((float)(bgStart + Main.bgW * num22), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.jungleBG[0]], Main.backgroundHeight[Main.jungleBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
-							this.LoadBackground(Main.jungleBG[1]);
+							LoadBackground(Main.jungleBG[1]);
 							Main.bgScale = 1.31f;
 							Main.bgScale *= 2f;
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.jungleBG[1]] * Main.bgScale);
-							this.bgParrallax = 0.43;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1840.0) + (int)this.scAdj;
+							bgParrallax = 0.43;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1840.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 400;
-								this.bgStart -= 80;
+								bgTop = 400;
+								bgStart -= 80;
 							}
 							if (Main.jungleBG[1] == 60)
 							{
-								this.bgTop -= 175;
+								bgTop -= 175;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num23 = 0; num23 < this.bgLoops; num23++)
+								for (int num23 = 0; num23 < bgLoops; num23++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.jungleBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num23), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.jungleBG[1]], Main.backgroundHeight[Main.jungleBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.FlipHorizontally, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.jungleBG[1]], new Vector2((float)(bgStart + Main.bgW * num23), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.jungleBG[1]], Main.backgroundHeight[Main.jungleBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.FlipHorizontally, 0f);
 								}
 							}
 							Main.bgScale = 1.34f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.jungleBG[2]);
+							LoadBackground(Main.jungleBG[2]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.jungleBG[2]] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2060.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2060.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
 							if (Main.jungleBG[2] == 61)
 							{
-								this.bgTop -= 150;
+								bgTop -= 150;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num24 = 0; num24 < this.bgLoops; num24++)
+								for (int num24 = 0; num24 < bgLoops; num24++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.jungleBG[2]], new Vector2((float)(this.bgStart + Main.bgW * num24), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.jungleBG[2]], Main.backgroundHeight[Main.jungleBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.jungleBG[2]], new Vector2((float)(bgStart + Main.bgW * num24), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.jungleBG[2]], Main.backgroundHeight[Main.jungleBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
 						if (Main.bgAlpha[num21] > 0f && num21 == 2)
 						{
-							this.LoadBackground(Main.desertBG[0]);
+							LoadBackground(Main.desertBG[0]);
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.desertBG[0]] * Main.bgScale);
-							this.bgParrallax = 0.37;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1750.0) + (int)this.scAdj;
+							bgParrallax = 0.37;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1750.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num25 = 0; num25 < this.bgLoops; num25++)
+								for (int num25 = 0; num25 < bgLoops; num25++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.desertBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num25), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.desertBG[0]], Main.backgroundHeight[Main.desertBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.desertBG[0]], new Vector2((float)(bgStart + Main.bgW * num25), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.desertBG[0]], Main.backgroundHeight[Main.desertBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							Main.bgScale = 1.34f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.desertBG[1]);
+							LoadBackground(Main.desertBG[1]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.desertBG[1]] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2150.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2150.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num26 = 0; num26 < this.bgLoops; num26++)
+								for (int num26 = 0; num26 < bgLoops; num26++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.desertBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num26), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.desertBG[1]], Main.backgroundHeight[Main.desertBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.desertBG[1]], new Vector2((float)(bgStart + Main.bgW * num26), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.desertBG[1]], Main.backgroundHeight[Main.desertBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
 						if (Main.bgAlpha[num21] > 0f && num21 == 5)
 						{
-							this.LoadBackground(26);
+							LoadBackground(26);
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
 							Main.bgW = (int)((float)Main.backgroundWidth[26] * Main.bgScale);
-							this.bgParrallax = 0.37;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1750.0) + (int)this.scAdj;
+							bgParrallax = 0.37;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1750.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num27 = 0; num27 < this.bgLoops; num27++)
+								for (int num27 = 0; num27 < bgLoops; num27++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[26], new Vector2((float)(this.bgStart + Main.bgW * num27), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[26], Main.backgroundHeight[26])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[26], new Vector2((float)(bgStart + Main.bgW * num27), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[26], Main.backgroundHeight[26])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							Main.bgScale = 1.34f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(27);
+							LoadBackground(27);
 							Main.bgW = (int)((float)Main.backgroundWidth[27] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2150.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2150.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num28 = 0; num28 < this.bgLoops; num28++)
+								for (int num28 = 0; num28 < bgLoops; num28++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[27], new Vector2((float)(this.bgStart + Main.bgW * num28), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[27], Main.backgroundHeight[27])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[27], new Vector2((float)(bgStart + Main.bgW * num28), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[27], Main.backgroundHeight[27])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -31323,80 +31329,80 @@ namespace Terraria
 						{
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.corruptBG[0]);
+							LoadBackground(Main.corruptBG[0]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.corruptBG[0]] * Main.bgScale);
-							this.bgParrallax = 0.4;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)this.scAdj;
+							bgParrallax = 0.4;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
 							if (Main.corruptBG[0] == 56)
 							{
-								this.bgTop -= 100;
+								bgTop -= 100;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num29 = 0; num29 < this.bgLoops; num29++)
+								for (int num29 = 0; num29 < bgLoops; num29++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.corruptBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num29), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.corruptBG[0]], Main.backgroundHeight[Main.corruptBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.corruptBG[0]], new Vector2((float)(bgStart + Main.bgW * num29), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.corruptBG[0]], Main.backgroundHeight[Main.corruptBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							Main.bgScale = 1.31f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.corruptBG[1]);
+							LoadBackground(Main.corruptBG[1]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.corruptBG[1]] * Main.bgScale);
-							this.bgParrallax = 0.43;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)this.scAdj;
+							bgParrallax = 0.43;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 400;
-								this.bgStart -= 80;
+								bgTop = 400;
+								bgStart -= 80;
 							}
 							if (Main.corruptBG[0] == 56)
 							{
-								this.bgTop -= 100;
+								bgTop -= 100;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
 								try
 								{
-									for (int num30 = 0; num30 < this.bgLoops; num30++)
+									for (int num30 = 0; num30 < bgLoops; num30++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.corruptBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num30), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.corruptBG[1]], Main.backgroundHeight[Main.corruptBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.corruptBG[1]], new Vector2((float)(bgStart + Main.bgW * num30), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.corruptBG[1]], Main.backgroundHeight[Main.corruptBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.FlipHorizontally, 0f);
 									}
 								}
 								catch
 								{
-									this.LoadBackground(Main.corruptBG[1]);
+									LoadBackground(Main.corruptBG[1]);
 								}
 							}
 							Main.bgScale = 1.34f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.corruptBG[2]);
+							LoadBackground(Main.corruptBG[2]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.corruptBG[2]] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
 							if (Main.corruptBG[0] == 56)
 							{
-								this.bgTop -= 100;
+								bgTop -= 100;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num31 = 0; num31 < this.bgLoops; num31++)
+								for (int num31 = 0; num31 < bgLoops; num31++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.corruptBG[2]], new Vector2((float)(this.bgStart + Main.bgW * num31), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.corruptBG[2]], Main.backgroundHeight[Main.corruptBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.corruptBG[2]], new Vector2((float)(bgStart + Main.bgW * num31), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.corruptBG[2]], Main.backgroundHeight[Main.corruptBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -31404,61 +31410,61 @@ namespace Terraria
 						{
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.hallowBG[0]);
+							LoadBackground(Main.hallowBG[0]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.hallowBG[0]] * Main.bgScale);
-							this.bgParrallax = 0.4;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)this.scAdj;
+							bgParrallax = 0.4;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num32 = 0; num32 < this.bgLoops; num32++)
+								for (int num32 = 0; num32 < bgLoops; num32++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.hallowBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num32), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.hallowBG[0]], Main.backgroundHeight[Main.hallowBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.hallowBG[0]], new Vector2((float)(bgStart + Main.bgW * num32), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.hallowBG[0]], Main.backgroundHeight[Main.hallowBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							Main.bgScale = 1.31f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.hallowBG[1]);
+							LoadBackground(Main.hallowBG[1]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.hallowBG[1]] * Main.bgScale);
-							this.bgParrallax = 0.43;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)this.scAdj;
+							bgParrallax = 0.43;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 400;
-								this.bgStart -= 80;
+								bgTop = 400;
+								bgStart -= 80;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num33 = 0; num33 < this.bgLoops; num33++)
+								for (int num33 = 0; num33 < bgLoops; num33++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.hallowBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num33), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.hallowBG[1]], Main.backgroundHeight[Main.hallowBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.hallowBG[1]], new Vector2((float)(bgStart + Main.bgW * num33), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.hallowBG[1]], Main.backgroundHeight[Main.hallowBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							Main.bgScale = 1.34f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.hallowBG[2]);
+							LoadBackground(Main.hallowBG[2]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.hallowBG[2]] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num34 = 0; num34 < this.bgLoops; num34++)
+								for (int num34 = 0; num34 < bgLoops; num34++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.hallowBG[2]], new Vector2((float)(this.bgStart + Main.bgW * num34), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.hallowBG[2]], Main.backgroundHeight[Main.hallowBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.hallowBG[2]], new Vector2((float)(bgStart + Main.bgW * num34), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.hallowBG[2]], Main.backgroundHeight[Main.hallowBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -31466,151 +31472,151 @@ namespace Terraria
 						{
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
-							this.bgParrallax = 0.4;
+							bgParrallax = 0.4;
 							if (Main.treeBG[0] == 91)
 							{
-								this.bgParrallax = 0.27000001072883606;
+								bgParrallax = 0.27000001072883606;
 								Main.bgScale = 1.2f;
 								Main.bgScale *= 2f;
 							}
 							if (Main.treeBG[0] == 173)
 							{
-								this.bgParrallax = 0.25;
+								bgParrallax = 0.25;
 								Main.bgScale = 1.3f;
 								Main.bgScale *= 2f;
 							}
 							if (Main.treeBG[0] == 178)
 							{
-								this.bgParrallax = 0.30000001192092896;
+								bgParrallax = 0.30000001192092896;
 								Main.bgScale = 1.2f;
 								Main.bgScale *= 2f;
 							}
 							if (Main.treeBG[0] == 184)
 							{
-								this.bgParrallax = 0.25;
+								bgParrallax = 0.25;
 								Main.bgScale = 1.2f;
 								Main.bgScale *= 2f;
 							}
 							if (Main.treeBG[0] >= 0)
 							{
-								this.LoadBackground(Main.treeBG[0]);
+								LoadBackground(Main.treeBG[0]);
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.treeBG[0]] * Main.bgScale);
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)this.scAdj;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)scAdj;
 								if (Main.treeBG[0] == 91)
 								{
-									this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1600.0 + 1400.0) + (int)this.scAdj;
+									bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1600.0 + 1400.0) + (int)scAdj;
 								}
 								if (Main.treeBG[0] == 173)
 								{
-									this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1600.0 + 1400.0) + (int)this.scAdj;
+									bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1600.0 + 1400.0) + (int)scAdj;
 								}
 								if (Main.treeBG[0] == 184)
 								{
-									this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1600.0 + 1400.0) + (int)this.scAdj;
+									bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1600.0 + 1400.0) + (int)scAdj;
 								}
 								if (Main.gameMenu)
 								{
-									this.bgTop = 320;
+									bgTop = 320;
 								}
 								if (Main.treeBG[0] == 50)
 								{
-									this.bgTop -= 50;
+									bgTop -= 50;
 								}
 								if (Main.treeBG[0] == 53)
 								{
-									this.bgTop -= 100;
+									bgTop -= 100;
 								}
 								if (Main.treeBG[0] == 91)
 								{
-									this.bgTop += 200;
+									bgTop += 200;
 								}
 								if (Main.treeBG[0] == 173)
 								{
-									this.bgTop += 200;
+									bgTop += 200;
 								}
 								if (Main.treeBG[0] == 178)
 								{
-									this.bgTop += 75;
+									bgTop += 75;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num35 = 0; num35 < this.bgLoops; num35++)
+									for (int num35 = 0; num35 < bgLoops; num35++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.treeBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num35), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeBG[0]], Main.backgroundHeight[Main.treeBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.treeBG[0]], new Vector2((float)(bgStart + Main.bgW * num35), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeBG[0]], Main.backgroundHeight[Main.treeBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 									}
 								}
 							}
 							if (Main.treeBG[1] >= 0)
 							{
-								this.LoadBackground(Main.treeBG[1]);
+								LoadBackground(Main.treeBG[1]);
 								Main.bgScale = 1.31f;
 								Main.bgScale *= 2f;
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.treeBG[1]] * Main.bgScale);
-								this.bgParrallax = 0.43;
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)this.scAdj;
+								bgParrallax = 0.43;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)scAdj;
 								if (Main.gameMenu)
 								{
-									this.bgTop = 400;
-									this.bgStart -= 80;
+									bgTop = 400;
+									bgStart -= 80;
 								}
 								if (Main.treeBG[1] == 51)
 								{
-									this.bgTop -= 50;
+									bgTop -= 50;
 								}
 								if (Main.treeBG[1] == 54)
 								{
-									this.bgTop -= 100;
+									bgTop -= 100;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num36 = 0; num36 < this.bgLoops; num36++)
+									for (int num36 = 0; num36 < bgLoops; num36++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.treeBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num36), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeBG[1]], Main.backgroundHeight[Main.treeBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.FlipHorizontally, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.treeBG[1]], new Vector2((float)(bgStart + Main.bgW * num36), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeBG[1]], Main.backgroundHeight[Main.treeBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.FlipHorizontally, 0f);
 									}
 								}
 							}
 							if (Main.treeBG[2] >= 0)
 							{
-								this.LoadBackground(Main.treeBG[2]);
+								LoadBackground(Main.treeBG[2]);
 								Main.bgScale = 1.34f;
 								Main.bgScale *= 2f;
-								this.bgParrallax = 0.49;
+								bgParrallax = 0.49;
 								if (Main.treeBG[0] == 91)
 								{
 									Main.bgScale = 1.3f;
 									Main.bgScale *= 2f;
-									this.bgParrallax = 0.42;
+									bgParrallax = 0.42;
 								}
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.treeBG[2]] * Main.bgScale);
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)this.scAdj;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)scAdj;
 								if (Main.gameMenu)
 								{
-									this.bgTop = 480;
-									this.bgStart -= 120;
+									bgTop = 480;
+									bgStart -= 120;
 								}
 								if (Main.treeBG[2] == 52)
 								{
-									this.bgTop -= 50;
+									bgTop -= 50;
 								}
 								if (Main.treeBG[2] == 55)
 								{
-									this.bgTop -= 100;
+									bgTop -= 100;
 								}
 								if (Main.treeBG[2] == 92)
 								{
-									this.bgTop += 150;
+									bgTop += 150;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num37 = 0; num37 < this.bgLoops; num37++)
+									for (int num37 = 0; num37 < bgLoops; num37++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.treeBG[2]], new Vector2((float)(this.bgStart + Main.bgW * num37), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeBG[2]], Main.backgroundHeight[Main.treeBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.treeBG[2]], new Vector2((float)(bgStart + Main.bgW * num37), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.treeBG[2]], Main.backgroundHeight[Main.treeBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -31621,21 +31627,21 @@ namespace Terraria
 							{
 								Main.bgScale = 1.25f;
 								Main.bgScale *= 2f;
-								this.LoadBackground(Main.snowBG[0]);
+								LoadBackground(Main.snowBG[0]);
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.snowBG[0]] * Main.bgScale);
-								this.bgParrallax = 0.4;
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)this.scAdj;
+								bgParrallax = 0.4;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)scAdj;
 								if (Main.gameMenu)
 								{
-									this.bgTop = 320;
+									bgTop = 320;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num38 = 0; num38 < this.bgLoops; num38++)
+									for (int num38 = 0; num38 < bgLoops; num38++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.snowBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num38), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowBG[0]], Main.backgroundHeight[Main.snowBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.snowBG[0]], new Vector2((float)(bgStart + Main.bgW * num38), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowBG[0]], Main.backgroundHeight[Main.snowBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -31643,22 +31649,22 @@ namespace Terraria
 							{
 								Main.bgScale = 1.31f;
 								Main.bgScale *= 2f;
-								this.LoadBackground(Main.snowBG[1]);
+								LoadBackground(Main.snowBG[1]);
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.snowBG[1]] * Main.bgScale);
-								this.bgParrallax = 0.43;
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)this.scAdj;
+								bgParrallax = 0.43;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)scAdj;
 								if (Main.gameMenu)
 								{
-									this.bgTop = 400;
-									this.bgStart -= 80;
+									bgTop = 400;
+									bgStart -= 80;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num39 = 0; num39 < this.bgLoops; num39++)
+									for (int num39 = 0; num39 < bgLoops; num39++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.snowBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num39), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowBG[1]], Main.backgroundHeight[Main.snowBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.snowBG[1]], new Vector2((float)(bgStart + Main.bgW * num39), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowBG[1]], Main.backgroundHeight[Main.snowBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -31666,22 +31672,22 @@ namespace Terraria
 							{
 								Main.bgScale = 1.34f;
 								Main.bgScale *= 2f;
-								this.LoadBackground(Main.snowBG[2]);
+								LoadBackground(Main.snowBG[2]);
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.snowBG[2]] * Main.bgScale);
-								this.bgParrallax = 0.49;
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)this.scAdj;
+								bgParrallax = 0.49;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)scAdj;
 								if (Main.gameMenu)
 								{
-									this.bgTop = 480;
-									this.bgStart -= 120;
+									bgTop = 480;
+									bgStart -= 120;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num40 = 0; num40 < this.bgLoops; num40++)
+									for (int num40 = 0; num40 < bgLoops; num40++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.snowBG[2]], new Vector2((float)(this.bgStart + Main.bgW * num40), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowBG[2]], Main.backgroundHeight[Main.snowBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.snowBG[2]], new Vector2((float)(bgStart + Main.bgW * num40), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.snowBG[2]], Main.backgroundHeight[Main.snowBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 									}
 								}
 							}
@@ -31690,77 +31696,77 @@ namespace Terraria
 						{
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.crimsonBG[0]);
+							LoadBackground(Main.crimsonBG[0]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.crimsonBG[0]] * Main.bgScale);
-							this.bgParrallax = 0.4;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)this.scAdj;
+							bgParrallax = 0.4;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1500.0) + (int)scAdj;
 							if (Main.crimsonBG[0] == 105)
 							{
-								this.bgTop += 50;
+								bgTop += 50;
 							}
 							if (Main.crimsonBG[0] == 174)
 							{
-								this.bgTop -= 350;
+								bgTop -= 350;
 							}
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num41 = 0; num41 < this.bgLoops; num41++)
+								for (int num41 = 0; num41 < bgLoops; num41++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.crimsonBG[0]], new Vector2((float)(this.bgStart + Main.bgW * num41), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.crimsonBG[0]], Main.backgroundHeight[Main.crimsonBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.crimsonBG[0]], new Vector2((float)(bgStart + Main.bgW * num41), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.crimsonBG[0]], Main.backgroundHeight[Main.crimsonBG[0]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							Main.bgScale = 1.31f;
 							Main.bgScale *= 2f;
 							if (Main.crimsonBG[1] > -1)
 							{
-								this.LoadBackground(Main.crimsonBG[1]);
+								LoadBackground(Main.crimsonBG[1]);
 								Main.bgW = (int)((float)Main.backgroundWidth[Main.crimsonBG[1]] * Main.bgScale);
-								this.bgParrallax = 0.43;
-								this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-								this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)this.scAdj;
+								bgParrallax = 0.43;
+								bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+								bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1750.0) + (int)scAdj;
 								if (Main.gameMenu)
 								{
-									this.bgTop = 400;
-									this.bgStart -= 80;
+									bgTop = 400;
+									bgStart -= 80;
 								}
-								this.bgLoops = Main.screenWidth / Main.bgW + 2;
+								bgLoops = Main.screenWidth / Main.bgW + 2;
 								if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 								{
-									for (int num42 = 0; num42 < this.bgLoops; num42++)
+									for (int num42 = 0; num42 < bgLoops; num42++)
 									{
-										this.spriteBatch.Draw(Main.backgroundTexture[Main.crimsonBG[1]], new Vector2((float)(this.bgStart + Main.bgW * num42), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.crimsonBG[1]], Main.backgroundHeight[Main.crimsonBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+										spriteBatch.Draw(Main.backgroundTexture[Main.crimsonBG[1]], new Vector2((float)(bgStart + Main.bgW * num42), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.crimsonBG[1]], Main.backgroundHeight[Main.crimsonBG[1]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 									}
 								}
 							}
 							Main.bgScale = 1.34f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(Main.crimsonBG[2]);
+							LoadBackground(Main.crimsonBG[2]);
 							Main.bgW = (int)((float)Main.backgroundWidth[Main.crimsonBG[2]] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 2000.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
 							if (Main.crimsonBG[2] == 175)
 							{
-								this.bgStart -= 1000;
-								this.bgTop -= 400;
+								bgStart -= 1000;
+								bgTop -= 400;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num43 = 0; num43 < this.bgLoops; num43++)
+								for (int num43 = 0; num43 < bgLoops; num43++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[Main.crimsonBG[2]], new Vector2((float)(this.bgStart + Main.bgW * num43), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.crimsonBG[2]], Main.backgroundHeight[Main.crimsonBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[Main.crimsonBG[2]], new Vector2((float)(bgStart + Main.bgW * num43), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[Main.crimsonBG[2]], Main.backgroundHeight[Main.crimsonBG[2]])), Main.backColor, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -31805,21 +31811,21 @@ namespace Terraria
 							}
 							Main.bgScale = 1.25f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(46);
+							LoadBackground(46);
 							Main.bgW = (int)((float)Main.backgroundWidth[46] * Main.bgScale);
-							this.bgParrallax = 0.4;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1400.0) + (int)this.scAdj;
+							bgParrallax = 0.4;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1800.0 + 1400.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 320;
+								bgTop = 320;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num49 = 0; num49 < this.bgLoops; num49++)
+								for (int num49 = 0; num49 < bgLoops; num49++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[46], new Vector2((float)(this.bgStart + Main.bgW * num49), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[46], Main.backgroundHeight[46])), color5, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[46], new Vector2((float)(bgStart + Main.bgW * num49), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[46], Main.backgroundHeight[46])), color5, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							color5 = Main.backColor;
@@ -31860,22 +31866,22 @@ namespace Terraria
 							}
 							Main.bgScale = 1.32f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(47);
+							LoadBackground(47);
 							Main.bgW = (int)((float)Main.backgroundWidth[47] * Main.bgScale);
-							this.bgParrallax = 0.43;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1675.0) + (int)this.scAdj;
+							bgParrallax = 0.43;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1950.0 + 1675.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 400;
-								this.bgStart -= 80;
+								bgTop = 400;
+								bgStart -= 80;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num50 = 0; num50 < this.bgLoops; num50++)
+								for (int num50 = 0; num50 < bgLoops; num50++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[47], new Vector2((float)(this.bgStart + Main.bgW * num50), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[47], Main.backgroundHeight[47])), color5, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[47], new Vector2((float)(bgStart + Main.bgW * num50), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[47], Main.backgroundHeight[47])), color5, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 							color5 = Main.backColor;
@@ -31913,22 +31919,22 @@ namespace Terraria
 							}
 							Main.bgScale = 1.36f;
 							Main.bgScale *= 2f;
-							this.LoadBackground(48);
+							LoadBackground(48);
 							Main.bgW = (int)((float)Main.backgroundWidth[48] * Main.bgScale);
-							this.bgParrallax = 0.49;
-							this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
-							this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 1950.0) + (int)this.scAdj;
+							bgParrallax = 0.49;
+							bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.bgW) - (double)(Main.bgW / 2));
+							bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 2100.0 + 1950.0) + (int)scAdj;
 							if (Main.gameMenu)
 							{
-								this.bgTop = 480;
-								this.bgStart -= 120;
+								bgTop = 480;
+								bgStart -= 120;
 							}
-							this.bgLoops = Main.screenWidth / Main.bgW + 2;
+							bgLoops = Main.screenWidth / Main.bgW + 2;
 							if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 							{
-								for (int num51 = 0; num51 < this.bgLoops; num51++)
+								for (int num51 = 0; num51 < bgLoops; num51++)
 								{
-									this.spriteBatch.Draw(Main.backgroundTexture[48], new Vector2((float)(this.bgStart + Main.bgW * num51), (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[48], Main.backgroundHeight[48])), color5, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.backgroundTexture[48], new Vector2((float)(bgStart + Main.bgW * num51), (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.backgroundWidth[48], Main.backgroundHeight[48])), color5, 0f, default(Vector2), Main.bgScale, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -31937,22 +31943,22 @@ namespace Terraria
 			}
 			if (!Main.mapFullscreen && Main.cloudAlpha > 0f && (double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 			{
-				this.bgParrallax = 0.1;
-				this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.backgroundWidth[Main.background]) - (double)(Main.backgroundWidth[Main.background] / 2));
-				this.bgLoops = Main.screenWidth / Main.backgroundWidth[Main.background] + 2;
-				this.bgStartY = 0;
-				this.bgLoopsY = 0;
-				this.bgTop = (int)((double)(-(double)Main.screenPosition.Y) / (Main.worldSurface * 16.0 - 600.0) * 200.0);
-				for (int num52 = 0; num52 < this.bgLoops; num52++)
+				bgParrallax = 0.1;
+				bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.backgroundWidth[Main.background]) - (double)(Main.backgroundWidth[Main.background] / 2));
+				bgLoops = Main.screenWidth / Main.backgroundWidth[Main.background] + 2;
+				bgStartY = 0;
+				bgLoopsY = 0;
+				bgTop = (int)((double)(-(double)Main.screenPosition.Y) / (Main.worldSurface * 16.0 - 600.0) * 200.0);
+				for (int num52 = 0; num52 < bgLoops; num52++)
 				{
 					Color color6 = Main.bgColor;
-					this.bgStart = 0;
+					bgStart = 0;
 					float num53 = Main.cloudAlpha;
 					color6.R = (byte)((float)color6.R * num53);
 					color6.G = (byte)((float)color6.G * num53);
 					color6.B = (byte)((float)color6.B * num53);
 					color6.A = (byte)((float)color6.A * num53);
-					this.spriteBatch.Draw(Main.backgroundTexture[49], new Rectangle(this.bgStart + Main.backgroundWidth[49] * num52, this.bgTop, Main.backgroundWidth[49], Main.backgroundHeight[49]), color6);
+					spriteBatch.Draw(Main.backgroundTexture[49], new Rectangle(bgStart + Main.backgroundWidth[49] * num52, bgTop, Main.backgroundWidth[49], Main.backgroundHeight[49]), color6);
 				}
 			}
 		}
@@ -31960,7 +31966,7 @@ namespace Terraria
 		{
 			if (!Main.gameMenu)
 			{
-				this.lookForColorTiles();
+				lookForColorTiles();
 			}
 			if (Main.loadMap)
 			{
@@ -31969,7 +31975,7 @@ namespace Terraria
 				Main.mapMinY = 0;
 				Main.mapMaxY = Main.maxTilesY;
 				Main.refreshMap = false;
-				this.DrawToMap();
+				DrawToMap();
 			}
 			if (Lighting.lightMode >= 2)
 			{
@@ -31981,23 +31987,23 @@ namespace Terraria
 			}
 			if (Main.drawToScreen && Main.targetSet)
 			{
-				this.ReleaseTargets();
+				ReleaseTargets();
 			}
 			if (!Main.drawToScreen && !Main.targetSet)
 			{
-				this.InitTargets();
+				InitTargets();
 			}
 			Stopwatch stopwatch = new Stopwatch();
 			stopwatch.Start();
 			Main.fpsCount++;
-			if (!base.IsActive)
+			if (!IsActive)
 			{
 				Main.maxQ = true;
 			}
 			if (!Main.dedServ)
 			{
 				bool flag = false;
-				if (Main.screenWidth != base.GraphicsDevice.Viewport.Width || Main.screenHeight != base.GraphicsDevice.Viewport.Height)
+				if (Main.screenWidth != GraphicsDevice.Viewport.Width || Main.screenHeight != GraphicsDevice.Viewport.Height)
 				{
 					Main.mapTime = Main.mapTimeMax + 30;
 					flag = true;
@@ -32006,8 +32012,8 @@ namespace Terraria
 						Main.renderNow = true;
 					}
 				}
-				Main.screenWidth = base.GraphicsDevice.Viewport.Width;
-				Main.screenHeight = base.GraphicsDevice.Viewport.Height;
+				Main.screenWidth = GraphicsDevice.Viewport.Width;
+				Main.screenHeight = GraphicsDevice.Viewport.Height;
 				if (Main.screenWidth > Main.maxScreenW)
 				{
 					Main.screenWidth = Main.maxScreenW;
@@ -32030,12 +32036,12 @@ namespace Terraria
 				}
 				if (flag)
 				{
-					this.graphics.PreferredBackBufferWidth = Main.screenWidth;
-					this.graphics.PreferredBackBufferHeight = Main.screenHeight;
-					this.graphics.ApplyChanges();
+					graphics.PreferredBackBufferWidth = Main.screenWidth;
+					graphics.PreferredBackBufferHeight = Main.screenHeight;
+					graphics.ApplyChanges();
 					if (!Main.drawToScreen)
 					{
-						this.InitTargets();
+						InitTargets();
 					}
 				}
 			}
@@ -32298,7 +32304,7 @@ namespace Terraria
 			}
 			if (Main.showSplash)
 			{
-				this.DrawSplash(gameTime);
+				DrawSplash(gameTime);
 				return;
 			}
 			Main.sunCircle += 0.01f;
@@ -32320,23 +32326,23 @@ namespace Terraria
 					Main.renderNow = false;
 					Main.renderCount = 99;
 					int tempLightCount = Lighting.tempLightCount;
-					this.Draw(gameTime);
+					Draw(gameTime);
 					Lighting.tempLightCount = tempLightCount;
-					Lighting.LightTiles(this.firstTileX, this.lastTileX, this.firstTileY, this.lastTileY);
-					Lighting.LightTiles(this.firstTileX, this.lastTileX, this.firstTileY, this.lastTileY);
-					this.RenderTiles();
+					Lighting.LightTiles(firstTileX, lastTileX, firstTileY, lastTileY);
+					Lighting.LightTiles(firstTileX, lastTileX, firstTileY, lastTileY);
+					RenderTiles();
 					Main.sceneTilePos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 					Main.sceneTilePos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
-					this.RenderBackground();
+					RenderBackground();
 					Main.sceneBackgroundPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 					Main.sceneBackgroundPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
-					this.RenderWalls();
+					RenderWalls();
 					Main.sceneWallPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 					Main.sceneWallPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
-					this.RenderTiles2();
+					RenderTiles2();
 					Main.sceneTile2Pos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 					Main.sceneTile2Pos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
-					this.RenderWater();
+					RenderWater();
 					Main.sceneWaterPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 					Main.sceneWaterPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					Main.renderCount = 99;
@@ -32345,31 +32351,31 @@ namespace Terraria
 				{
 					if (Main.renderCount == 3)
 					{
-						this.RenderTiles();
+						RenderTiles();
 						Main.sceneTilePos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneTilePos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Main.renderCount == 2)
 					{
-						this.RenderBackground();
+						RenderBackground();
 						Main.sceneBackgroundPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneBackgroundPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Main.renderCount == 2)
 					{
-						this.RenderWalls();
+						RenderWalls();
 						Main.sceneWallPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneWallPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Main.renderCount == 3)
 					{
-						this.RenderTiles2();
+						RenderTiles2();
 						Main.sceneTile2Pos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneTile2Pos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Main.renderCount == 1)
 					{
-						this.RenderWater();
+						RenderWater();
 						Main.sceneWaterPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneWaterPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
@@ -32378,31 +32384,31 @@ namespace Terraria
 				{
 					if (Math.Abs(Main.sceneTilePos.X - (Main.screenPosition.X - (float)Main.offScreenRange)) > (float)Main.offScreenRange || Math.Abs(Main.sceneTilePos.Y - (Main.screenPosition.Y - (float)Main.offScreenRange)) > (float)Main.offScreenRange)
 					{
-						this.RenderTiles();
+						RenderTiles();
 						Main.sceneTilePos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneTilePos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Math.Abs(Main.sceneTile2Pos.X - (Main.screenPosition.X - (float)Main.offScreenRange)) > (float)Main.offScreenRange || Math.Abs(Main.sceneTile2Pos.Y - (Main.screenPosition.Y - (float)Main.offScreenRange)) > (float)Main.offScreenRange)
 					{
-						this.RenderTiles2();
+						RenderTiles2();
 						Main.sceneTile2Pos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneTile2Pos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Math.Abs(Main.sceneBackgroundPos.X - (Main.screenPosition.X - (float)Main.offScreenRange)) > (float)Main.offScreenRange || Math.Abs(Main.sceneBackgroundPos.Y - (Main.screenPosition.Y - (float)Main.offScreenRange)) > (float)Main.offScreenRange)
 					{
-						this.RenderBackground();
+						RenderBackground();
 						Main.sceneBackgroundPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneBackgroundPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Math.Abs(Main.sceneWallPos.X - (Main.screenPosition.X - (float)Main.offScreenRange)) > (float)Main.offScreenRange || Math.Abs(Main.sceneWallPos.Y - (Main.screenPosition.Y - (float)Main.offScreenRange)) > (float)Main.offScreenRange)
 					{
-						this.RenderWalls();
+						RenderWalls();
 						Main.sceneWallPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneWallPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
 					if (Math.Abs(Main.sceneWaterPos.X - (Main.screenPosition.X - (float)Main.offScreenRange)) > (float)Main.offScreenRange || Math.Abs(Main.sceneWaterPos.Y - (Main.screenPosition.Y - (float)Main.offScreenRange)) > (float)Main.offScreenRange)
 					{
-						this.RenderWater();
+						RenderWater();
 						Main.sceneWaterPos.X = Main.screenPosition.X - (float)Main.offScreenRange;
 						Main.sceneWaterPos.Y = Main.screenPosition.Y - (float)Main.offScreenRange;
 					}
@@ -32412,7 +32418,7 @@ namespace Terraria
 			{
 				if (Main.updateMap)
 				{
-					if (base.IsActive || Main.netMode == 1)
+					if (IsActive || Main.netMode == 1)
 					{
 						if (Main.refreshMap || Main.mapUnfinished)
 						{
@@ -32435,7 +32441,7 @@ namespace Terraria
 							Main.mapMinY = 0;
 							Main.mapMaxY = Main.maxTilesY;
 						}
-						this.DrawToMap();
+						DrawToMap();
 						Main.updateMap = false;
 					}
 					else
@@ -32446,13 +32452,13 @@ namespace Terraria
 							Main.mapMaxX = Main.maxTilesX;
 							Main.mapMinY = 0;
 							Main.mapMaxY = Main.maxTilesY;
-							this.DrawToMap();
+							DrawToMap();
 						}
 						else
 						{
 							if (Map.numUpdateTile > 0)
 							{
-								this.DrawToMap();
+								DrawToMap();
 							}
 						}
 					}
@@ -32465,20 +32471,20 @@ namespace Terraria
 						Main.mapMaxX = Main.maxTilesX;
 						Main.mapMinY = 0;
 						Main.mapMaxY = Main.maxTilesY;
-						this.DrawToMap();
+						DrawToMap();
 					}
 				}
 			}
-			this.bgParrallax = 0.1;
-			this.bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * this.bgParrallax, (double)Main.backgroundWidth[Main.background]) - (double)(Main.backgroundWidth[Main.background] / 2));
-			this.bgLoops = Main.screenWidth / Main.backgroundWidth[Main.background] + 2;
-			this.bgStartY = 0;
-			this.bgLoopsY = 0;
-			this.bgTop = (int)((double)(-(double)Main.screenPosition.Y) / (Main.worldSurface * 16.0 - 600.0) * 200.0);
+			bgParrallax = 0.1;
+			bgStart = (int)(-Math.IEEERemainder((double)Main.screenPosition.X * bgParrallax, (double)Main.backgroundWidth[Main.background]) - (double)(Main.backgroundWidth[Main.background] / 2));
+			bgLoops = Main.screenWidth / Main.backgroundWidth[Main.background] + 2;
+			bgStartY = 0;
+			bgLoopsY = 0;
+			bgTop = (int)((double)(-(double)Main.screenPosition.Y) / (Main.worldSurface * 16.0 - 600.0) * 200.0);
 			Main.bgColor = Color.White;
 			if (Main.gameMenu || Main.netMode == 2)
 			{
-				this.bgTop = -200;
+				bgTop = -200;
 			}
 			int num16 = (int)(Main.time / 54000.0 * (double)(Main.screenWidth + Main.sunTexture.Width * 2)) - Main.sunTexture.Width;
 			int num17 = 0;
@@ -32496,12 +32502,12 @@ namespace Terraria
 				if (Main.time < 27000.0)
 				{
 					num22 = Math.Pow(1.0 - Main.time / 54000.0 * 2.0, 2.0);
-					num17 = (int)((double)this.bgTop + num22 * 250.0 + 180.0);
+					num17 = (int)((double)bgTop + num22 * 250.0 + 180.0);
 				}
 				else
 				{
 					num22 = Math.Pow((Main.time / 54000.0 - 0.5) * 2.0, 2.0);
-					num17 = (int)((double)this.bgTop + num22 * 250.0 + 180.0);
+					num17 = (int)((double)bgTop + num22 * 250.0 + 180.0);
 				}
 				num18 = (float)(1.2 - num22 * 0.4);
 			}
@@ -32511,12 +32517,12 @@ namespace Terraria
 				if (Main.time < 16200.0)
 				{
 					num23 = Math.Pow(1.0 - Main.time / 32400.0 * 2.0, 2.0);
-					num20 = (int)((double)this.bgTop + num23 * 250.0 + 180.0);
+					num20 = (int)((double)bgTop + num23 * 250.0 + 180.0);
 				}
 				else
 				{
 					num23 = Math.Pow((Main.time / 32400.0 - 0.5) * 2.0, 2.0);
-					num20 = (int)((double)this.bgTop + num23 * 250.0 + 180.0);
+					num20 = (int)((double)bgTop + num23 * 250.0 + 180.0);
 				}
 				num21 = (float)(1.2 - num23 * 0.4);
 			}
@@ -32658,7 +32664,7 @@ namespace Terraria
 			}
 			if (Main.gameMenu || Main.netMode == 2)
 			{
-				this.bgTop = 0;
+				bgTop = 0;
 				if (!Main.dayTime)
 				{
 					Main.bgColor.R = 35;
@@ -33119,26 +33125,26 @@ namespace Terraria
 				Main.bgColor.B = 0;
 				Main.bgColor.A = 0;
 			}
-			base.GraphicsDevice.Clear(Color.Black);
-			base.Draw(gameTime);
+			GraphicsDevice.Clear(Color.Black);
+			Draw(gameTime);
 			if (Main.gameMenu || Main.player[Main.myPlayer].gravDir == 1f)
 			{
-				this.Transform = Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f));
-				this.Rasterizer = RasterizerState.CullCounterClockwise;
+				Transform = Matrix.CreateScale(1f, 1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, 0f, 0f));
+				Rasterizer = RasterizerState.CullCounterClockwise;
 			}
 			else
 			{
-				this.Transform = Matrix.CreateScale(1f, -1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, (float)Main.screenHeight, 0f));
-				this.Rasterizer = RasterizerState.CullClockwise;
+				Transform = Matrix.CreateScale(1f, -1f, 1f) * Matrix.CreateRotationZ(0f) * Matrix.CreateTranslation(new Vector3(0f, (float)Main.screenHeight, 0f));
+				Rasterizer = RasterizerState.CullClockwise;
 			}
-			this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, this.Rasterizer, null, this.Transform);
+			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, Rasterizer, null, Transform);
 			if (!Main.mapFullscreen)
 			{
 				if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0)
 				{
-					for (int k = 0; k < this.bgLoops; k++)
+					for (int k = 0; k < bgLoops; k++)
 					{
-						this.spriteBatch.Draw(Main.backgroundTexture[Main.background], new Rectangle(this.bgStart + Main.backgroundWidth[Main.background] * k, this.bgTop, Main.backgroundWidth[Main.background], Main.backgroundHeight[Main.background]), Main.bgColor);
+						spriteBatch.Draw(Main.backgroundTexture[Main.background], new Rectangle(bgStart + Main.backgroundWidth[Main.background] * k, bgTop, Main.backgroundWidth[Main.background], Main.backgroundHeight[Main.background]), Main.bgColor);
 					}
 				}
 				if ((double)Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0 && 255f * (1f - Main.cloudAlpha) - (float)Main.bgColor.R - 25f > 0f && Main.netMode != 2)
@@ -33176,7 +33182,7 @@ namespace Terraria
 						color.B = (byte)((float)num55 * num52);
 						float num56 = Main.star[l].position.X * ((float)Main.screenWidth / 800f);
 						float num57 = Main.star[l].position.Y * ((float)Main.screenHeight / 600f);
-						this.spriteBatch.Draw(Main.starTexture[Main.star[l].type], new Vector2(num56 + (float)Main.starTexture[Main.star[l].type].Width * 0.5f, num57 + (float)Main.starTexture[Main.star[l].type].Height * 0.5f + (float)this.bgTop), new Rectangle?(new Rectangle(0, 0, Main.starTexture[Main.star[l].type].Width, Main.starTexture[Main.star[l].type].Height)), color, Main.star[l].rotation, new Vector2((float)Main.starTexture[Main.star[l].type].Width * 0.5f, (float)Main.starTexture[Main.star[l].type].Height * 0.5f), Main.star[l].scale * Main.star[l].twinkle, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.starTexture[Main.star[l].type], new Vector2(num56 + (float)Main.starTexture[Main.star[l].type].Width * 0.5f, num57 + (float)Main.starTexture[Main.star[l].type].Height * 0.5f + (float)bgTop), new Rectangle?(new Rectangle(0, 0, Main.starTexture[Main.star[l].type].Width, Main.starTexture[Main.star[l].type].Height)), color, Main.star[l].rotation, new Vector2((float)Main.starTexture[Main.star[l].type].Width * 0.5f, (float)Main.starTexture[Main.star[l].type].Height * 0.5f), Main.star[l].scale * Main.star[l].twinkle, SpriteEffects.None, 0f);
 					}
 				}
 				if ((double)(Main.screenPosition.Y / 16f) < Main.worldSurface + 2.0)
@@ -33194,8 +33200,8 @@ namespace Terraria
 							}
 							Color color2 = new Color((int)((byte)(255f * num58)), (int)((byte)((float)white.G * num58)), (int)((byte)((float)white.B * num58)), (int)((byte)(255f * num58)));
 							Color color3 = new Color((int)((byte)((float)white.R * num58)), (int)((byte)((float)white.G * num58)), (int)((byte)((float)white.B * num58)), (int)((byte)((float)(white.B - 60) * num58)));
-							this.spriteBatch.Draw(Main.sun3Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun3Texture.Width, Main.sun3Texture.Height)), color2, rotation, new Vector2((float)(Main.sun3Texture.Width / 2), (float)(Main.sun3Texture.Height / 2)), num18, SpriteEffects.None, 0f);
-							this.spriteBatch.Draw(Main.sun3Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun3Texture.Width, Main.sun3Texture.Height)), color3, rotation, new Vector2((float)(Main.sun3Texture.Width / 2), (float)(Main.sun3Texture.Height / 2)), num18, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.sun3Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun3Texture.Width, Main.sun3Texture.Height)), color2, rotation, new Vector2((float)(Main.sun3Texture.Width / 2), (float)(Main.sun3Texture.Height / 2)), num18, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.sun3Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun3Texture.Width, Main.sun3Texture.Height)), color3, rotation, new Vector2((float)(Main.sun3Texture.Width / 2), (float)(Main.sun3Texture.Height / 2)), num18, SpriteEffects.None, 0f);
 						}
 						else
 						{
@@ -33209,8 +33215,8 @@ namespace Terraria
 								}
 								Color color4 = new Color((int)((byte)(255f * num59)), (int)((byte)((float)white.G * num59)), (int)((byte)((float)white.B * num59)), (int)((byte)(255f * num59)));
 								Color color5 = new Color((int)((byte)((float)white.R * num59)), (int)((byte)((float)white.G * num59)), (int)((byte)((float)white.B * num59)), (int)((byte)((float)(white.B - 60) * num59)));
-								this.spriteBatch.Draw(Main.sun2Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun2Texture.Width, Main.sun2Texture.Height)), color4, rotation, new Vector2((float)(Main.sun2Texture.Width / 2), (float)(Main.sun2Texture.Height / 2)), num18, SpriteEffects.None, 0f);
-								this.spriteBatch.Draw(Main.sun2Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun2Texture.Width, Main.sun2Texture.Height)), color5, rotation, new Vector2((float)(Main.sun2Texture.Width / 2), (float)(Main.sun2Texture.Height / 2)), num18, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.sun2Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun2Texture.Width, Main.sun2Texture.Height)), color4, rotation, new Vector2((float)(Main.sun2Texture.Width / 2), (float)(Main.sun2Texture.Height / 2)), num18, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.sun2Texture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sun2Texture.Width, Main.sun2Texture.Height)), color5, rotation, new Vector2((float)(Main.sun2Texture.Width / 2), (float)(Main.sun2Texture.Height / 2)), num18, SpriteEffects.None, 0f);
 							}
 							else
 							{
@@ -33222,8 +33228,8 @@ namespace Terraria
 								}
 								Color color6 = new Color((int)((byte)(255f * num60)), (int)((byte)((float)white.G * num60)), (int)((byte)((float)white.B * num60)), (int)((byte)(255f * num60)));
 								Color color7 = new Color((int)((byte)((float)white.R * num60)), (int)((byte)((float)white.G * num60)), (int)((byte)((float)white.B * num60)), (int)((byte)((float)white.B * num60)));
-								this.spriteBatch.Draw(Main.sunTexture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sunTexture.Width, Main.sunTexture.Height)), color6, rotation, new Vector2((float)(Main.sunTexture.Width / 2), (float)(Main.sunTexture.Height / 2)), num18, SpriteEffects.None, 0f);
-								this.spriteBatch.Draw(Main.sunTexture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sunTexture.Width, Main.sunTexture.Height)), color7, rotation, new Vector2((float)(Main.sunTexture.Width / 2), (float)(Main.sunTexture.Height / 2)), num18, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.sunTexture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sunTexture.Width, Main.sunTexture.Height)), color6, rotation, new Vector2((float)(Main.sunTexture.Width / 2), (float)(Main.sunTexture.Height / 2)), num18, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.sunTexture, new Vector2((float)num16, (float)(num17 + (int)Main.sunModY)), new Rectangle?(new Rectangle(0, 0, Main.sunTexture.Width, Main.sunTexture.Height)), color7, rotation, new Vector2((float)(Main.sunTexture.Width / 2), (float)(Main.sunTexture.Height / 2)), num18, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -33238,7 +33244,7 @@ namespace Terraria
 						white2.G = (byte)((float)white2.G * num61);
 						white2.B = (byte)((float)white2.B * num61);
 						white2.A = (byte)((float)white2.A * num61);
-						this.spriteBatch.Draw(Main.moonTexture[Main.moonType], new Vector2((float)num19, (float)(num20 + (int)Main.moonModY)), new Rectangle?(new Rectangle(0, Main.moonTexture[Main.moonType].Width * Main.moonPhase, Main.moonTexture[Main.moonType].Width, Main.moonTexture[Main.moonType].Width)), white2, rotation2, new Vector2((float)(Main.moonTexture[Main.moonType].Width / 2), (float)(Main.moonTexture[Main.moonType].Width / 2)), num21, SpriteEffects.None, 0f);
+						spriteBatch.Draw(Main.moonTexture[Main.moonType], new Vector2((float)num19, (float)(num20 + (int)Main.moonModY)), new Rectangle?(new Rectangle(0, Main.moonTexture[Main.moonType].Width * Main.moonPhase, Main.moonTexture[Main.moonType].Width, Main.moonTexture[Main.moonType].Width)), white2, rotation2, new Vector2((float)(Main.moonTexture[Main.moonType].Width / 2), (float)(Main.moonTexture[Main.moonType].Width / 2)), num21, SpriteEffects.None, 0f);
 					}
 				}
 				Rectangle value;
@@ -33294,8 +33300,8 @@ namespace Terraria
 					}
 				}
 			}
-			this.scAdj = 1f - (float)((double)(Main.screenPosition.Y + (float)Main.screenHeight) / (Main.worldSurface * 16.0));
-			this.scAdj = (float)(Main.worldSurface * 16.0) / (Main.screenPosition.Y + (float)Main.screenHeight);
+			scAdj = 1f - (float)((double)(Main.screenPosition.Y + (float)Main.screenHeight) / (Main.worldSurface * 16.0));
+			scAdj = (float)(Main.worldSurface * 16.0) / (Main.screenPosition.Y + (float)Main.screenHeight);
 			float num62 = (float)Main.maxTilesY * 0.15f * 16f;
 			num62 -= Main.screenPosition.Y;
 			if (num62 < 0f)
@@ -33304,25 +33310,25 @@ namespace Terraria
 			}
 			num62 *= 0.00025f;
 			float num63 = num62 * num62;
-			this.scAdj *= 0.45f - num63;
+			scAdj *= 0.45f - num63;
 			if ((double)Main.maxTilesY <= 1200.0)
 			{
-				this.scAdj *= -500f;
+				scAdj *= -500f;
 			}
 			else
 			{
 				if ((double)Main.maxTilesY <= 1800.0)
 				{
-					this.scAdj *= -300f;
+					scAdj *= -300f;
 				}
 				else
 				{
-					this.scAdj *= -150f;
+					scAdj *= -150f;
 				}
 			}
-			this.screenOff = (float)(Main.screenHeight - 600);
-			this.bgTop = (int)((double)(-(double)Main.screenPosition.Y + this.screenOff / 2f) / (Main.worldSurface * 16.0) * 1200.0 + 1190.0) + (int)this.scAdj;
-			this.cTop = (float)(this.bgTop - 50);
+			screenOff = (float)(Main.screenHeight - 600);
+			bgTop = (int)((double)(-(double)Main.screenPosition.Y + screenOff / 2f) / (Main.worldSurface * 16.0) * 1200.0 + 1190.0) + (int)scAdj;
+			cTop = (float)(bgTop - 50);
 			if (Main.resetClouds)
 			{
 				Cloud.resetClouds();
@@ -33749,7 +33755,7 @@ namespace Terraria
 			{
 				try
 				{
-					this.DrawSurfaceBG();
+					DrawSurfaceBG();
 					goto IL_4520;
 				}
 				catch
@@ -33757,7 +33763,7 @@ namespace Terraria
 					goto IL_4520;
 				}
 			}
-			this.DrawSurfaceBG();
+			DrawSurfaceBG();
 			IL_4520:
 			if (Main.gameMenu || Main.netMode == 2)
 			{
@@ -33772,59 +33778,59 @@ namespace Terraria
 						color8.B = (byte)((float)color8.B * num67);
 						color8.A = (byte)((float)color8.A * num67);
 						float rotation3 = (float)Math.Atan2((double)Main.rain[m].velocity.X, (double)(-(double)Main.rain[m].velocity.Y));
-						this.spriteBatch.Draw(Main.rainTexture[(int)Main.rain[m].type], Main.rain[m].position - Main.screenPosition, new Rectangle?(new Rectangle(0, 0, Main.rainTexture[(int)Main.rain[m].type].Width, Main.rainTexture[(int)Main.rain[m].type].Height)), color8, rotation3, default(Vector2), Main.rain[m].scale, SpriteEffects.None, 0f);
-						if (base.IsActive)
+						spriteBatch.Draw(Main.rainTexture[(int)Main.rain[m].type], Main.rain[m].position - Main.screenPosition, new Rectangle?(new Rectangle(0, 0, Main.rainTexture[(int)Main.rain[m].type].Width, Main.rainTexture[(int)Main.rain[m].type].Height)), color8, rotation3, default(Vector2), Main.rain[m].scale, SpriteEffects.None, 0f);
+						if (IsActive)
 						{
 							Main.rain[m].Update();
 						}
 					}
 				}
-				this.DrawMenu();
+				DrawMenu();
 				return;
 			}
-			this.firstTileX = (int)(Main.screenPosition.X / 16f - 1f);
-			this.lastTileX = (int)((Main.screenPosition.X + (float)Main.screenWidth) / 16f) + 2;
-			this.firstTileY = (int)(Main.screenPosition.Y / 16f - 1f);
-			this.lastTileY = (int)((Main.screenPosition.Y + (float)Main.screenHeight) / 16f) + 2;
-			if (this.firstTileX < 0)
+			firstTileX = (int)(Main.screenPosition.X / 16f - 1f);
+			lastTileX = (int)((Main.screenPosition.X + (float)Main.screenWidth) / 16f) + 2;
+			firstTileY = (int)(Main.screenPosition.Y / 16f - 1f);
+			lastTileY = (int)((Main.screenPosition.Y + (float)Main.screenHeight) / 16f) + 2;
+			if (firstTileX < 0)
 			{
-				this.firstTileX = 0;
+				firstTileX = 0;
 			}
-			if (this.lastTileX > Main.maxTilesX)
+			if (lastTileX > Main.maxTilesX)
 			{
-				this.lastTileX = Main.maxTilesX;
+				lastTileX = Main.maxTilesX;
 			}
-			if (this.firstTileY < 0)
+			if (firstTileY < 0)
 			{
-				this.firstTileY = 0;
+				firstTileY = 0;
 			}
-			if (this.lastTileY > Main.maxTilesY)
+			if (lastTileY > Main.maxTilesY)
 			{
-				this.lastTileY = Main.maxTilesY;
+				lastTileY = Main.maxTilesY;
 			}
 			if (!Main.drawSkip)
 			{
-				Lighting.LightTiles(this.firstTileX, this.lastTileX, this.firstTileY, this.lastTileY);
+				Lighting.LightTiles(firstTileX, lastTileX, firstTileY, lastTileY);
 			}
 			if (!Main.mapFullscreen)
 			{
 				Color arg_47FE_0 = Color.White;
 				if (Main.drawToScreen)
 				{
-					this.drawWaters(true);
+					drawWaters(true);
 				}
 				else
 				{
-					this.spriteBatch.Draw(this.backWaterTarget, Main.sceneBackgroundPos - Main.screenPosition, Color.White);
+					spriteBatch.Draw(backWaterTarget, Main.sceneBackgroundPos - Main.screenPosition, Color.White);
 				}
 				float x = (Main.sceneBackgroundPos.X - Main.screenPosition.X + (float)Main.offScreenRange) * Main.caveParrallax - (float)Main.offScreenRange;
 				if (Main.drawToScreen)
 				{
-					this.DrawBackground();
+					DrawBackground();
 				}
 				else
 				{
-					this.spriteBatch.Draw(this.backgroundTarget, new Vector2(x, Main.sceneBackgroundPos.Y - Main.screenPosition.Y), Color.White);
+					spriteBatch.Draw(backgroundTarget, new Vector2(x, Main.sceneBackgroundPos.Y - Main.screenPosition.Y), Color.White);
 				}
 				Main.magmaBGFrameCounter++;
 				if (Main.magmaBGFrameCounter >= 8)
@@ -33840,49 +33846,49 @@ namespace Terraria
 				{
 					if (Main.drawToScreen)
 					{
-						this.DrawBlack();
-						this.DrawWalls();
+						DrawBlack();
+						DrawWalls();
 					}
 					else
 					{
-						this.spriteBatch.Draw(this.blackTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
-						this.spriteBatch.Draw(this.wallTarget, Main.sceneWallPos - Main.screenPosition, Color.White);
+						spriteBatch.Draw(blackTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
+						spriteBatch.Draw(wallTarget, Main.sceneWallPos - Main.screenPosition, Color.White);
 					}
-					this.DrawWoF();
+					DrawWoF();
 					if (Main.player[Main.myPlayer].detectCreature)
 					{
 						if (Main.drawToScreen)
 						{
-							this.DrawTiles(false);
-							this.drawWaterfalls();
-							this.DrawTiles(true);
+							DrawTiles(false);
+							drawWaterfalls();
+							DrawTiles(true);
 						}
 						else
 						{
-							this.spriteBatch.Draw(this.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
-							this.drawWaterfalls();
-							this.spriteBatch.Draw(this.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
+							spriteBatch.Draw(tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
+							drawWaterfalls();
+							spriteBatch.Draw(tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
 						}
-						this.DrawNPCs(true);
-						this.DrawNPCs(false);
+						DrawNPCs(true);
+						DrawNPCs(false);
 					}
 					else
 					{
 						if (Main.drawToScreen)
 						{
-							this.DrawTiles(false);
-							this.drawWaterfalls();
-							this.DrawNPCs(true);
-							this.DrawTiles(true);
+							DrawTiles(false);
+							drawWaterfalls();
+							DrawNPCs(true);
+							DrawTiles(true);
 						}
 						else
 						{
-							this.spriteBatch.Draw(this.tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
-							this.drawWaterfalls();
-							this.DrawNPCs(true);
-							this.spriteBatch.Draw(this.tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
+							spriteBatch.Draw(tile2Target, Main.sceneTile2Pos - Main.screenPosition, Color.White);
+							drawWaterfalls();
+							DrawNPCs(true);
+							spriteBatch.Draw(tileTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
 						}
-						this.DrawNPCs(false);
+						DrawNPCs(false);
 					}
 				}
 				catch
@@ -33896,7 +33902,7 @@ namespace Terraria
 						{
 							try
 							{
-								this.DrawProj(n);
+								DrawProj(n);
 							}
 							catch
 							{
@@ -33911,12 +33917,12 @@ namespace Terraria
 					{
 						if (Main.projectile[num68].active && Main.projectile[num68].type > 0 && !Main.projectile[num68].hide)
 						{
-							this.DrawProj(num68);
+							DrawProj(num68);
 						}
 					}
 				}
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, this.Rasterizer, null, this.Transform);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, Rasterizer, null, Transform);
 				for (int num69 = 0; num69 < 255; num69++)
 				{
 					if (Main.player[num69].active && !Main.player[num69].outOfRange)
@@ -33926,16 +33932,16 @@ namespace Terraria
 							Vector2 position = Main.player[num69].position;
 							Main.player[num69].position = Main.player[num69].shadowPos[0];
 							Main.player[num69].shadow = 0.5f;
-							this.DrawGhost(Main.player[num69]);
+							DrawGhost(Main.player[num69]);
 							Main.player[num69].position = Main.player[num69].shadowPos[1];
 							Main.player[num69].shadow = 0.7f;
-							this.DrawGhost(Main.player[num69]);
+							DrawGhost(Main.player[num69]);
 							Main.player[num69].position = Main.player[num69].shadowPos[2];
 							Main.player[num69].shadow = 0.9f;
-							this.DrawGhost(Main.player[num69]);
+							DrawGhost(Main.player[num69]);
 							Main.player[num69].position = position;
 							Main.player[num69].shadow = 0f;
-							this.DrawGhost(Main.player[num69]);
+							DrawGhost(Main.player[num69]);
 						}
 						else
 						{
@@ -34112,21 +34118,21 @@ namespace Terraria
 								Player expr_5516_cp_0 = Main.player[num69];
 								expr_5516_cp_0.position.Y = expr_5516_cp_0.position.Y + Main.player[num69].gfxOffY;
 								Main.player[num69].shadow = Main.player[num69].ghostFade;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position.X = position2.X + Main.player[num69].ghostFade * 5f;
 								Main.player[num69].shadow = Main.player[num69].ghostFade;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position = position2;
 								Main.player[num69].position.Y = position2.Y - Main.player[num69].ghostFade * 5f;
 								Player expr_55F5_cp_0 = Main.player[num69];
 								expr_55F5_cp_0.position.Y = expr_55F5_cp_0.position.Y + Main.player[num69].gfxOffY;
 								Main.player[num69].shadow = Main.player[num69].ghostFade;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position.Y = position2.Y + Main.player[num69].ghostFade * 5f;
 								Player expr_5670_cp_0 = Main.player[num69];
 								expr_5670_cp_0.position.Y = expr_5670_cp_0.position.Y + Main.player[num69].gfxOffY;
 								Main.player[num69].shadow = Main.player[num69].ghostFade;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position = position2;
 								Main.player[num69].shadow = 0f;
 							}
@@ -34135,13 +34141,13 @@ namespace Terraria
 								Vector2 position3 = Main.player[num69].position;
 								Main.player[num69].position = Main.player[num69].shadowPos[0];
 								Main.player[num69].shadow = 0.5f;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position = Main.player[num69].shadowPos[1];
 								Main.player[num69].shadow = 0.7f;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position = Main.player[num69].shadowPos[2];
 								Main.player[num69].shadow = 0.9f;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].position = position3;
 								Main.player[num69].shadow = 0f;
 							}
@@ -34157,7 +34163,7 @@ namespace Terraria
 									Player expr_585F_cp_0 = Main.player[num69];
 									expr_585F_cp_0.position.Y = expr_585F_cp_0.position.Y + Main.player[num69].gfxOffY;
 									Main.player[num69].shadow = 0.9f;
-									this.DrawPlayer(Main.player[num69]);
+									DrawPlayer(Main.player[num69]);
 									Main.player[num69].position = position4;
 									Main.player[num69].shadow = 0f;
 								}
@@ -34186,20 +34192,20 @@ namespace Terraria
 								Player expr_59AF_cp_0 = Main.player[num69];
 								expr_59AF_cp_0.position.X = expr_59AF_cp_0.position.X + Main.player[num69].shadowDodgeCount;
 								Main.player[num69].shadow = 0.5f + (float)Main.rand.Next(-10, 11) * 0.005f;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Player expr_5A0B_cp_0 = Main.player[num69];
 								expr_5A0B_cp_0.position.X = expr_5A0B_cp_0.position.X - Main.player[num69].shadowDodgeCount * 2f;
 								Main.player[num69].shadow = 0.5f + (float)Main.rand.Next(-10, 11) * 0.005f;
-								this.DrawPlayer(Main.player[num69]);
+								DrawPlayer(Main.player[num69]);
 								Main.player[num69].shadow = 0f;
 								Main.player[num69].position = position5;
 							}
-							this.DrawPlayer(Main.player[num69]);
+							DrawPlayer(Main.player[num69]);
 						}
 					}
 				}
-				this.spriteBatch.End();
-				this.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, this.Rasterizer, null, this.Transform);
+				spriteBatch.End();
+				spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, Rasterizer, null, Transform);
 				if (!Main.gamePaused)
 				{
 					Main.essScale += (float)Main.essDir * 0.01f;
@@ -34223,7 +34229,7 @@ namespace Terraria
 						int arg_5BC3_0 = (int)((double)Main.item[num72].position.Y + (double)Main.item[num72].height * 0.5) / 16;
 						int arg_5BC9_0 = Lighting.offScreenTiles;
 						Color color9 = Lighting.GetColor((int)((double)Main.item[num72].position.X + (double)Main.item[num72].width * 0.5) / 16, (int)((double)Main.item[num72].position.Y + (double)Main.item[num72].height * 0.5) / 16);
-						if (!Main.gamePaused && base.IsActive && ((Main.item[num72].type >= 71 && Main.item[num72].type <= 74) || Main.item[num72].type == 58 || Main.item[num72].type == 109) && color9.R > 60)
+						if (!Main.gamePaused && IsActive && ((Main.item[num72].type >= 71 && Main.item[num72].type <= 74) || Main.item[num72].type == 58 || Main.item[num72].type == 109) && color9.R > 60)
 						{
 							float num73 = (float)Main.rand.Next(500) - (Math.Abs(Main.item[num72].velocity.X) + Math.Abs(Main.item[num72].velocity.Y)) * 10f;
 							if (num73 < (float)(color9.R / 50))
@@ -34265,14 +34271,14 @@ namespace Terraria
 						float num77 = (float)(Main.item[num72].width / 2 - Main.itemTexture[Main.item[num72].type].Width / 2);
 						if (Main.item[num72].type >= 1522 && Main.item[num72].type <= 1527)
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.item[num72].type], new Vector2(Main.item[num72].position.X - Main.screenPosition.X + (float)(Main.itemTexture[Main.item[num72].type].Width / 2) + num77, Main.item[num72].position.Y - Main.screenPosition.Y + (float)(Main.itemTexture[Main.item[num72].type].Height / 2) + num76 + 2f), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.item[num72].type].Width, Main.itemTexture[Main.item[num72].type].Height)), new Color(250, 250, 250, (int)(Main.mouseTextColor / 2)), rotation4, new Vector2((float)(Main.itemTexture[Main.item[num72].type].Width / 2), (float)(Main.itemTexture[Main.item[num72].type].Height / 2)), (float)Main.mouseTextColor / 1000f + 0.8f, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.item[num72].type], new Vector2(Main.item[num72].position.X - Main.screenPosition.X + (float)(Main.itemTexture[Main.item[num72].type].Width / 2) + num77, Main.item[num72].position.Y - Main.screenPosition.Y + (float)(Main.itemTexture[Main.item[num72].type].Height / 2) + num76 + 2f), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.item[num72].type].Width, Main.itemTexture[Main.item[num72].type].Height)), new Color(250, 250, 250, (int)(Main.mouseTextColor / 2)), rotation4, new Vector2((float)(Main.itemTexture[Main.item[num72].type].Width / 2), (float)(Main.itemTexture[Main.item[num72].type].Height / 2)), (float)Main.mouseTextColor / 1000f + 0.8f, SpriteEffects.None, 0f);
 						}
 						else
 						{
-							this.spriteBatch.Draw(Main.itemTexture[Main.item[num72].type], new Vector2(Main.item[num72].position.X - Main.screenPosition.X + (float)(Main.itemTexture[Main.item[num72].type].Width / 2) + num77, Main.item[num72].position.Y - Main.screenPosition.Y + (float)(Main.itemTexture[Main.item[num72].type].Height / 2) + num76 + 2f), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.item[num72].type].Width, Main.itemTexture[Main.item[num72].type].Height)), alpha, rotation4, new Vector2((float)(Main.itemTexture[Main.item[num72].type].Width / 2), (float)(Main.itemTexture[Main.item[num72].type].Height / 2)), num75, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.itemTexture[Main.item[num72].type], new Vector2(Main.item[num72].position.X - Main.screenPosition.X + (float)(Main.itemTexture[Main.item[num72].type].Width / 2) + num77, Main.item[num72].position.Y - Main.screenPosition.Y + (float)(Main.itemTexture[Main.item[num72].type].Height / 2) + num76 + 2f), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.item[num72].type].Width, Main.itemTexture[Main.item[num72].type].Height)), alpha, rotation4, new Vector2((float)(Main.itemTexture[Main.item[num72].type].Width / 2), (float)(Main.itemTexture[Main.item[num72].type].Height / 2)), num75, SpriteEffects.None, 0f);
 							if (Main.item[num72].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.itemTexture[Main.item[num72].type], new Vector2(Main.item[num72].position.X - Main.screenPosition.X + (float)(Main.itemTexture[Main.item[num72].type].Width / 2) + num77, Main.item[num72].position.Y - Main.screenPosition.Y + (float)(Main.itemTexture[Main.item[num72].type].Height / 2) + num76 + 2f), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.item[num72].type].Width, Main.itemTexture[Main.item[num72].type].Height)), Main.item[num72].GetColor(color9), rotation4, new Vector2((float)(Main.itemTexture[Main.item[num72].type].Width / 2), (float)(Main.itemTexture[Main.item[num72].type].Height / 2)), num75, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.itemTexture[Main.item[num72].type], new Vector2(Main.item[num72].position.X - Main.screenPosition.X + (float)(Main.itemTexture[Main.item[num72].type].Width / 2) + num77, Main.item[num72].position.Y - Main.screenPosition.Y + (float)(Main.itemTexture[Main.item[num72].type].Height / 2) + num76 + 2f), new Rectangle?(new Rectangle(0, 0, Main.itemTexture[Main.item[num72].type].Width, Main.itemTexture[Main.item[num72].type].Height)), Main.item[num72].GetColor(color9), rotation4, new Vector2((float)(Main.itemTexture[Main.item[num72].type].Width / 2), (float)(Main.itemTexture[Main.item[num72].type].Height / 2)), num75, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -34288,8 +34294,8 @@ namespace Terraria
 						color10.B = (byte)((float)color10.B * num79);
 						color10.A = (byte)((float)color10.A * num79);
 						float rotation5 = (float)Math.Atan2((double)Main.rain[num78].velocity.X, (double)(-(double)Main.rain[num78].velocity.Y));
-						this.spriteBatch.Draw(Main.rainTexture[(int)Main.rain[num78].type], Main.rain[num78].position - Main.screenPosition, new Rectangle?(new Rectangle(0, 0, Main.rainTexture[(int)Main.rain[num78].type].Width, Main.rainTexture[(int)Main.rain[num78].type].Height)), color10, rotation5, default(Vector2), Main.rain[num78].scale, SpriteEffects.None, 0f);
-						if (base.IsActive)
+						spriteBatch.Draw(Main.rainTexture[(int)Main.rain[num78].type], Main.rain[num78].position - Main.screenPosition, new Rectangle?(new Rectangle(0, 0, Main.rainTexture[(int)Main.rain[num78].type].Width, Main.rainTexture[(int)Main.rain[num78].type].Height)), color10, rotation5, default(Vector2), Main.rain[num78].scale, SpriteEffects.None, 0f);
+						if (IsActive)
 						{
 							Main.rain[num78].Update();
 						}
@@ -34299,7 +34305,7 @@ namespace Terraria
 				{
 					try
 					{
-						this.DrawGore();
+						DrawGore();
 						goto IL_653E;
 					}
 					catch
@@ -34307,7 +34313,7 @@ namespace Terraria
 						goto IL_653E;
 					}
 				}
-				this.DrawGore();
+				DrawGore();
 				IL_653E:
 				Rectangle value2 = new Rectangle((int)Main.screenPosition.X - 500, (int)Main.screenPosition.Y - 50, Main.screenWidth + 1000, Main.screenHeight + 100);
 				for (int num80 = 0; num80 < Main.numDust; num80++)
@@ -34340,7 +34346,7 @@ namespace Terraria
 									float scale = Main.dust[num80].scale * (1f - (float)num82 / 10f);
 									Color color11 = Lighting.GetColor((int)((double)Main.dust[num80].position.X + 4.0) / 16, (int)((double)Main.dust[num80].position.Y + 4.0) / 16);
 									color11 = Main.dust[num80].GetAlpha(color11);
-									this.spriteBatch.Draw(Main.dustTexture, value3 - Main.screenPosition, new Rectangle?(Main.dust[num80].frame), color11, Main.dust[num80].rotation, new Vector2(4f, 4f), scale, SpriteEffects.None, 0f);
+									spriteBatch.Draw(Main.dustTexture, value3 - Main.screenPosition, new Rectangle?(Main.dust[num80].frame), color11, Main.dust[num80].rotation, new Vector2(4f, 4f), scale, SpriteEffects.None, 0f);
 									num82++;
 								}
 							}
@@ -34350,10 +34356,10 @@ namespace Terraria
 								color12 = Color.White;
 							}
 							color12 = Main.dust[num80].GetAlpha(color12);
-							this.spriteBatch.Draw(Main.dustTexture, Main.dust[num80].position - Main.screenPosition, new Rectangle?(Main.dust[num80].frame), color12, Main.dust[num80].rotation, new Vector2(4f, 4f), Main.dust[num80].scale, SpriteEffects.None, 0f);
+							spriteBatch.Draw(Main.dustTexture, Main.dust[num80].position - Main.screenPosition, new Rectangle?(Main.dust[num80].frame), color12, Main.dust[num80].rotation, new Vector2(4f, 4f), Main.dust[num80].scale, SpriteEffects.None, 0f);
 							if (Main.dust[num80].color != default(Color))
 							{
-								this.spriteBatch.Draw(Main.dustTexture, Main.dust[num80].position - Main.screenPosition, new Rectangle?(Main.dust[num80].frame), Main.dust[num80].GetColor(color12), Main.dust[num80].rotation, new Vector2(4f, 4f), Main.dust[num80].scale, SpriteEffects.None, 0f);
+								spriteBatch.Draw(Main.dustTexture, Main.dust[num80].position - Main.screenPosition, new Rectangle?(Main.dust[num80].frame), Main.dust[num80].GetColor(color12), Main.dust[num80].rotation, new Vector2(4f, 4f), Main.dust[num80].scale, SpriteEffects.None, 0f);
 							}
 							if (color12 == Color.Black)
 							{
@@ -34368,15 +34374,15 @@ namespace Terraria
 				}
 				if (Main.drawToScreen)
 				{
-					this.drawWaters(false);
+					drawWaters(false);
 					if (Main.player[Main.myPlayer].inventory[Main.player[Main.myPlayer].selectedItem].mech)
 					{
-						this.DrawWires();
+						DrawWires();
 					}
 				}
 				else
 				{
-					this.spriteBatch.Draw(this.waterTarget, Main.sceneWaterPos - Main.screenPosition, Color.White);
+					spriteBatch.Draw(waterTarget, Main.sceneWaterPos - Main.screenPosition, Color.White);
 				}
 				if (!Main.mapFullscreen && Main.mapStyle == 2)
 				{
@@ -34384,7 +34390,7 @@ namespace Terraria
 					{
 						try
 						{
-							this.DrawMap();
+							DrawMap();
 							goto IL_6A73;
 						}
 						catch
@@ -34392,11 +34398,11 @@ namespace Terraria
 							goto IL_6A73;
 						}
 					}
-					this.DrawMap();
+					DrawMap();
 				}
 				IL_6A73:
-				this.spriteBatch.End();
-				this.spriteBatch.Begin();
+				spriteBatch.End();
+				spriteBatch.Begin();
 				if (!Main.hideUI)
 				{
 					for (int num83 = 0; num83 < 255; num83++)
@@ -34437,7 +34443,7 @@ namespace Terraria
 								{
 									black = new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor);
 								}
-								this.spriteBatch.DrawString(Main.fontMouseText, Main.player[num83].chatText, new Vector2(vector2.X + (float)num85 - Main.screenPosition.X, vector2.Y + (float)num86 - Main.screenPosition.Y), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontMouseText, Main.player[num83].chatText, new Vector2(vector2.X + (float)num85 - Main.screenPosition.X, vector2.Y + (float)num86 - Main.screenPosition.Y), black, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -34503,11 +34509,11 @@ namespace Terraria
 								{
 									float num96 = Main.combatText[num87].position.Y - Main.screenPosition.Y;
 									num96 = (float)Main.screenHeight - num96;
-									this.spriteBatch.DrawString(Main.fontCombatText[num88], Main.combatText[num87].text, new Vector2(Main.combatText[num87].position.X - Main.screenPosition.X + (float)num94 + origin.X, num96 + (float)num95 + origin.Y), color13, Main.combatText[num87].rotation, origin, Main.combatText[num87].scale, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontCombatText[num88], Main.combatText[num87].text, new Vector2(Main.combatText[num87].position.X - Main.screenPosition.X + (float)num94 + origin.X, num96 + (float)num95 + origin.Y), color13, Main.combatText[num87].rotation, origin, Main.combatText[num87].scale, SpriteEffects.None, 0f);
 								}
 								else
 								{
-									this.spriteBatch.DrawString(Main.fontCombatText[num88], Main.combatText[num87].text, new Vector2(Main.combatText[num87].position.X - Main.screenPosition.X + (float)num94 + origin.X, Main.combatText[num87].position.Y - Main.screenPosition.Y + (float)num95 + origin.Y), color13, Main.combatText[num87].rotation, origin, Main.combatText[num87].scale, SpriteEffects.None, 0f);
+									spriteBatch.DrawString(Main.fontCombatText[num88], Main.combatText[num87].text, new Vector2(Main.combatText[num87].position.X - Main.screenPosition.X + (float)num94 + origin.X, Main.combatText[num87].position.Y - Main.screenPosition.Y + (float)num95 + origin.Y), color13, Main.combatText[num87].rotation, origin, Main.combatText[num87].scale, SpriteEffects.None, 0f);
 								}
 							}
 						}
@@ -34586,7 +34592,7 @@ namespace Terraria
 								{
 									num105 = (float)Main.screenHeight - num105;
 								}
-								this.spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(Main.itemText[num97].position.X - Main.screenPosition.X + (float)num103 + origin2.X, num105 + origin2.Y), color14, Main.itemText[num97].rotation, origin2, Main.itemText[num97].scale, SpriteEffects.None, 0f);
+								spriteBatch.DrawString(Main.fontMouseText, text, new Vector2(Main.itemText[num97].position.X - Main.screenPosition.X + (float)num103 + origin2.X, num105 + origin2.Y), color14, Main.itemText[num97].rotation, origin2, Main.itemText[num97].scale, SpriteEffects.None, 0f);
 							}
 						}
 					}
@@ -34599,7 +34605,7 @@ namespace Terraria
 							(int)((float)Netplay.clientSock.statusCount / (float)Netplay.clientSock.statusMax * 100f),
 							"%"
 						});
-						this.spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2(628f - Main.fontMouseText.MeasureString(text2).X * 0.5f + (float)(Main.screenWidth - 800), 84f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+						spriteBatch.DrawString(Main.fontMouseText, text2, new Vector2(628f - Main.fontMouseText.MeasureString(text2).X * 0.5f + (float)(Main.screenWidth - 800), 84f), new Color((int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor, (int)Main.mouseTextColor), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 					}
 					if (Main.BlackFadeIn > 0)
 					{
@@ -34613,16 +34619,16 @@ namespace Terraria
 							num106 = 255;
 						}
 						Main.BlackFadeIn -= 25;
-						this.spriteBatch.Draw(Main.loTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), new Color(0, 0, 0, num106));
+						spriteBatch.Draw(Main.loTexture, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), new Color(0, 0, 0, num106));
 					}
-					this.DrawFPS();
+					DrawFPS();
 					if (!Main.mapFullscreen)
 					{
 						if (Main.ignoreErrors)
 						{
 							try
 							{
-								this.DrawInterface();
+								DrawInterface();
 								goto IL_7619;
 							}
 							catch
@@ -34630,7 +34636,7 @@ namespace Terraria
 								goto IL_7619;
 							}
 						}
-						this.DrawInterface();
+						DrawInterface();
 					}
 				}
 				else
@@ -34638,7 +34644,7 @@ namespace Terraria
 					Main.maxQ = true;
 				}
 				IL_7619:
-				this.spriteBatch.End();
+				spriteBatch.End();
 				if (Main.mouseLeft)
 				{
 					Main.mouseLeftRelease = false;
@@ -34686,10 +34692,10 @@ namespace Terraria
 			{
 				Main.player[Main.myPlayer].toggleInv();
 			}
-			this.DrawMap();
-			this.DrawFPS();
-			this.DrawPlayerChat();
-			this.spriteBatch.End();
+			DrawMap();
+			DrawFPS();
+			DrawPlayerChat();
+			spriteBatch.End();
 			if (Main.mouseLeft)
 			{
 				Main.mouseLeftRelease = false;
