@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 namespace Terraria
 {
-	internal static class Program
+    internal static class Program
 	{
 		private static void Main(string[] args)
 		{
@@ -67,13 +67,16 @@ namespace Terraria
 				{
 					try
 					{
-						using (StreamWriter streamWriter = new StreamWriter("client-crashlog.txt", true))
+						using (var streamWriter = new StreamWriter("client-crashlog.txt", true))
 						{
 							streamWriter.WriteLine(DateTime.Now);
 							streamWriter.WriteLine(ex);
-							streamWriter.WriteLine("/n");
 						}
+#if DEBUG
+						throw;
+#else
 						MessageBox.Show(ex.ToString(), "Terraria: Error");
+#endif
 					}
 					catch
 					{
